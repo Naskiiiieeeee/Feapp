@@ -1,0 +1,32 @@
+  /* Add this to your custom CSS file (e.g., style.css) */
+
+/* Keyframes for the glowing/blinking effect */
+@keyframes glow-red {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.7); /* Subtle red glow */
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 0, 0, 1); /* Brighter red glow */
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
+    }
+}
+
+/* Style for the card when it has pending requests */
+.pending-glow-card {
+    /* Apply the animation */
+    animation: glow-red 1.5s infinite alternate; /* 1.5s duration, infinite loop, alternates direction */
+    border: 1px solid rgba(255, 0, 0, 0.5); /* Optional: add a red border */
+}
+
+/* Optional: Make the icon also blink/change color */
+.pending-glow-card .card-icon i {
+    animation: text-blink-red 1.5s infinite alternate;
+}
+
+@keyframes text-blink-red {
+    0% { color: #dc3545; /* Bootstrap red */ }
+    50% { color: #ffc107; /* Bootstrap yellow, or a brighter red */ }
+    100% { color: #dc3545; }
+}

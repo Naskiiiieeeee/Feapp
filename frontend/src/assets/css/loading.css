@@ -1,0 +1,66 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      background: radial-gradient(circle at center, #0f0f0f, #000000);
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body {
+      flex-direction: column;
+      color: #00ffcc;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      margin-bottom: 1rem;
+      animation: glitch 1s infinite;
+      word-break: break-word;
+    }
+
+    #countdown {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+      color: #ff3cac;
+      margin-bottom: 1rem;
+    }
+
+    .loading-bar {
+      width: 100%;
+      max-width: 400px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      border-radius: 6px;
+    }
+
+    .progress {
+      height: 100%;
+      background: linear-gradient(to right, #00ffcc, #ff3cac);
+      width: 0%;
+      animation: loadBar 5s linear forwards;
+    }
+
+    @keyframes loadBar {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 red, -2px 0 blue; }
+      20% { text-shadow: -2px 0 red, 2px 0 blue; }
+      40% { text-shadow: 2px 2px red, -2px -2px blue; }
+      60% { text-shadow: -2px -2px red, 2px 2px blue; }
+      80% { text-shadow: 2px -2px red, -2px 2px blue; }
+      100% { text-shadow: 0 0 red, 0 0 blue; }
+    }
