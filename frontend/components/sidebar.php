@@ -18,6 +18,13 @@
         </a>
       </li>
       <li class="nav-heading">Users Account</li>
+      <li class="nav-item <?= $current_page=='ManageAdminView' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="ManageAdminView">
+          <i class="bi-people"></i>
+          <span>Manage Administrator Account</span>
+        </a>
+      </li>
+
       <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
         <a class="nav-link collapsed" href="#">
           <i class="bi-people"></i>
