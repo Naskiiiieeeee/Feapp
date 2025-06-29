@@ -17,4 +17,13 @@ class UserAdminViewModel {
         $totalRecords = $this->model->countAllAdmins();
         return ceil($totalRecords / $limit);
     }
+
+    public function deleteAdminUser($id){
+        return $this->model->deleteAdmin($id);
+    }
+
+    public function updateAdminUser($id, $status){
+        return $this->model->updateStatus($id, $status);
+    }
+
 }

@@ -18,4 +18,15 @@ class UserAdminModel extends BaseModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function deleteAdmin($id) {
+        $stmt = $this->db->prepare("DELETE FROM `endusers` WHERE `eu_id` = ?");
+        return $stmt->execute([$id]);
+    }
+
+    public function updateStatus($id, $status) {
+        $stmt = $this->db->prepare("UPDATE `endusers` SET `status` = ? WHERE `code` = ?");
+        return $stmt->execute([$status, $id]);
+    }
+
 }
