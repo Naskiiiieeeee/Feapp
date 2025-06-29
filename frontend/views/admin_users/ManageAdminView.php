@@ -1,8 +1,8 @@
 <?php
-require_once '../../backend/ViewModels/UserAdminViewModel.php';
-include_once __DIR__ . '/../components/header.php';
-include_once __DIR__ . '/../components/navigation.php';
-include_once __DIR__ . '/../components/sidebar.php';
+require_once __DIR__ . '/../../../backend/ViewModels/UserAdminViewModel.php';
+include_once __DIR__ . '/../../components/header.php';
+include_once __DIR__ . '/../../components/navigation.php';
+include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
 $vm = new UserAdminViewModel();
@@ -165,8 +165,8 @@ $total_pages = $vm->getTotalPages($limit);
 </div>
 
 <?php
-include_once __DIR__ . '/../components/footer.php';
-include_once __DIR__ . '/../components/footscript.php';
+include_once __DIR__ . '/../../components/footer.php';
+include_once __DIR__ . '/../../components/footscript.php';
 ?>
 
 <!-- Edit Button Logic -->
@@ -235,9 +235,31 @@ include_once __DIR__ . '/../components/footscript.php';
       }, 500);
     });
   });
+
+  $('#updateForm').submit(function(e){
+    e.preventDefault();
+    $.ajax({
+      url: '../../api/api.adminuser.php',
+      type: 'POST',
+      data: $(this).serialize(),
+      dataType: 'json',
+      success(data) {
+        if (data === 'updated') {
+          Swal.fire({ icon:'success', timer:1500, showConfirmButton:false })
+               .then(()=>{
+                 $('#verifyModal').modal('hide');
+                 location.reload();
+               });
+        } else {
+          Swal.fire('Error','Failed to update','error');
+        }
+      }
+    });
+  });
+
 </script>
 
-<script>
+<!-- <script>
   $(document).ready(function () {
     $('#updateForm').submit(function (e) {
       e.preventDefault();
@@ -265,5 +287,5 @@ include_once __DIR__ . '/../components/footscript.php';
       });
     });
   });
-</script>
+</script> -->
 

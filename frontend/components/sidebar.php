@@ -1,8 +1,9 @@
 <?php 
-  // function PageName() {
-  //   return substr( $_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"],"/") +1);
-  // }
-  // $current_page = PageName();
+$basePath = '/feapp/frontend/views/';
+  function PageName() {
+    return substr( $_SERVER["SCRIPT_NAME"], strrpos($_SERVER["SCRIPT_NAME"],"/") +1);
+  }
+  $current_page = PageName();
 
   // if($role == "Admin"){
     ?>
@@ -12,14 +13,14 @@
     <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-heading">Data Monitoring</li>
       <li class="nav-item <?= $current_page=='dashboard' ? 'active' : null ?>" >
-        <a class="nav-link collapsed" href="dashboard">
+        <a class="nav-link collapsed" href="<?= $basePath ?>dashboard.php">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
       <li class="nav-heading">Users Account</li>
       <li class="nav-item <?= $current_page=='ManageAdminView' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="ManageAdminView">
+        <a class="nav-link collapsed" href="<?= $basePath ?>admin_users/ManageAdminView">
           <i class="bi-people"></i>
           <span>Manage Administrator Account</span>
         </a>
