@@ -29,4 +29,8 @@ class UserFacultyViewModel {
     public function addNewFaculty($path, $fullname, $email, $password, $dep, $role, $code){
         return $this->model->createNewFaculty($path, $fullname, $email, $password, $dep, $role, $code);
     }
+
+    public function getFacultyByCode($code) {
+        return $this->model->getFacultyByCode($code);
+    }
 }
