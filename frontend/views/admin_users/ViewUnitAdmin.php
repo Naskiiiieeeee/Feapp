@@ -4,15 +4,20 @@ include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
-// Pagination setup
 $vm = new UserAdminViewModel();
-$page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
-$limit = 4;
-$count = ($page_no - 1) * $limit + 1;
+$adminData = null;
 
-// Get paginated data and total pages
-$adminUsers = $vm->getPaginatedAdmins($page_no, $limit);
-$total_pages = $vm->getTotalPages($limit);
+if (isset($_GET['token'])) {
+    $decoded = base64_decode($_GET['token']);
+    list($code, $salt) = explode('|', $decoded);
+
+    if ($code === $salt) {
+        $adminData = $vm->getAdminByCode($code);
+    } else {
+        echo '<script>alert("Invalid token!"); window.location="ManageAdminView.php";</script>';
+        exit;
+    }
+}
 ?>
 
 <main id="main" class="main">
@@ -31,30 +36,20 @@ $total_pages = $vm->getTotalPages($limit);
     <div class="col-xl-4">
       <div class="card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-        <?php
-            if (isset($_GET['token'])) {
-              $decoded = base64_decode($_GET['token']);
-              list($code, $salt) = explode('|', $decoded);
-              if ($salt === $code) {
-                $sql = "SELECT * FROM `endusers` WHERE `code` = '$code' ";
-                $result = mysqli_query($con,$sql);
-                while($row = mysqli_fetch_array($result)){
-              ?>
-          <img src="./src/img/logo.png" alt="Profile" class="rounded-circle">
-          <h2><?= $row['deviceName']; ?></h2>
-          <h3><?= $so->decrypt($row['deviceType']); ?></h3>
-          <?php
-                }} else {
-                  echo '<script> alert("Invalid Token!"); window.location="manageuser"; </script>';
-              }
-          } ?>
+        <?php if ($adminData): ?>
+            <img src="<?= BASE_URL ?>/<?= htmlspecialchars($adminData['photo']) ?>" alt="Profile" class="rounded-circle" width="150">
+            <h2><?= htmlspecialchars($adminData['fullname']) ?></h2>
+            <h3><?= htmlspecialchars($adminData['department']) ?></h3>
+        <?php else: ?>
+            <p class="text-danger">User not found or invalid token.</p>
+        <?php endif; ?>
           <div class="social-links mt-2">
             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
             <a href="#" class="google"><i class="bi bi-google"></i></a>
           </div>
         </div>
-        <div class="card-footer bg-secondary">
+        <div class="card-footer bg-primary-subtle">
 
         </div>
       </div>
@@ -70,99 +65,64 @@ $total_pages = $vm->getTotalPages($limit);
           </ul>
           <div class="tab-content pt-2">
             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-              <?php
-              if (isset($_GET['token'])) {
-                $decoded = base64_decode($_GET['token']);
-                list($candCode, $salt) = explode('|', $decoded);
-                if ($salt === $candCode) {
-                  $sql = "SELECT * FROM `endusers` WHERE `code` = '$code' ";
-                  $result = mysqli_query($con,$sql);
-                  while($row = mysqli_fetch_array($result)){
-              ?>
 
-              <h5 class="card-title">Devices Details</h5>
+              <h5 class="card-title">Account Details</h5>
+              <?php if ($adminData): ?>
 
               <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-upc-scan"></i> Device Name</div>
-                <div class="col-lg-8 col-md-8"><?= $row['deviceName']; ?></div>
+                <div class="col-lg-4 col-md-4 label"><i class="bi bi-upc-scan"></i> Fullname</div>
+                <div class="col-lg-8 col-md-8"><?= $adminData['fullname']; ?></div>
               </div>
 
               <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-telephone"></i> Phone Number</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['pnumber']); ?></div>
+                <div class="col-lg-4 col-md-4 label"><i class="bi bi-envelope-at"></i> Email</div>
+                <div class="col-lg-8 col-md-8"><?= $adminData['email']; ?></div>
+              </div>
+              
+              <div class="row">
+                <div class="col-lg-4 col-md-4 label"><i class="bi bi-building-fill-lock"></i> Department</div>
+                <div class="col-lg-8 col-md-8"><?= $adminData['department']; ?></div>
               </div>
 
               <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-clipboard-data"></i> Remote IP</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['ip_address']); ?></div>
+                <div class="col-lg-4 col-md-4 label"><i class="bi bi-calendar-check"></i> Registration Date</div>
+                <div class="col-lg-8 col-md-8"><?= $adminData['date_created']; ?></div>
               </div>
 
               <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-braces-asterisk"></i> Browser</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['browser']); ?></div>
+                <div class="col-lg-4 col-md-4 label"><i class="bi bi-person-rolodex"></i> Role</div>
+                <div class="col-lg-8 col-md-8"><?= $adminData['role']; ?></div>
               </div>
 
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-cpu"></i> Operating System</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['os']); ?></div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-motherboard"></i> Device Type</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['deviceType']); ?></div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-geo-alt"></i> Latitude</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['latitude']); ?></div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-geo-alt-fill"></i> Longitude</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['longitude']); ?></div>
-              </div>
-
-                            <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-crosshair"></i> City</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['city']); ?></div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-geo"></i> Region</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['region']); ?></div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-pin-map"></i> Country</div>
-                <div class="col-lg-8 col-md-8"><?= $so->decrypt($row['country']); ?></div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-universal-access-circle"></i> Access Status</div>
-                <div class="col-lg-8 col-md-8">
-                    <?php
-                      if($row['status'] == 1){
-                        echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Activated</span>';
-                      }elseif($row['status'] == 2){
-                        echo '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle"></i> Restricted</span>';
-                      }elseif($row['status'] == 0){
-                         echo '<span class="badge bg-warning fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>';
-                      }else{
-                        echo '<span class="badge bg-secondary text-white fs-6"><i class="bi bi-recycle"></i> Archieved</span>';
-                      }
-                    ?>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 label"><i class="bi bi-universal-access-circle"></i> Access Status</div>
+                    <div class="col-lg-8 col-md-8">
+                        <?php
+                            switch ($adminData['status']) {
+                                case 1:
+                                    echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Verified</span>';
+                                    break;
+                                case 2:
+                                    echo '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle"></i> Restricted</span>';
+                                    break;
+                                case 0:
+                                    echo '<span class="badge bg-warning fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>';
+                                    break;
+                                default:
+                                    echo '<span class="badge bg-secondary fs-6"><i class="bi bi-recycle"></i> Archived</span>';
+                                    break;
+                            }
+                        ?>
+                    </div>
                 </div>
-              </div>
-              <?php
-                  }} else {
-                    echo '<script> alert("Invalid Token!"); window.location="manageuser.php"; </script>';
-                }
-              }
-              ?>
+            <?php else: ?>
+                <p class="text-danger">User not found or invalid token.</p>
+            <?php endif; ?>
+
             </div>
           </div>
         </div>
-        <div class="card-footer bg-secondary">
+        <div class="card-footer bg-primary-subtle">
 
         </div>
       </div>
