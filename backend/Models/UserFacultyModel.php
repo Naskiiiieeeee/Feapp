@@ -54,7 +54,13 @@ class UserFaculty extends BaseModel {
     public function getByEmail($email){
         $stmt = $this->db->prepare("SELECT * FROM `endusers` WHERE `email` = ? AND `status` = 1 ");
         $stmt->execute([$email]);
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getByRole(){
+        $stmt = $this->db->prepare("SELECT * FROM `endusers` WHERE `role` = 'Faculty' AND `status` = 1 ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

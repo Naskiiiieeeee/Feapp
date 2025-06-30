@@ -116,15 +116,15 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
     <li class="nav-heading">Evaluation Status</li>
-      <li class="nav-item <?= $current_page=='dashboard' ? 'active' : null ?>" >
+      <li class="nav-item <?= $current_page=='dashboardstudent' ? 'active' : null ?>" >
         <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/student_users/dashboardstudent">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
       <li class="nav-heading">Evaluation Panel</li>
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item <?= $current_page=='FacultyViewList' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/student_users/FacultyViewList">
           <i class="bi bi-file-break"></i>
           <span>Add Response</span>
         </a>

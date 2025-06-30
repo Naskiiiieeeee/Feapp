@@ -35,7 +35,11 @@ class UserFacultyViewModel {
     }
 
     public function getUserEmail($email) {
-    return $this->model->getByEmail($email);
-}
+        return $this->model->getByEmail($email);
+    }
+
+    public function getFacultyInfo(){
+        return $this->model->getByRole();
+    }
 
 }
