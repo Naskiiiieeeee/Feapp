@@ -75,43 +75,32 @@
           <span>Dashboard</span>
         </a>
       </li>
-      <li class="nav-heading">Users Account</li>
+      <li class="nav-heading">Evaluation Reports</li>
       <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
         <a class="nav-link collapsed" href="#">
-          <i class="bi-people"></i>
-          <span>Manage Administrator Account</span>
+          <i class="bi bi-journal-text"></i>
+          <span>View Student Evaluation</span>
         </a>
       </li>
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi-people"></i>
-          <span>Manage Faculty Account</span>
-        </a>
-      </li>
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
-          <i class="bi-people"></i>
-          <span>Manage Student Account</span>
-        </a>
-      </li>
+
       <li class="nav-heading">AI Recommender</li>
       <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
         <a class="nav-link collapsed" href="#">
-          <i class="bi bi-app-indicator"></i>
-          <span>Response Validation</span>
+          <i class="bi bi-filetype-ai"></i>
+          <span>System Recommendation</span>
         </a>
       </li>
-      <li class="nav-heading">Reports</li>
+      <li class="nav-heading">System Reports</li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-          <i class="bi-file-earmark-ruled"></i>
-          <span>System Reports</span>
+          <i class="bi bi-file-earmark-bar-graph"></i>
+          <span>Overall Reports</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-          <i class="bi bi-gear"></i>
-          <span>Export Files</span>
+          <i class="bi bi-file-earmark-lock"></i>
+          <span>Print Evaluation Result</span>
         </a>
       </li>
       <li class="nav-heading">User Account</li>
