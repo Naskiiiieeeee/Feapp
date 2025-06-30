@@ -39,4 +39,10 @@ class UserStudentModel extends BaseModel{
         return $stmt->fetch();
     }
 
+    public function getUserByEmail($email) {
+        $stmt = $this->db->prepare("SELECT * FROM `student_info` WHERE `student_email` = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
