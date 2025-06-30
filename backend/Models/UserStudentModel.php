@@ -1,0 +1,42 @@
+<?php
+require_once __DIR__ . '/../Core/BaseModel.php';
+
+class UserStudentModel extends BaseModel{
+        public function countAllStudent() {
+        $query = "SELECT COUNT(*) as total_records FROM `student_info` WHERE `role` = 'Student'";
+        $stmt = $this->db->query($query);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_records'] ?? 0;
+    }
+
+    public function getStudentPaginated($offset, $limit) {
+        $query = "SELECT * FROM `student_info` WHERE `role` = 'Faculty' ORDER BY `si_id` DESC LIMIT :offset, :limit";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteStudent($id) {
+        $stmt = $this->db->prepare("DELETE FROM `student_info` WHERE `si_id` = ?");
+        return $stmt->execute([$id]);
+    }
+
+    public function updateStatus($id, $status) {
+        $stmt = $this->db->prepare("UPDATE `student_info` SET `status` = ? WHERE `si_id` = ?");
+        return $stmt->execute([$status, $id]);
+    }
+
+    public function createNewStudent($email, $studentNo, $fullname, $section, $yearLvl, $role){
+        $query = "INSERT INTO `student_info`(`student_email`, `student_no`, `student_name`, `student_section`, `student_year`, `role`) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([$email, $studentNo, $fullname, $section, $yearLvl, $role]);
+    }
+    public function getByEmail($email){
+        $stmt = $this->db->prepare("SELECT * FROM `student_info` WHERE `student_email` = ? AND `status` = 1 ");
+        $stmt->execute([$email]);
+        return $stmt->fetch();
+    }
+
+}

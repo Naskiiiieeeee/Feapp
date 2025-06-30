@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../backend/ViewModels/AuthViewModel.php';
+require_once '../backend/ViewModels/AuthVModel.php';
 header("Content-Type: application/json");
 
 $authVM = new AuthViewModel();
@@ -12,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnLogin'])) {
     $result = $authVM->login($email, $password);
 
     if ($result) {
-        $_SESSION['email'] = $result['user']['email'];
-        $_SESSION['fullname'] = $result['user']['fullname'];
+        $_SESSION['email'] = $result['user']['student_email'];
+        $_SESSION['fullname'] = $result['user']['student_name'];
         $_SESSION['role'] = $result['role'];
-        header("Location: ../frontend/views/Dashboard.php");
+        header("Location: ../frontend/views/student_users/dashboardstudent");
         exit;
     } else {
         echo "Invalid credentials";

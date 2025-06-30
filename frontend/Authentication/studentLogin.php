@@ -48,8 +48,8 @@ define('BASE_URL', '/feapp');
                           <span id="period"> AM </span>
                       </div>
               </div>
-            <div class="title">Faculty Login</div>
-          <form action="<?= BASE_URL ?>/api/api.auth.php" method="POST">
+            <div class="title">Student Login</div>
+          <form action="<?= BASE_URL ?>/api/api.auth2.php" method="POST">
               <div class="input-boxes">
                 <div class="input-box">
                   <i class="fas fa-user"></i>
@@ -63,7 +63,7 @@ define('BASE_URL', '/feapp');
                   <input type="submit" value="Submit" name="btnLogin">
                 </div>
                 <div class="text sign-up-text">Proceed to <label for="flip">Forget Password</label></div>
-                <div class="text sign-up-text">Login as <a href="<?= BASE_URL ?>/frontend/Authentication/studentLogin">Student</a></div>
+                <div class="text sign-up-text">Login as <a href="<?= BASE_URL ?>/frontend/Authentication/login">Faculty</a></div>
               </div>
           </form>
       </div>
