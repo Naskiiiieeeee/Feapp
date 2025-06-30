@@ -19,42 +19,6 @@ include_once __DIR__ . '/../../components/sidebar.php';
 
               <div class="row">
                 <!-- Sales Card -->
-                  <div class="col-xxl-4 col-md-12">
-                      <?php
-                    //   $date = date('Y-m-d');
-                    //   $dash_user = "SELECT * FROM `request_download` WHERE `status` = 0 AND `date` = '$date'";
-                    //   $dash_users = mysqli_query($con, $dash_user);
-                    //   $user_total = 0; 
-                    //   if ($dash_users) {
-                    //       $user_total = mysqli_num_rows($dash_users);
-                    //   }
-
-                    //   $card_glow_class = ''; 
-                    //   if ($user_total > 0) {
-                    //       $card_glow_class = ' pending-glow-card'; 
-                    //   }
-                      ?>
-                      <div class="card info-card sales-card <?= $card_glow_class; ?>">
-                          <div class="card-body">
-                              <h5 class="card-title text-center">Pending Download<span> | Request</span></h5>
-                              <div class="d-flex align-items-center justify-content-center">
-                                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                      <i class="bi bi-cloud-arrow-down"></i>
-                                  </div>
-                                  <div class="ps-3">
-                                      <h6 class="mb-0">
-                                        <!-- <?= $user_total > 0 ? $user_total : 'No Pending Request'; ?> -->
-                                    </h6>
-                                    <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="card-footer bg-secondary-subtle">
-                            <a href="adminmanagerequest" class="btn btn-sm btn-success text-white d-flex align-items-center justify-content-center"><i class="bi bi-eye mx-1"></i> View List</a>
-                          </div>
-                      </div>
-                  </div>
-
                   <div class="col-xxl-4 col-md-6">
                     <div class="card info-card sales-card">
                       <div class="card-body">
@@ -87,7 +51,7 @@ include_once __DIR__ . '/../../components/sidebar.php';
                     <div class="col-xxl-4 col-md-6">
                       <div class="card info-card revenue-card">
                         <div class="card-body">
-                          <h5 class="card-title">Number of <span>| Administrators</span></h5>
+                          <h5 class="card-title">Number of <span>| Response</span></h5>
                           <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                               <i class="bi bi-bookmarks"></i>
@@ -109,16 +73,17 @@ include_once __DIR__ . '/../../components/sidebar.php';
                           </div>
                         </div>
                       </div>
-                    </div><!-- End Revenue Card -->
+                    </div>
+                    <!-- End Revenue Card -->
 
                 <!-- Customers Card -->
                     <div class="col-xxl-4 col-xl-12">
                       <div class="card info-card customers-card">
                         <div class="card-body">
-                          <h5 class="card-title">Registered <span>| Student</span></h5>
+                          <h5 class="card-title">Unevaluate <span>| Faculty</span></h5>
                           <div class="d-flex align-items-center">
                             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                              <i class="bi bi-boxes"></i>
+                              <i class="bi bi-exclamation-triangle"></i>
                             </div>
                             <div class="ps-3">
                               <?php 
@@ -163,7 +128,7 @@ include_once __DIR__ . '/../../components/sidebar.php';
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title">User Response <span>/Analytics</span></h5>
+                      <h5 class="card-title">Student Response <span>/Analytics</span></h5>
                       <div id="deviceAnalyticsChart" style="min-height: 400px;"></div>
 
                       <script>
@@ -212,33 +177,6 @@ include_once __DIR__ . '/../../components/sidebar.php';
                     </div>
                   </div>
                 </div>
-
-                <?php
-                //   $dates = [];
-                //   $registered = [];
-                //   $dataReadings = [];
-
-                //   for ($i = 6; $i >= 0; $i--) {
-                //       $date = date('Y-m-d', strtotime("-$i days"));
-                      
-                //       $query = "SELECT COUNT(*) AS total_reg FROM `preregistration` WHERE DATE(dateSubmitted) = '$date'";
-                //       $result = mysqli_query($con, $query);
-                //       $data = mysqli_fetch_assoc($result);
-                //       $reg_count = $data['total_reg'] ?? 0;
-                //       $registered[] = $reg_count;
-                      
-                //       $dates[] = date('Y-m-d\TH:i:s.000\Z', strtotime($date));
-                //   }
-                ?>
-              <!-- Reports -->
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Registration <span>/Reports</span></h5>
-                            <div id="reportChart"></div>
-                        </div>
-                    </div>
-                </div>
               </div>
         </div>
     <!-- End Left side columns -->
@@ -250,17 +188,17 @@ include_once __DIR__ . '/../../components/sidebar.php';
                   <h5 class="card-title">Data Security<span>| News</span></h5>
                   <div class="news">
                       <div class="post-item clearfix">
-                        <img src="../src/assets/img/prosec.jpg" alt="">
+                        <img src="<?= BASE_URL ?>/frontend/src/assets/img/prosec.jpg" alt="">
                         <h4><a href="#">Data Encryption</a></h4>
                         <p>Maintain security of the system through timely security updates, fixes, and patches to ensure data privacy and timely responses to threats. Maintain playbooks with guidelines for decommissioning. Establish standardized third-party governance and ensure that stakeholders meet the required standards and requirements.</p>
                       </div>
                       <div class="post-item clearfix">
-                        <img src="../src/assets/img/prosales.png" alt="">
+                        <img src="<?= BASE_URL ?>/frontend/src/assets/img/prosales.png" alt="">
                         <h4><a href="#">Realtime Fetching</a></h4>
                         <p>Realtime fetching of results inevitably lead to greater profits. You need to increase your monthly sales volume, for example, to achieve greater profits. Profit margins are the most important barometer of a company's health, according to "Bloomberg Businessweek" online.</p>
                       </div>
                       <div class="post-item clearfix">
-                        <img src="../src/assets/img/prostock.jpg" alt="">
+                        <img src="<?= BASE_URL ?>/frontend/src/assets/img/prostock.jpg" alt="">
                         <h4><a href="#">Data Storage</a></h4>
                         <p>Investment product is the umbrella term for all the stocks, bonds, options, derivatives and other financial instruments that people put money into in hopes of earning profits.</p>
                       </div>
@@ -289,59 +227,6 @@ include_once __DIR__ . '/../../components/sidebar.php';
                 {
                     name: 'Logout',
                     data: logout
-                }
-            ],
-            chart: {
-                height: 350,
-                type: 'area',
-                toolbar: {
-                    show: false
-                }
-            },
-            markers: {
-                size: 4
-            },
-            colors: ['#E57068', '#2eca6a'],
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.3,
-                    opacityTo: 0.4,
-                    stops: [0, 90, 100]
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth',
-                width: 2
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: dates
-            },
-            tooltip: {
-                x: {
-                    format: 'dd/MM/yy HH:mm'
-                }
-            }
-        }).render();
-    });
-</script>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const dates = <?php echo json_encode($dates); ?>;
-        const registered = <?php echo json_encode($registered); ?>;
-
-        new ApexCharts(document.querySelector("#reportChart"), {
-            series: [
-                {
-                    name: 'Login',
-                    data: registered
                 }
             ],
             chart: {
