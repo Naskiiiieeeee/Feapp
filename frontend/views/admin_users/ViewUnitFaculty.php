@@ -116,7 +116,7 @@ if (isset($_GET['token'])) {
                     </div>
                 </div>
             <?php else: ?>
-                <p class="text-danger">User not found or invalid token.</p>
+                <p class="text-danger">User information not found or invalid token.</p>
             <?php endif; ?>
 
             </div>
