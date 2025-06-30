@@ -30,8 +30,6 @@ class UserAdminModel extends BaseModel {
                 unlink($photoPath);
             }
         }
-
-        // Step 4: Delete the user from the database
         $stmt = $this->db->prepare("DELETE FROM `endusers` WHERE `eu_id` = ?");
         return $stmt->execute([$id]);
     }

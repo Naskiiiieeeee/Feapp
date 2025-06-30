@@ -18,7 +18,7 @@
               //  echo $fullname;
                ?>
             </span>
-          </a><!-- End Profile Iamge Icon -->
+          </a>
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             

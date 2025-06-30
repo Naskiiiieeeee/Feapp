@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])) {
     exit;
 }
 
+// ADD NEW ADMIN
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile'])) {
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];
@@ -41,10 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile']
     $code = uniqid();
 
     $photo = $_FILES['photo'];
-    $uploadDir = __DIR__ . '/../uploads/admin/'; // absolute path
+    $uploadDir = __DIR__ . '/../uploads/admin/'; 
     $fileName = uniqid() . '_' . basename($photo['name']);
     $targetFile = $uploadDir . $fileName;
-    $relativePath = 'uploads/admin/' . $fileName; // relative path for database
+    $relativePath = 'uploads/admin/' . $fileName; 
 
     if (!file_exists($uploadDir)) {
         mkdir($uploadDir, 0777, true);

@@ -61,7 +61,7 @@
           <span>Export Files</span>
         </a>
       </li>
-      <!-- End Profile Page Nav -->
+      
       <li class="nav-heading">User Account</li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="profile">
@@ -69,6 +69,7 @@
           <span>Profile</span>
         </a>
       </li>
+
     </ul>
 
   </aside>
