@@ -45,4 +45,10 @@ class UserFaculty extends BaseModel {
         return $stmt->execute([$path, $fullname, $email, $password, $dep, $role, $code]);
     }
 
+    public function getFacultyByCode($code) {
+        $stmt = $this->db->prepare("SELECT * FROM `endusers` WHERE `code` = ?");
+        $stmt->execute([$code]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
