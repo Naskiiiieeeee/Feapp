@@ -31,10 +31,21 @@
             </li>
 
             <li>
+              <?php 
+              if($role == "Student"){
+              ?>
+              <a class="dropdown-item d-flex align-items-center" href="<?= BASE_URL ?>/frontend/views/student_users/profileStudent">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+              <?php 
+              }else{
+              ?>
               <a class="dropdown-item d-flex align-items-center" href="<?= BASE_URL ?>/frontend/views/profile">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
+              <?php } ?>
             </li>
             <li>
               <hr class="dropdown-divider">
