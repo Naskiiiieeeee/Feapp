@@ -286,6 +286,59 @@ if (isset($_GET['token'])) {
                 </div>
               </div>
 
+              <hr> 
+              <div class="row">
+                <div class="col-lg-12 col-md-6 label">4. Preparedness and Organization</div>
+              </div>  
+                            
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher is well-prepared for each class, with clear lesson plans and materials.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_1" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_1" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_1" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_1" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_1" id="" value="1"> 1
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher effectively manages class time and transitions smoothly between activities.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_2" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_2" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_2" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_2" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_2" id="" value="1"> 1
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher is consistently well-prepared and effectively delivers lessons in both synchronous and asynchronous formats, ensuring clarity and continuity of learning.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_3" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_3" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_3" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_3" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_3" id="" value="1"> 1
+                </div>
+              </div>
+              
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher has a well-prepared and organized syllabus, which is closely followed during class lessons to ensure a structured and cohesive learning experience.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_4" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_4" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_4" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_4" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section1_q4_4" id="" value="1"> 1
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
