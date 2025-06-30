@@ -30,4 +30,8 @@ class UserAdminViewModel {
         return $this->model->createNewAdmin($path, $fullname, $email, $password, $dep, $role, $code);
     }
 
+    public function getAdminByCode($code) {
+        return $this->model->getAdminByCode($code);
+    }
+
 }
