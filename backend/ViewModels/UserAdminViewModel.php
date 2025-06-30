@@ -26,4 +26,8 @@ class UserAdminViewModel {
         return $this->model->updateStatus($id, $status);
     }
 
+    public function addNewAdmin($path, $fullname, $email, $password, $dep, $role, $code){
+        return $this->model->createNewAdmin($path, $fullname, $email, $password, $dep, $role, $code);
+    }
+
 }

@@ -21,7 +21,7 @@ $total_pages = $vm->getTotalPages($limit);
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageAdminView">Manage Users</a></li>
-        <li class="breadcrumb-item active"><a href="Adduser">Add New Admin User</a></li>
+        <li class="breadcrumb-item active"><a href="AddNewAdminUser">Add New Admin User</a></li>
       </ol>
     </nav>
   </div>
@@ -186,6 +186,7 @@ include_once __DIR__ . '/../../components/footscript.php';
 
 <!-- Delete Button Logic -->
 <script>
+  const BASE_URL = "<?= BASE_URL ?>";
   $(document).ready(function () {
     $(document).on('click', '.deleteuser', function () {
       var id = $(this).attr('id');
@@ -209,7 +210,7 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: '../../api/api.adminuser.php',
+              url: BASE_URL + '/api/api.adminuser.php',
               type: 'POST',
               data: { deleteUser: id },
               success: function (data) {
@@ -236,56 +237,39 @@ include_once __DIR__ . '/../../components/footscript.php';
     });
   });
 
-  $('#updateForm').submit(function(e){
-    e.preventDefault();
-    $.ajax({
-      url: '../../api/api.adminuser.php',
-      type: 'POST',
-      data: $(this).serialize(),
-      dataType: 'json',
-      success(data) {
-        if (data === 'updated') {
-          Swal.fire({ icon:'success', timer:1500, showConfirmButton:false })
-               .then(()=>{
-                 $('#verifyModal').modal('hide');
-                 location.reload();
-               });
-        } else {
-          Swal.fire('Error','Failed to update','error');
-        }
+$('#updateForm').submit(function(e){
+  e.preventDefault();
+
+  var formData = new FormData(this);
+  formData.append("btnUpdateAccess", true); 
+
+  $.ajax({
+    url: BASE_URL + '/api/api.adminuser.php',
+    type: 'POST',
+    data: formData,
+    contentType: false,       
+    processData: false,        
+    dataType: 'json',
+    success(data) {
+      if (data === "updated") {
+        Swal.fire({
+          icon: 'success',
+          title: 'Admin Updated',
+          text: 'Admin information successfully updated!',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          $('#verifyModal').modal('hide');
+          location.reload();
+        });
+      } else {
+        Swal.fire('Error', 'Failed to update', "error");
       }
-    });
+    },
+    error() {
+      Swal.fire('Error', 'Server error. Try again.', "error");
+    }
   });
+});
 
 </script>
-
-<!-- <script>
-  $(document).ready(function () {
-    $('#updateForm').submit(function (e) {
-      e.preventDefault();
-      $.ajax({
-        url: '../../api/api.adminuser.php',
-        type: 'POST',
-        data: $(this).serialize(),
-        dataType: 'json', // Let jQuery parse it for you
-        success: function (response) {
-          if (response === "updated") {
-            Swal.fire({
-              icon: 'success',
-              title: 'Success',
-              text: 'User access updated!',
-              timer: 2000,
-              showConfirmButton: false
-            }).then(() => {
-              $('#verifyModal').modal('hide');
-              window.location.reload();
-            });
-          } else {
-            Swal.fire("Error", "Failed to update access", "error");
-          }
-        }
-      });
-    });
-  });
-</script> -->
-

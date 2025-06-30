@@ -31,3 +31,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])) {
     }
     exit;
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile'])) {
+    $fullname = $_POST['fullname'];
+    $email = $_POST['email'];
+    $department = $_POST['department'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = "Admin";
+    $code = uniqid();
+
+    $photo = $_FILES['photo'];
+    $uploadDir = __DIR__ . '/../uploads/admin/'; // absolute path
+    $fileName = uniqid() . '_' . basename($photo['name']);
+    $targetFile = $uploadDir . $fileName;
+    $relativePath = 'uploads/admin/' . $fileName; // relative path for database
+
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    if (move_uploaded_file($photo['tmp_name'], $targetFile)) {
+        $result = $vm->addNewAdmin($relativePath, $fullname, $email, $password, $department, $role, $code);
+        echo json_encode($result ? "added" : "error");
+    } else {
+        echo json_encode("error");
+    }
+    exit;
+}

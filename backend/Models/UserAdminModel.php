@@ -20,6 +20,18 @@ class UserAdminModel extends BaseModel {
     }
 
     public function deleteAdmin($id) {
+        $stmt = $this->db->prepare("SELECT `photo` FROM `endusers` WHERE `eu_id` = ?");
+        $stmt->execute([$id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && !empty($user['photo'])) {
+            $photoPath = __DIR__ . '/../../' . $user['photo'];
+            if (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
+
+        // Step 4: Delete the user from the database
         $stmt = $this->db->prepare("DELETE FROM `endusers` WHERE `eu_id` = ?");
         return $stmt->execute([$id]);
     }
@@ -27,6 +39,12 @@ class UserAdminModel extends BaseModel {
     public function updateStatus($id, $status) {
         $stmt = $this->db->prepare("UPDATE `endusers` SET `status` = ? WHERE `code` = ?");
         return $stmt->execute([$status, $id]);
+    }
+
+    public function createNewAdmin($path, $fullname, $email, $password, $dep, $role, $code){
+        $query = "INSERT INTO `endusers`(`photo`, `fullname`, `email`, `password`, `department`, `role`, `code`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([$path, $fullname, $email, $password, $dep, $role, $code]);
     }
 
 }
