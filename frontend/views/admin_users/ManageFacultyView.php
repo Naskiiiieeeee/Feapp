@@ -1,27 +1,27 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/UserAdminViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/UserFacultyViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
-$vm = new UserAdminViewModel();
+$vm = new UserFacultyViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$adminUsers = $vm->getPaginatedAdmins($page_no, $limit);
+$facultyUsers = $vm->getPaginatedFaculty($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
 ?>
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Manage Administrator's Information</h1>
+    <h1>Manage Faculties Information</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="ManageAdminView">Manage Users</a></li>
-        <li class="breadcrumb-item active"><a href="AddNewAdminUser">Add New Admin User</a></li>
+        <li class="breadcrumb-item"><a href="ManageFacultyView">Manage Faculty</a></li>
+        <li class="breadcrumb-item active"><a href="AddNewFacultyUser">Add New Faculty User</a></li>
       </ol>
     </nav>
   </div>
@@ -46,8 +46,8 @@ $total_pages = $vm->getTotalPages($limit);
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($adminUsers)): ?>
-                  <?php foreach ($adminUsers as $row): ?>
+                <?php if (!empty($facultyUsers)): ?>
+                  <?php foreach ($facultyUsers as $row): ?>
                     <?php $token = base64_encode($row['code'] . '|' . $row['code']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
@@ -116,7 +116,6 @@ $total_pages = $vm->getTotalPages($limit);
               </ul>
             </nav>
           </div>
-
         </div>
       </div>
     </div>
@@ -210,7 +209,7 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.adminuser.php',
+              url: BASE_URL + '/api/api.facultyuser.php',
               type: 'POST',
               data: { deleteUser: id },
               success: function (data) {
@@ -244,7 +243,7 @@ $('#updateForm').submit(function(e){
   formData.append("btnUpdateAccess", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.adminuser.php',
+    url: BASE_URL + '/api/api.facultyuser.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -254,8 +253,8 @@ $('#updateForm').submit(function(e){
       if (data === "updated") {
         Swal.fire({
           icon: 'success',
-          title: 'Admin Updated',
-          text: 'Admin information successfully updated!',
+          title: 'Faculty Updated',
+          text: 'Faculty information successfully updated!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {

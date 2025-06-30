@@ -18,15 +18,15 @@
         </a>
       </li>
       <li class="nav-heading">Users Account</li>
-      <li class="nav-item <?= $current_page=='ManageAdminView' || $current_page=='#'  ? 'active' : null ?>">
+      <li class="nav-item <?= $current_page=='ManageAdminView' || $current_page=='AddNewAdminUser'  ? 'active' : null ?>">
         <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/ManageAdminView">
           <i class="bi-people"></i>
           <span>Manage Administrator Account</span>
         </a>
       </li>
 
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item <?= $current_page=='ManageFacultyView' || $current_page=='AddNewFacultyUser'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/ManageFacultyView">
           <i class="bi-people"></i>
           <span>Manage Faculty Account</span>
         </a>
