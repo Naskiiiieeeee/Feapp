@@ -71,7 +71,7 @@ $total_pages = $vm->getTotalPages($limit);
                         ?>
                       </td>
                       <td>
-                        <a href="adminviewunitUser?token=<?= urlencode($token); ?>" title="View">
+                        <a href="ViewUnitAdmin?token=<?= urlencode($token); ?>" title="View">
                           <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>
                         </a>
                         <button type="button"
