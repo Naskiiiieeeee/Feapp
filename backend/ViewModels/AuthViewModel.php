@@ -1,27 +1,21 @@
 <?php
-require_once __DIR__ . '/UserAdminViewModel.php';
-require_once __DIR__ . '/UserFacultyViewModel.php';
+require_once __DIR__ . '/../Models/UserModel.php';
 
 class AuthViewModel {
-    private $adminVM;
-    private $facultyVM;
+    private $model;
 
     public function __construct() {
-        $this->adminVM = new UserAdminViewModel();
-        $this->facultyVM = new UserFacultyViewModel();
+        $this->model = new UserModel();
     }
 
     public function login($email, $password) {
-        // Try Admin
-        $admin = $this->adminVM->getUserEmail($email);
-        if ($admin && password_verify($password, $admin['password'])) {
-            return ['role' => 'Admin', 'user' => $admin];
-        }
+        $user = $this->model->getUserByEmail($email);
 
-        // Try Faculty
-        $faculty = $this->facultyVM->getUserEmail($email);
-        if ($faculty && password_verify($password, $faculty['password'])) {
-            return ['role' => 'Faculty', 'user' => $faculty];
+        if ($user && password_verify($password, $user['password'])) {
+            return [
+                'user' => $user,
+                'role' => $user['role']
+            ];
         }
 
         return false;
