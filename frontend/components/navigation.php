@@ -31,7 +31,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="profile">
+              <a class="dropdown-item d-flex align-items-center" href="<?= BASE_URL ?>/frontend/views/profile">
                 <i class="bi bi-person"></i>
                 <span>My Profile</span>
               </a>
