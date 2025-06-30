@@ -261,6 +261,30 @@ if (isset($_GET['token'])) {
                     <input type="radio" class="mx-4 mt-3" name="section1_q3_2" id="" value="1"> 1
                 </div>
               </div>
+                                          
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher demonstrates flexibility and adapts lesson plans to meet students' needs or changing situations.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_3" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_3" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_3" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_3" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_3" id="" value="1"> 1
+                </div>
+              </div>
+              
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher maintains being a good role model to students by adhering to the rules and regulations of the school.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_4" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_4" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_4" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_4" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section1_q3_4" id="" value="1"> 1
+                </div>
+              </div>
 
             </div>
           </div>
