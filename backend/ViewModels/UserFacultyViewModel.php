@@ -33,4 +33,9 @@ class UserFacultyViewModel {
     public function getFacultyByCode($code) {
         return $this->model->getFacultyByCode($code);
     }
+
+    public function getUserEmail($email) {
+    return $this->model->getByEmail($email);
+}
+
 }

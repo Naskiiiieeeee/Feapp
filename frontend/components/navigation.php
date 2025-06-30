@@ -14,9 +14,7 @@
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="<?= BASE_URL ?>/frontend/src/img/clientlogo.jpg" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">
-              <?php 
-              //  echo $fullname;
-               ?>
+              <?= htmlspecialchars($fullname) ?>
             </span>
           </a>
 
@@ -24,9 +22,7 @@
             
             <li class="dropdown-header">
                   <h6>
-                    <?php
-                    //  echo $role;
-                    ?>
+                    <?= htmlspecialchars( $role) ?>
                   </h6>
                 <span>Panel</span>
             </li>
@@ -48,7 +44,7 @@
               <button class="dropdown-item d-flex align-items-center">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>
-                  <a href="logout.php" class="text-dark">Sign Out</a>
+                  <a href="<?= BASE_URL ?>/frontend/Authentication/logout" class="text-dark">Sign Out</a>
                 </span>
               </button>
             </li>

@@ -6,3 +6,6 @@ RewriteCond %{REQUEST_FILENAME} !-d
 
 # Rewrite /folder/file to /folder/file.php
 RewriteRule ^(.+)$ $1.php [L]
+
+# Custom 404 page
+ErrorDocument 404 /feapp/frontend/Authentication/404.php

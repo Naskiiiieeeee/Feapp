@@ -34,4 +34,8 @@ class UserAdminViewModel {
         return $this->model->getAdminByCode($code);
     }
 
+    public function getUserEmail($email){
+        return $this->model->getByEmail($email);
+    }
+
 }

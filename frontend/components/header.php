@@ -1,16 +1,14 @@
 <?php 
-  // session_start();
-  // if (!isset($_SESSION['email']) || !isset($_SESSION['fullname']) || !isset($_SESSION['role'])) {
-  //     '<script>alert("Unauthorized access!"); window.location = "index.php";</script>';
-  //     exit;
-  // }
-  // $username = $_SESSION['email'];
-  // $fullname = $_SESSION['fullname'];
-  // $role = $_SESSION['role'];
-
-  define('BASE_URL', '/feapp');
+if (!isset($_SESSION)) session_start();
+define('BASE_URL', '/feapp');
+if (!isset($_SESSION['email']) || !isset($_SESSION['fullname']) || !isset($_SESSION['role'])) {
+    header("Location: " . BASE_URL . "/frontend/Authentication/404.php");
+    exit;
+}
+$fullname = $_SESSION['fullname'];
+$role = $_SESSION['role'];
+$email = $_SESSION['email'];
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
