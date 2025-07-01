@@ -6,6 +6,7 @@ include_once __DIR__ . '/../../components/sidebar.php';
 
 $vm = new UserFacultyViewModel();
 $facultyList = null;
+$facultyData = null;
 
 if (isset($_GET['token'])) {
     $decoded = base64_decode($_GET['token']);
@@ -17,7 +18,7 @@ if (isset($_GET['token'])) {
         echo '<script>alert("Invalid token!"); window.location="FacultyViewList";</script>';
         exit;
     }
-}
+  }
 ?>
 
 <main id="main" class="main">
@@ -102,6 +103,7 @@ if (isset($_GET['token'])) {
 
     <div class="col-xl-12">
       <div class="card">
+        <form action="submitEvaluation.php" method="post" id="evaluationForm">
         <div class="card-body pt-3">
           <ul class="nav nav-tabs nav-tabs-bordered">
             <li class="nav-item">
@@ -606,7 +608,8 @@ if (isset($_GET['token'])) {
           </div>
         </div>
         <div class="card-footer bg-primary-subtle">
-
+          <button type="submit" class="btn btn-primary mt-4">Submit Evaluation</button>
+        </form>
         </div>
       </div>
     </div>
@@ -619,3 +622,79 @@ if (isset($_GET['token'])) {
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
+
+<!-- <script>
+// 1. Get the token from PHP (safely pass to JS)
+const token = "<?php echo isset($_GET['token']) ? $_GET['token'] : ''; ?>";
+
+// 2. Unique key for this faculty evaluation
+const storageKey = `faculty_evaluation_${token}`;
+
+// 3. Load saved answers on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const savedAnswers = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+  Object.keys(savedAnswers).forEach(name => {
+    const radio = document.querySelector(`input[name="${name}"][value="${savedAnswers[name]}"]`);
+    if (radio) radio.checked = true;
+  });
+});
+
+// 4. Save to localStorage every time a radio button changes
+document.querySelectorAll('input[type=radio]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const savedAnswers = JSON.parse(localStorage.getItem(storageKey)) || {};
+    savedAnswers[radio.name] = radio.value;
+    localStorage.setItem(storageKey, JSON.stringify(savedAnswers));
+  });
+});
+
+// 5. Clear answers on form submit (optional)
+const form = document.getElementById('evaluationForm');
+if (form) {
+  form.addEventListener('submit', () => {
+    localStorage.removeItem(storageKey);
+  });
+}
+</script> -->
+
+<script>
+const token = <?php echo json_encode($_GET['token'] ?? ''); ?>;
+const storageKey = `faculty_evaluation_${token}`;
+
+// Restore saved values (radio + textarea) on page load
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+  // Prefill radios
+  Object.entries(saved).forEach(([name, value]) => {
+    const input = document.querySelector(`[name="${name}"]`);
+    
+    if (input) {
+      if (input.type === 'radio') {
+        const selectedRadio = document.querySelector(`input[name="${name}"][value="${value}"]`);
+        if (selectedRadio) selectedRadio.checked = true;
+      } else if (input.tagName === 'TEXTAREA') {
+        input.value = value;
+      }
+    }
+  });
+});
+
+// Save radio and textarea changes to localStorage
+document.querySelectorAll('input[type=radio], textarea').forEach(input => {
+  input.addEventListener('input', () => {
+    const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
+    saved[input.name] = input.value;
+    localStorage.setItem(storageKey, JSON.stringify(saved));
+  });
+});
+
+// Optional: clear localStorage on form submission
+const form = document.getElementById('evaluationForm');
+if (form) {
+  form.addEventListener('submit', () => {
+    localStorage.removeItem(storageKey);
+  });
+}
+</script>
