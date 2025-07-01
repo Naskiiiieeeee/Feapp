@@ -339,6 +339,269 @@ if (isset($_GET['token'])) {
                 </div>
               </div>
 
+              <hr> 
+
+              <div class="row">
+                <div class="col-lg-12 col-md-6">
+                    <h5 class="card-title"> Section 2: Core Values and Personality Traits</h5>
+                </div>
+              </div>
+              <hr> 
+
+              <div class="row">
+                <div class="col-lg-12 col-md-6 label">1. Professionalism and Integrity</div>
+              </div>
+                            
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher shows dedication to their role and takes responsibility for students’ learning.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_1" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_1" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_1" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_1" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_1" id="" value="1"> 1
+                </div>
+              </div>
+                                          
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher upholds high ethical and moral values by practicing honesty and integrity inside and outside the classroom.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_2" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_2" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_2" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_2" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_2" id="" value="1"> 1
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher maintains good grooming by wearing appropriate attire for a teacher?</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_3" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_3" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_3" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_3" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_3" id="" value="1"> 1
+                </div>
+              </div>
+              
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher observes punctuality in attending classes regularly.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_4" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_4" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_4" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_4" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q1_4" id="" value="1"> 1
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-12 col-md-6 label">2. Respect and Fairness</div>
+              </div>
+                            
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher treats all students fairly, without favoritism, regardless of age, gender, beliefs, religion, attitudes, and personality.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_1" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_1" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_1" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_1" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_1" id="" value="1"> 1
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher respects diverse backgrounds, opinions, and perspectives in the classroom.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_2" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_2" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_2" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_2" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_2" id="" value="1"> 1
+                </div>
+              </div>
+              
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher treats all students with respect and kindness, creating a safe learning space.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_3" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_3" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_3" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_3" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_3" id="" value="1"> 1
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher respects and values the opinions and ideas of all students.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_4" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_4" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_4" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_4" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q2_4" id="" value="1"> 1
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-12 col-md-6 label">3. Approachability and Support</div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher is approachable and available to answer questions or provide additional help.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_1" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_1" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_1" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_1" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_1" id="" value="1"> 1
+                </div>
+              </div>
+              
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher demonstrates empathy and understanding toward students’ needs and challenges.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_2" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_2" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_2" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_2" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_2" id="" value="1"> 1
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher shows genuine concern for students’ learning and well-being.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_3" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_3" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_3" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_3" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_3" id="" value="1"> 1
+                </div>
+              </div>
+              
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher is patient and understanding with students who need extra help.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_4" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_4" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_4" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_4" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q3_4" id="" value="1"> 1
+                </div>
+              </div>
+
+              <hr>
+              <div class="row">
+                <div class="col-lg-12 col-md-6 label">4. Enthusiasm and Motivation</div>
+              </div>
+                            
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher displays enthusiasm for the subject and makes learning enjoyable.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_1" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_1" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_1" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_1" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_1" id="" value="1"> 1
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher motivates students to do their best and fosters a love for learning.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_2" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_2" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_2" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_2" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_2" id="" value="1"> 1
+                </div>
+              </div>
+              
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher connects lesson content to real-life situations or applications.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_3" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_3" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_3" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_3" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_3" id="" value="1"> 1
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	The teacher creates a positive learning atmosphere that motivates students to do their best.</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_4" id="" value="5"> 5
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_4" id="" value="4"> 4
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_4" id="" value="3"> 3
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_4" id="" value="2"> 2
+                    <input type="radio" class="mx-4 mt-3" name="section2_q4_4" id="" value="1"> 1
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-lg-12 col-md-6">
+                    <h5 class="card-title">Overall Evaluation</h5>
+                </div>
+              </div>
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">•	Overall, how would you rate this teacher?</ul>
+                <div class="col-lg-12 col-md-6 ">
+                    <label for="">Rating:</label>
+                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="5"> Excellent
+                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="4"> Very Good
+                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="3"> Good
+                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="2"> Fair
+                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="1"> Poor
+                </div>
+              </div>
+              <hr> 
+
+              <div class="row">
+                <div class="col-lg-12 col-md-6">
+                    <h5 class="card-title">Open-Ended Feedback:</h5>
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">1.	What do you think are the teacher's strengths?</ul>
+                <div class="col-lg-12 col-md-6 ">
+                  <textarea name="section4_q1" id="" cols="30" class="form-control"></textarea>
+                </div>
+              </div>
+                            
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">2.	In what areas could the teacher improve?</ul>
+                <div class="col-lg-12 col-md-6 ">
+                  <textarea name="section4_q2" id="" cols="30" class="form-control"></textarea>
+                </div>
+              </div>
+
+              <div class="row">
+                <ul class="col-lg-12 col-md-6">3.	Any additional comments:</ul>
+                <div class="col-lg-12 col-md-6 ">
+                  <textarea name="section4_q3" id="" cols="30" class="form-control"></textarea>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
