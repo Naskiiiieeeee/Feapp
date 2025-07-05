@@ -630,10 +630,9 @@ const token = <?php echo json_encode($_GET['token'] ?? ''); ?>;
 const userEmail = <?php echo json_encode($_SESSION['email']); ?>;
 const storageKey = `faculty_evaluation_${userEmail}_${token}`;
 
-// === Restore saved radio + textarea values from localStorage ===
+// Restore saved radios and textareas
 window.addEventListener('DOMContentLoaded', () => {
   const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
-
   Object.entries(saved).forEach(([name, value]) => {
     const input = document.querySelector(`[name="${name}"]`);
     if (input) {
@@ -647,7 +646,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// === Save changes to radio and textarea into localStorage ===
+// Save user input
 document.querySelectorAll('input[type=radio], textarea').forEach(input => {
   input.addEventListener('input', () => {
     const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
@@ -656,51 +655,43 @@ document.querySelectorAll('input[type=radio], textarea').forEach(input => {
   });
 });
 
-// === Calculate average score of radio buttons per section ===
+// Get average per section
 function getAverageScore(sectionPrefix) {
-  let total = 0;
-  let count = 0;
-
+  let total = 0, count = 0;
   document.querySelectorAll(`input[type="radio"]:checked`).forEach(input => {
     if (input.name.startsWith(sectionPrefix)) {
       total += parseInt(input.value);
       count++;
     }
   });
-
   return count ? (total / count).toFixed(2) : 0;
 }
 
-// === Handle form submission ===
+// Handle submit
 $('#evaluationForm').submit(function (e) {
   e.preventDefault();
 
   const formData = new FormData(this);
   formData.append("btnSubmitEvaluation", true);
 
-  const academicAvg = getAverageScore("section1_");   // Section 1 radios
-  const coreValuesAvg = getAverageScore("section2_"); // Section 2 radios
-  const overallScore = getAverageScore("overall_rating");  // Overall rating
+  const academicAvg = getAverageScore("section1_");
+  const coreValuesAvg = getAverageScore("section2_");
+  const overallScore = getAverageScore("overall_rating");
 
-  // Optional: validate if not all answered
   if (parseFloat(academicAvg) === 0 || parseFloat(coreValuesAvg) === 0 || parseFloat(overallScore) === 0) {
     Swal.fire('Incomplete', 'Please answer all required questions.', 'warning');
     return;
   }
 
-  // Textarea feedback
-  const feedback1 = document.querySelector('textarea[name="strengths"]').value;
-  const feedback2 = document.querySelector('textarea[name="improvements"]').value;
-  const feedback3 = document.querySelector('textarea[name="comments"]').value;
-
   formData.append("academic_avg", academicAvg);
   formData.append("core_values_avg", coreValuesAvg);
   formData.append("overall_score", overallScore);
-  formData.append("strengths", feedback1);
-  formData.append("improvements", feedback2);
-  formData.append("comments", feedback3);
+  formData.append("strengths", document.querySelector('textarea[name="strengths"]').value);
+  formData.append("improvements", document.querySelector('textarea[name="improvements"]').value);
+  formData.append("comments", document.querySelector('textarea[name="comments"]').value);
+  formData.append("faculty_token", token); // Important!
 
-  // === Submit to PHP first ===
+  // Step 1: Submit evaluation
   $.ajax({
     url: BASE_URL + '/api/api.setuprecommender.php',
     type: 'POST',
@@ -710,7 +701,7 @@ $('#evaluationForm').submit(function (e) {
     dataType: 'json',
     success: function (response) {
       if (response === "added") {
-        // === Call Flask recommender after successful evaluation ===
+        // Step 2: Ask AI for recommendation
         $.ajax({
           url: 'http://localhost:5000/recommend-training',
           method: 'POST',
@@ -723,29 +714,42 @@ $('#evaluationForm').submit(function (e) {
             professionalism: coreValuesAvg
           }),
           success: function (recommendation) {
+            const aiTraining = recommendation.recommended_training || "None";
+
             Swal.fire({
               icon: 'success',
               title: 'Evaluation Submitted!',
-              html: 'Recommended Training: <b>' + recommendation.recommended_training + '</b>'
+              html: 'Recommended Training: <b>' + aiTraining + '</b>'
             }).then(() => {
-              localStorage.removeItem(storageKey);
-              location.href = 'FacultyViewList';
+              // Step 3: Save recommendation to DB
+              $.ajax({
+                url: BASE_URL + '/api/api.save_recommendation.php',
+                method: 'POST',
+                data: {
+                  student_email: userEmail,
+                  faculty_token: token,
+                  ai_recommendation: aiTraining
+                },
+                success: function () {
+                  localStorage.removeItem(storageKey);
+                  location.href = 'FacultyViewList';
+                }
+              });
             });
           },
           error: function () {
-            Swal.fire('Submitted', 'Evaluation saved, but training recommender failed.', 'warning');
-            localStorage.removeItem(storageKey);
-            location.href = 'FacultyViewList';
+            Swal.fire('AI Error', 'Evaluation saved but failed to get AI recommendation.', 'warning');
           }
         });
+      } else if (response === "already_evaluated") {
+        Swal.fire('Notice', 'You already evaluated this faculty.', 'info');
       } else {
-        Swal.fire('Error', 'Student already evaluated this faculty.', 'error');
+        Swal.fire('Error', 'Something went wrong.', 'error');
       }
     },
     error: function () {
-      Swal.fire('Error', 'Server error. Try again later.', 'error');
+      Swal.fire('Error', 'PHP server error.', 'error');
     }
   });
 });
 </script>
-

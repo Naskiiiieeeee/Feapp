@@ -15,14 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitEvaluation']
     $academic_avg = $_POST['academic_avg'] ?? 0;
     $core_values_avg = $_POST['core_values_avg'] ?? 0;
     $overall_score = $_POST['overall_score'] ?? 0;
-
     $strengths = $_POST['strengths'] ?? '';
     $improvements = $_POST['improvements'] ?? '';
     $comments = $_POST['comments'] ?? '';
 
     if ($code === $salt) {
-        $facultyCode = $code;
-        $faculty_token = $code; 
+        $faculty_token = $token;
 
         $stmt = $conn->prepare("SELECT id FROM faculty_evaluations WHERE student_email = ? AND faculty_token = ?");
         $stmt->execute([$student_email, $faculty_token]);
@@ -31,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitEvaluation']
             echo json_encode("already_evaluated");
             exit;
         }
+
         $insert = $conn->prepare("INSERT INTO faculty_evaluations 
             (student_email, faculty_token, academic_avg, core_values_avg, overall_score, feedback_strengths, feedback_improvements, feedback_comments)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -46,13 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitEvaluation']
             $comments
         ]);
 
-        if ($success) {
-            echo json_encode("added");
-        } else {
-            echo json_encode("error_saving");
-        }
+        echo json_encode($success ? "added" : "error_saving");
     } else {
-        echo json_encode("invalid");
+        echo json_encode("invalid_token");
     }
 } else {
     echo json_encode("invalid_request");
