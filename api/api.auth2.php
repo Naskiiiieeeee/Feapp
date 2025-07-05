@@ -18,6 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnLogin'])) {
         header("Location: ../frontend/views/student_users/dashboardstudent");
         exit;
     } else {
-        echo "Invalid credentials";
+        echo json_encode("error");
     }
 }

@@ -5,6 +5,23 @@ header("Content-Type: application/json");
 
 $authVM = new AuthViewModel();
 
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnLogin'])) {
+//     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+//     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+
+//     $result = $authVM->login($email, $password);
+
+//     if ($result) {
+//         $_SESSION['email'] = $result['user']['email'];
+//         $_SESSION['fullname'] = $result['user']['fullname'];
+//         $_SESSION['role'] = $result['role'];
+//         header("Location: ../frontend/views/Dashboard.php");
+//         exit;
+//     } else {
+//         echo json_encode("error");
+//     }
+// }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnLogin'])) {
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -15,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnLogin'])) {
         $_SESSION['email'] = $result['user']['email'];
         $_SESSION['fullname'] = $result['user']['fullname'];
         $_SESSION['role'] = $result['role'];
-        header("Location: ../frontend/views/Dashboard.php");
-        exit;
+        echo json_encode(["status" => "success"]);
     } else {
-        echo "Invalid credentials";
+        echo json_encode(["status" => "error"]);
     }
+    exit;
 }
