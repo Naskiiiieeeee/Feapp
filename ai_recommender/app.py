@@ -3,9 +3,8 @@ from flask_cors import CORS
 import joblib
 
 app = Flask(__name__)
-CORS(app)  # <- Enables cross-origin requests
+CORS(app) 
 
-# Load the trained model
 model = joblib.load("training_model.pkl")
 
 @app.route('/recommend-training', methods=['POST'])

@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSubmitEvaluation']
     $comments = $_POST['comments'] ?? '';
 
     if ($code === $salt) {
-        $faculty_token = $token;
+        $faculty_token = $code;
 
         $stmt = $conn->prepare("SELECT id FROM faculty_evaluations WHERE student_email = ? AND faculty_token = ?");
         $stmt->execute([$student_email, $faculty_token]);

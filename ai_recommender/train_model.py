@@ -4,7 +4,7 @@ import joblib
 
 data = pd.read_csv("training_data.csv")
 X = data[["subject_knowledge", "engagement", "management", "preparedness", "professionalism"]]
-y = data["recommended_training"]  # <- fixed column name
+y = data["recommended_training"] 
 
 model = DecisionTreeClassifier()
 model.fit(X, y)
