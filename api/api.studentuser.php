@@ -27,3 +27,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
     }
     exit;
 }
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveStudentProfile'])){
+    $fullname = filter_input(INPUT_POST, 'fullname', FILTER_SANITIZE_SPECIAL_CHARS);
+    $section = filter_input(INPUT_POST, 'section', FILTER_SANITIZE_SPECIAL_CHARS); 
+    $yearLvl = filter_input(INPUT_POST, 'yearLvl', FILTER_SANITIZE_SPECIAL_CHARS);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+    $studentNo = filter_input(INPUT_POST, 'studentNo', FILTER_SANITIZE_SPECIAL_CHARS);
+    $role = "Student";
+
+    $result = $vm->addStudent($email,$studentNo, $fullname, $section, $yearLvl, $role);
+
+    if($result){
+        echo json_encode("added");
+    }else{
+        echo json_encode("error");
+    }
+    exit;
+}
