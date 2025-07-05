@@ -1,9 +1,7 @@
 <?php
-
 require_once '../backend/ViewModels/UserStudentViewModel.php';
+header("Content-Type: application/json");
 $vm = new UserStudentViewModel();
-
-header("Content-Type : application/json");
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteUser'])){
     $userId = filter_input(INPUT_POST, 'deleteUser' , FILTER_SANITIZE_SPECIAL_CHARS);
@@ -14,6 +12,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteUser'])){
     }else{
         echo json_encode("error");
     }
+    exit;
 }
 
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
@@ -22,12 +21,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
     
     $result = $vm->updateStudent($id, $status);
     if($result){
-        echo json_encode("success");
+        echo json_encode("updated");
     }else{
         echo json_encode("error");
     }
-}
-
-if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveStudent'])){
-    
+    exit;
 }

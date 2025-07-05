@@ -210,7 +210,7 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.adminuser.php',
+              url: BASE_URL + '/api/api.studentuser.php',
               type: 'POST',
               data: { deleteUser: id },
               success: function (data) {
@@ -244,7 +244,7 @@ $('#updateForm').submit(function(e){
   formData.append("btnUpdateAccess", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.adminuser.php',
+    url: BASE_URL + '/api/api.studentuser.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -254,8 +254,8 @@ $('#updateForm').submit(function(e){
       if (data === "updated") {
         Swal.fire({
           icon: 'success',
-          title: 'Admin Updated',
-          text: 'Admin information successfully updated!',
+          title: 'Student Updated',
+          text: 'Student information successfully updated!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {

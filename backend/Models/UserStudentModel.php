@@ -24,7 +24,7 @@ class UserStudentModel extends BaseModel{
     }
 
     public function updateStatus($id, $status) {
-        $stmt = $this->db->prepare("UPDATE `student_info` SET `status` = ? WHERE `si_id` = ?");
+        $stmt = $this->db->prepare("UPDATE `student_info` SET `status` = ? WHERE `student_no` = ?");
         return $stmt->execute([$status, $id]);
     }
 
