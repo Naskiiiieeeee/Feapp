@@ -77,7 +77,6 @@ $total_pages = $vm->getTotalPages($limit, $email);
               </ul>
             </nav>
           </div>
-
         </div>
       </div>
     </div>
