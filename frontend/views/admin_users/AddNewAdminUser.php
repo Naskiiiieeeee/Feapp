@@ -115,7 +115,7 @@ $('#AddForm').submit(function (e) {
           location.href = 'ManageAdminView.php';
         });
       } else {
-        Swal.fire('Error', 'Failed to add admin', 'error');
+        Swal.fire('Error', 'Duplicate Administrator Email', 'error');
       }
     },
     error: function () {

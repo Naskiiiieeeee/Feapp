@@ -115,7 +115,7 @@ $('#AddForm').submit(function (e) {
           location.href = 'ManageFacultyView';
         });
       } else {
-        Swal.fire('Error', 'Failed to add faculty', 'error');
+        Swal.fire('Warning', 'Duplicate Faculty Email', 'error');
       }
     },
     error: function () {

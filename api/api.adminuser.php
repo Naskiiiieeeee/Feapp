@@ -47,15 +47,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile']
     $targetFile = $uploadDir . $fileName;
     $relativePath = 'uploads/admin/' . $fileName; 
 
-    if (!file_exists($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
+    $isDuplicate = $vm->getUserEmail($email);
+    if(!$isDuplicate){
 
-    if (move_uploaded_file($photo['tmp_name'], $targetFile)) {
-        $result = $vm->addNewAdmin($relativePath, $fullname, $email, $password, $department, $role, $code);
-        echo json_encode($result ? "added" : "error");
-    } else {
-        echo json_encode("error");
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        if (move_uploaded_file($photo['tmp_name'], $targetFile)) {
+            $result = $vm->addNewAdmin($relativePath, $fullname, $email, $password, $department, $role, $code);
+            echo json_encode($result ? "added" : "error");
+        } else {
+            echo json_encode("error");
+        }
+        exit;
+    }else{
+            echo json_encode("error");
     }
     exit;
+
 }

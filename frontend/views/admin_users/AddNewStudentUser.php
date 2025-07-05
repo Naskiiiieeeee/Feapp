@@ -74,7 +74,6 @@ include_once __DIR__ . '/../../components/footscript.php';
 
 <script>
   const BASE_URL = "<?= BASE_URL ?>";
-  // AJAX form submission
 $('#AddForm').submit(function (e) {
   e.preventDefault();
 
@@ -100,7 +99,7 @@ $('#AddForm').submit(function (e) {
           location.href = 'ManageStudentView';
         });
       } else {
-        Swal.fire('Error', 'Failed to add Student', "error");
+        Swal.fire('Warning', 'Duplicate Student Email', "error");
       }
     },
     error: function () {

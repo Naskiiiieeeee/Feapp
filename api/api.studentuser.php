@@ -36,10 +36,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveStudentProfile'
     $studentNo = filter_input(INPUT_POST, 'studentNo', FILTER_SANITIZE_SPECIAL_CHARS);
     $role = "Student";
 
-    $result = $vm->addStudent($email,$studentNo, $fullname, $section, $yearLvl, $role);
-
-    if($result){
-        echo json_encode("added");
+    $existEmail = $vm->getUserEmail($email);
+    if(!$existEmail){
+        $result = $vm->addStudent($email,$studentNo, $fullname, $section, $yearLvl, $role);
+        if($result){
+            echo json_encode("added");
+        }else{
+            echo json_encode("error");
+        }
+        exit;
     }else{
         echo json_encode("error");
     }
