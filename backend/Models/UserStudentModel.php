@@ -10,7 +10,7 @@ class UserStudentModel extends BaseModel{
     }
 
     public function getStudentPaginated($offset, $limit) {
-        $query = "SELECT * FROM `student_info` WHERE `role` = 'Faculty' ORDER BY `si_id` DESC LIMIT :offset, :limit";
+        $query = "SELECT * FROM `student_info` WHERE `role` = 'Student' ORDER BY `si_id` DESC LIMIT :offset, :limit";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);

@@ -22,7 +22,7 @@ class UserStudentViewModel {
         return $this->model->updateStatus($id, $status);
     }
 
-    public function getPaginatedFaculty($page = 1, $limit = 4) {
+    public function getStudentPaginated($page = 1, $limit = 4) {
         $offset = ($page - 1) * $limit;
         return $this->model->getStudentPaginated($offset, $limit);
     }

@@ -29,8 +29,8 @@
           <span>Manage Faculty Account</span>
         </a>
       </li>
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item <?= $current_page=='ManageStudentView' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/ManageStudentView">
           <i class="bi-people"></i>
           <span>Manage Student Account</span>
         </a>
