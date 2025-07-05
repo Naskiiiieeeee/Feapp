@@ -103,7 +103,7 @@ if (isset($_GET['token'])) {
 
     <div class="col-xl-12">
       <div class="card">
-        <form action="submitEvaluation.php" method="post" id="evaluationForm">
+        <form id="evaluationForm">
         <div class="card-body pt-3">
           <ul class="nav nav-tabs nav-tabs-bordered">
             <li class="nav-item">
@@ -126,6 +126,7 @@ if (isset($_GET['token'])) {
               <div class="row">
                 <div class="col-lg-12 col-md-6">
                     <h5 class="card-title"> Section 1: Academic Performance</h5>
+                    <input type="hidden" name="faculty_token" value="<?= htmlspecialchars($_GET['token'] ?? '') ?>">
                 </div>
               </div>
               <hr> 
@@ -568,11 +569,11 @@ if (isset($_GET['token'])) {
                 <ul class="col-lg-12 col-md-6">•	Overall, how would you rate this teacher?</ul>
                 <div class="col-lg-12 col-md-6 ">
                     <label for="">Rating:</label>
-                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="5"> Excellent
-                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="4"> Very Good
-                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="3"> Good
-                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="2"> Fair
-                    <input type="radio" class="mx-4 mt-3" name="section3_q1_1" id="" value="1"> Poor
+                    <input type="radio" class="mx-4 mt-3" name="overall_rating" id="" value="5"> Excellent
+                    <input type="radio" class="mx-4 mt-3" name="overall_rating" id="" value="4"> Very Good
+                    <input type="radio" class="mx-4 mt-3" name="overall_rating" id="" value="3"> Good
+                    <input type="radio" class="mx-4 mt-3" name="overall_rating" id="" value="2"> Fair
+                    <input type="radio" class="mx-4 mt-3" name="overall_rating" id="" value="1"> Poor
                 </div>
               </div>
               <hr> 
@@ -586,21 +587,21 @@ if (isset($_GET['token'])) {
               <div class="row">
                 <ul class="col-lg-12 col-md-6">1.	What do you think are the teacher's strengths?</ul>
                 <div class="col-lg-12 col-md-6 ">
-                  <textarea name="section4_q1" id="" cols="30" class="form-control"></textarea>
+                  <textarea name="strengths" id="" cols="30" class="form-control"></textarea>
                 </div>
               </div>
                             
               <div class="row">
                 <ul class="col-lg-12 col-md-6">2.	In what areas could the teacher improve?</ul>
                 <div class="col-lg-12 col-md-6 ">
-                  <textarea name="section4_q2" id="" cols="30" class="form-control"></textarea>
+                  <textarea name="improvements" id="" cols="30" class="form-control"></textarea>
                 </div>
               </div>
 
               <div class="row">
                 <ul class="col-lg-12 col-md-6">3.	Any additional comments:</ul>
                 <div class="col-lg-12 col-md-6 ">
-                  <textarea name="section4_q3" id="" cols="30" class="form-control"></textarea>
+                  <textarea name="comments" id="" cols="30" class="form-control"></textarea>
                 </div>
               </div>
 
@@ -608,7 +609,7 @@ if (isset($_GET['token'])) {
           </div>
         </div>
         <div class="card-footer bg-primary-subtle">
-          <button type="submit" class="btn btn-primary mt-4">Submit Evaluation</button>
+          <button type="submit" class="btn btn-primary mt-4" name="btnSubmitEvaluation">Submit Evaluation</button>
         </form>
         </div>
       </div>
@@ -622,23 +623,23 @@ if (isset($_GET['token'])) {
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+const BASE_URL = "<?= BASE_URL ?>";
 const token = <?php echo json_encode($_GET['token'] ?? ''); ?>;
 const userEmail = <?php echo json_encode($_SESSION['email']); ?>;
 const storageKey = `faculty_evaluation_${userEmail}_${token}`;
 
-// Restore saved values (radio + textarea) on page load
+// === Restore saved radio + textarea values from localStorage ===
 window.addEventListener('DOMContentLoaded', () => {
   const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
 
-  // Prefill radios and textarea
   Object.entries(saved).forEach(([name, value]) => {
     const input = document.querySelector(`[name="${name}"]`);
     if (input) {
       if (input.type === 'radio') {
-        const selectedRadio = document.querySelector(`input[name="${name}"][value="${value}"]`);
-        if (selectedRadio) selectedRadio.checked = true;
+        const selected = document.querySelector(`input[name="${name}"][value="${value}"]`);
+        if (selected) selected.checked = true;
       } else if (input.tagName === 'TEXTAREA') {
         input.value = value;
       }
@@ -646,7 +647,7 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Save radio and textarea changes to localStorage
+// === Save changes to radio and textarea into localStorage ===
 document.querySelectorAll('input[type=radio], textarea').forEach(input => {
   input.addEventListener('input', () => {
     const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
@@ -655,12 +656,96 @@ document.querySelectorAll('input[type=radio], textarea').forEach(input => {
   });
 });
 
-// Optional: clear localStorage on form submission
-const form = document.getElementById('evaluationForm');
-if (form) {
-  form.addEventListener('submit', () => {
-    localStorage.removeItem(storageKey);
+// === Calculate average score of radio buttons per section ===
+function getAverageScore(sectionPrefix) {
+  let total = 0;
+  let count = 0;
+
+  document.querySelectorAll(`input[type="radio"]:checked`).forEach(input => {
+    if (input.name.startsWith(sectionPrefix)) {
+      total += parseInt(input.value);
+      count++;
+    }
   });
+
+  return count ? (total / count).toFixed(2) : 0;
 }
+
+// === Handle form submission ===
+$('#evaluationForm').submit(function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+  formData.append("btnSubmitEvaluation", true);
+
+  const academicAvg = getAverageScore("section1_");   // Section 1 radios
+  const coreValuesAvg = getAverageScore("section2_"); // Section 2 radios
+  const overallScore = getAverageScore("overall_rating");  // Overall rating
+
+  // Optional: validate if not all answered
+  if (parseFloat(academicAvg) === 0 || parseFloat(coreValuesAvg) === 0 || parseFloat(overallScore) === 0) {
+    Swal.fire('Incomplete', 'Please answer all required questions.', 'warning');
+    return;
+  }
+
+  // Textarea feedback
+  const feedback1 = document.querySelector('textarea[name="strengths"]').value;
+  const feedback2 = document.querySelector('textarea[name="improvements"]').value;
+  const feedback3 = document.querySelector('textarea[name="comments"]').value;
+
+  formData.append("academic_avg", academicAvg);
+  formData.append("core_values_avg", coreValuesAvg);
+  formData.append("overall_score", overallScore);
+  formData.append("strengths", feedback1);
+  formData.append("improvements", feedback2);
+  formData.append("comments", feedback3);
+
+  // === Submit to PHP first ===
+  $.ajax({
+    url: BASE_URL + '/api/api.setuprecommender.php',
+    type: 'POST',
+    data: formData,
+    contentType: false,
+    processData: false,
+    dataType: 'json',
+    success: function (response) {
+      if (response === "added") {
+        // === Call Flask recommender after successful evaluation ===
+        $.ajax({
+          url: 'http://localhost:5000/recommend-training',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            subject_knowledge: academicAvg,
+            engagement: academicAvg,
+            management: coreValuesAvg,
+            preparedness: academicAvg,
+            professionalism: coreValuesAvg
+          }),
+          success: function (recommendation) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Evaluation Submitted!',
+              html: 'Recommended Training: <b>' + recommendation.recommended_training + '</b>'
+            }).then(() => {
+              localStorage.removeItem(storageKey);
+              location.href = 'FacultyViewList';
+            });
+          },
+          error: function () {
+            Swal.fire('Submitted', 'Evaluation saved, but training recommender failed.', 'warning');
+            localStorage.removeItem(storageKey);
+            location.href = 'FacultyViewList';
+          }
+        });
+      } else {
+        Swal.fire('Error', 'Student already evaluated this faculty.', 'error');
+      }
+    },
+    error: function () {
+      Swal.fire('Error', 'Server error. Try again later.', 'error');
+    }
+  });
+});
 </script>
 
