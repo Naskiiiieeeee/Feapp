@@ -129,8 +129,8 @@
           <span>Add Response</span>
         </a>
       </li>
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item <?= $current_page=='ViewEvaluatedFaculty' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/student_users/ViewEvaluatedFaculty">
           <i class="bi bi-file-earmark-check"></i>
           <span>View Faculty Evaluation</span>
         </a>
