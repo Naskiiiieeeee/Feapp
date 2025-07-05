@@ -9,6 +9,7 @@ define('BASE_URL', '/feapp');
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="<?= BASE_URL ?>/frontend/src/assets/css/login.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body  onload="initClock()">
@@ -49,7 +50,7 @@ define('BASE_URL', '/feapp');
                       </div>
               </div>
             <div class="title">Student Login</div>
-          <form action="<?= BASE_URL ?>/api/api.auth2.php" method="POST">
+          <form id="loginForm">
               <div class="input-boxes">
                 <div class="input-box">
                   <i class="fas fa-user"></i>
@@ -85,6 +86,43 @@ define('BASE_URL', '/feapp');
     </div>
     </div>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <script>
+    const BASE_URL = "<?= BASE_URL ?>";
+
+    $('#loginForm').submit(function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      formData.append("btnLogin", true);
+
+      $.ajax({
+        url: BASE_URL + "/api/api.auth2.php",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (response) {
+          if (response.status === "success") {
+            window.location.href = BASE_URL + "/frontend/views/student_users/dashboardstudent";
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Login Failed",
+              text: "Invalid email or password.",
+            });
+          }
+        },
+        error: function () {
+          Swal.fire("Error", "Server issue. Try again.", "error");
+        }
+      });
+    });
+</script>
+
 
   <script type="text/javascript">
         function updateClock(){
