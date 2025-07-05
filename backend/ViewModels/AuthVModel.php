@@ -9,8 +9,11 @@ class AuthViewModel {
 
     public function login($email, $password) {
         $student = $this->studentVM->getByEmail($email);
-        if ($student) {
-            return ['role' => 'Student', 'user' => $student];
+        if ($student && $password === $student['student_no']) {
+            return [
+                'role' => 'Student',
+                'user' => $student
+            ];
         }
         return false;
     }

@@ -623,53 +623,18 @@ include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
 
-<!-- <script>
-// 1. Get the token from PHP (safely pass to JS)
-const token = "<?php echo isset($_GET['token']) ? $_GET['token'] : ''; ?>";
-
-// 2. Unique key for this faculty evaluation
-const storageKey = `faculty_evaluation_${token}`;
-
-// 3. Load saved answers on page load
-window.addEventListener('DOMContentLoaded', () => {
-  const savedAnswers = JSON.parse(localStorage.getItem(storageKey)) || {};
-
-  Object.keys(savedAnswers).forEach(name => {
-    const radio = document.querySelector(`input[name="${name}"][value="${savedAnswers[name]}"]`);
-    if (radio) radio.checked = true;
-  });
-});
-
-// 4. Save to localStorage every time a radio button changes
-document.querySelectorAll('input[type=radio]').forEach(radio => {
-  radio.addEventListener('change', () => {
-    const savedAnswers = JSON.parse(localStorage.getItem(storageKey)) || {};
-    savedAnswers[radio.name] = radio.value;
-    localStorage.setItem(storageKey, JSON.stringify(savedAnswers));
-  });
-});
-
-// 5. Clear answers on form submit (optional)
-const form = document.getElementById('evaluationForm');
-if (form) {
-  form.addEventListener('submit', () => {
-    localStorage.removeItem(storageKey);
-  });
-}
-</script> -->
-
 <script>
 const token = <?php echo json_encode($_GET['token'] ?? ''); ?>;
-const storageKey = `faculty_evaluation_${token}`;
+const userEmail = <?php echo json_encode($_SESSION['email']); ?>;
+const storageKey = `faculty_evaluation_${userEmail}_${token}`;
 
 // Restore saved values (radio + textarea) on page load
 window.addEventListener('DOMContentLoaded', () => {
   const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
 
-  // Prefill radios
+  // Prefill radios and textarea
   Object.entries(saved).forEach(([name, value]) => {
     const input = document.querySelector(`[name="${name}"]`);
-    
     if (input) {
       if (input.type === 'radio') {
         const selectedRadio = document.querySelector(`input[name="${name}"][value="${value}"]`);
@@ -698,3 +663,4 @@ if (form) {
   });
 }
 </script>
+
