@@ -10,9 +10,8 @@ $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
-// Get paginated data and total pages
-$studentView = $vm->getPaginatedAdmins($page_no, $limit,$email);
-$total_pages = $vm->getTotalPages($limit,$email);
+$studentView = $vm->getPaginatedEvaluatedFaculty($page_no, $limit, $email);
+$total_pages = $vm->getTotalPages($limit, $email);
 
 ?>
 
@@ -48,12 +47,12 @@ $total_pages = $vm->getTotalPages($limit,$email);
                     <tr>
                       <td><?= $count++; ?></td>
                       <td class=""><?= htmlspecialchars($row['faculty_token']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_token']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['faculty_name']); ?></td>
                       <td class=""><?= htmlspecialchars($row['submitted_at']); ?></td>
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
-                  <tr class="text-center"><td colspan="3">No Registered Data!</td></tr>
+                  <tr class="text-center"><td colspan="4">No Registered Data!</td></tr>
                 <?php endif; ?>
                 </tbody>
               </table>

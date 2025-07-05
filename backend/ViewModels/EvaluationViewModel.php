@@ -11,14 +11,15 @@ class EvaluationViewModel {
         return $this->model->countAllEvaluationsFromUsersInput($email);
     }
 
-    public function getPaginatedAdmins($page = 1, $limit = 4, $email) {
+    public function getPaginatedEvaluatedFaculty($page = 1, $limit = 4, $email) {
         $offset = ($page - 1) * $limit;
-        return $this->model->getPaginatedEvaluationFromUsersInput($offset, $limit, $email);
+        return $this->model->getPaginatedEvaluatedFaculty($offset, $limit, $email);
     }
     
     public function getTotalPages($limit = 4, $email) {
         $totalRecords = $this->model->countAllEvaluationsFromUsersInput($email);
         return ceil($totalRecords / $limit);
     }
+
 
 }
