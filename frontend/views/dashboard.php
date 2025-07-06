@@ -13,6 +13,16 @@ $totalStudent = $vm->getTotalStudent();
 $totalFaculty = $vm->getTotalFaculty();
 $totalAdmin = $vm->getTotalAdmins();
 
+$studentResponses = $vm->getForEachStudentResponse();
+$studentResponses = $studentResponses ?? [];
+
+$StudentEmail = [];
+$StudentEval = [];
+
+foreach ($studentResponses as $row) {
+    $StudentEmail[] = $row['student_email'];
+    $StudentEval[] = (int)$row['total'];
+}
 ?>
 <main id="main" class="main">
   <div class="pagetitle">
@@ -112,7 +122,8 @@ $totalAdmin = $vm->getTotalAdmins();
                           </div>
                         </div>
                       </div>
-                    </div><!-- End Revenue Card -->
+                    </div>
+                <!-- End Revenue Card -->
 
                 <!-- Customers Card -->
                     <div class="col-xxl-4 col-xl-12">
@@ -136,79 +147,68 @@ $totalAdmin = $vm->getTotalAdmins();
                           </div>
                         </div>
                       </div>
-                    </div><!-- End Customers Card -->
+                    </div>
+                <!-- End Customers Card -->
                 <!-- Reports -->
-
-                <?php
-                    // $query = "
-                    //     SELECT e.fullname, COUNT(d.ud_id) AS device_count
-                    //     FROM user_devices d
-                    //     INNER JOIN endusers e ON d.email = e.email
-                    //     GROUP BY e.fullname
-                    //     ORDER BY device_count DESC
-                    // ";
-
-                    // $result = mysqli_query($con, $query);
-
-                    // $owners = [];
-                    // $deviceCounts = [];
-
-                    // while ($row = mysqli_fetch_assoc($result)) {
-                    //     $owners[] = $row['fullname'];
-                    //     $deviceCounts[] = (int)$row['device_count'];
-                    // }
-                ?>
 
                 <!-- Card Container -->
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title">User Response <span>/Analytics</span></h5>
-                      <div id="deviceAnalyticsChart" style="min-height: 400px;"></div>
+                      <h5 class="card-title">Student Response <span>/Analytics</span></h5>
+                      <div id="ResponseAnalytics" style="min-height: 400px;"></div>
 
                       <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                          const owners = <?php echo json_encode($owners); ?>;
-                          const deviceCounts = <?php echo json_encode($deviceCounts); ?>;
+                      document.addEventListener("DOMContentLoaded", () => {
+                        const StudentEmail = <?php echo json_encode($StudentEmail); ?>;
+                        const StudentEval = <?php echo json_encode($StudentEval); ?>;
 
-                          new ApexCharts(document.querySelector("#deviceAnalyticsChart"), {
-                            series: [{
-                              name: "Registered Devices",
-                              data: deviceCounts
-                            }],
-                            chart: {
-                              type: 'bar',
-                              height: 400
+                        new ApexCharts(document.querySelector("#ResponseAnalytics"), {
+                          series: [{
+                            name: "Student Evaluations",
+                            data: StudentEval
+                          }],
+                          chart: {
+                            type: 'bar',
+                            height: 400
+                          },
+                          plotOptions: {
+                            bar: {
+                              borderRadius: 4,
+                              horizontal: false,
+                              distributed: true 
+                            }
+                          },
+                          dataLabels: {
+                            enabled: true
+                          },
+                          xaxis: {
+                            categories: StudentEmail,
+                            labels: {
+                              show: false
                             },
-                            plotOptions: {
-                              bar: {
-                                borderRadius: 4,
-                                horizontal: false,
-                              }
-                            },
-                            dataLabels: {
-                              enabled: true
-                            },
-                            xaxis: {
-                              categories: owners,
-                              title: {
-                                text: "End Users"
-                              }
-                            },
-                            yaxis: {
-                              title: {
-                                text: "Device Count"
-                              }
-                            },
-                            tooltip: {
-                              y: {
-                                formatter: val => `${val} device(s)`
-                              }
-                            },
-                            colors: ['#255F38']
-                          }).render();
-                        });
+                            title: {
+                              text: ""
+                            }
+                          },
+                          yaxis: {
+                            title: {
+                              text: "Evaluation Count"
+                            }
+                          },
+                          tooltip: {
+                            y: {
+                              formatter: val => `${val} evaluation(s)`
+                            }
+                          },
+                          legend: {
+                            show: false 
+                          },
+                          colors: ['#80CBC4', '#B4EBE6', '#FFB433', '#FFA955', '#F75A5A', '#4DA1A9', '#1ABC9C', '#2E5077', '#347928']
+                        }).render();
+                      });
                       </script>
+
                     </div>
                   </div>
                 </div>
@@ -273,116 +273,6 @@ $totalAdmin = $vm->getTotalAdmins();
     </section>
 </main>
 
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const dates = <?php echo json_encode($dates); ?>;
-        const registered = <?php echo json_encode($registered); ?>;
-        const logout = <?php echo json_encode($logout); ?>;
-
-        new ApexCharts(document.querySelector("#reportsChart"), {
-            series: [
-                {
-                    name: 'Login',
-                    data: registered
-                },
-                {
-                    name: 'Logout',
-                    data: logout
-                }
-            ],
-            chart: {
-                height: 350,
-                type: 'area',
-                toolbar: {
-                    show: false
-                }
-            },
-            markers: {
-                size: 4
-            },
-            colors: ['#E57068', '#2eca6a'],
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.3,
-                    opacityTo: 0.4,
-                    stops: [0, 90, 100]
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth',
-                width: 2
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: dates
-            },
-            tooltip: {
-                x: {
-                    format: 'dd/MM/yy HH:mm'
-                }
-            }
-        }).render();
-    });
-</script>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const dates = <?php echo json_encode($dates); ?>;
-        const registered = <?php echo json_encode($registered); ?>;
-
-        new ApexCharts(document.querySelector("#reportChart"), {
-            series: [
-                {
-                    name: 'Login',
-                    data: registered
-                }
-            ],
-            chart: {
-                height: 350,
-                type: 'area',
-                toolbar: {
-                    show: false
-                }
-            },
-            markers: {
-                size: 4
-            },
-            colors: ['#E57068', '#2eca6a'],
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.3,
-                    opacityTo: 0.4,
-                    stops: [0, 90, 100]
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth',
-                width: 2
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: dates
-            },
-            tooltip: {
-                x: {
-                    format: 'dd/MM/yy HH:mm'
-                }
-            }
-        }).render();
-    });
-</script>
 
 <?php 
 include_once __DIR__ . '/../components/footer.php';

@@ -27,5 +27,11 @@ class DashboardModel extends BaseModel{
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total_records'];
     }
+    public function getStudentResponseData() {
+        $query = "SELECT student_email, COUNT(*) as total FROM faculty_evaluations GROUP BY student_email";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }

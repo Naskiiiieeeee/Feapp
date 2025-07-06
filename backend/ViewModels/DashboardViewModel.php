@@ -20,4 +20,8 @@ class DashboardViewModel{
     public function getTotalAdmins(){
         return $this->model->countAdmin();
     }
+
+    public function getForEachStudentResponse(){
+        return $this->model->getStudentResponseData();
+    }
 }
