@@ -111,7 +111,7 @@ foreach ($facultyData as $row) {
       </div>
     </div>
 
-    <div class="col-xl-8">
+    <div class="col-xl-7">
         <div class="card">
             <div class="card-body pt-3">
                 <ul class="nav nav-tabs nav-tabs-bordered">
@@ -175,6 +175,41 @@ foreach ($facultyData as $row) {
         </div>
     </div>
 
+    <div class="col-xl-5">
+      <div class="card">
+        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+          <?php if (!empty($facultyData)): ?>
+          <?php
+          $academicTotal = 0;
+          $coreValuesTotal = 0;
+          $overallTotal = 0;
+          $count = count($facultyData);
+
+          foreach ($facultyData as $row) {
+              $academicTotal += floatval($row['academic_avg']);
+              $coreValuesTotal += floatval($row['core_values_avg']);
+              $overallTotal += floatval($row['overall_score']);
+          }
+
+          $academicAvg = $academicTotal / $count;
+          $coreValuesAvg = $coreValuesTotal / $count;
+          $overallAvg = $overallTotal / $count;
+
+          $overallRatings = ($academicAvg + $coreValuesAvg + $overallAvg) / 3;
+          ?>
+          <canvas id="evaluationBarChart" width="400" height="300"></canvas>
+
+
+          <?php else: ?>
+              <div class="text-center">No evaluation data found.</div>
+          <?php endif; ?>
+        </div>
+        <div class="card-footer bg-primary-subtle">
+
+        </div>
+      </div>
+    </div>
+
 
     <div class="col-xl-12">
       <div class="card">
@@ -230,3 +265,44 @@ foreach ($facultyData as $row) {
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('evaluationBarChart').getContext('2d');
+
+const evaluationChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Academic Avg', 'Core Values Avg', 'Overall Avg', 'Overall Rating'],
+        datasets: [{
+            label: 'Evaluation Scores',
+            data: [
+                <?= round($academicAvg, 2) ?>,
+                <?= round($coreValuesAvg, 2) ?>,
+                <?= round($overallAvg, 2) ?>,
+                <?= round($overallRatings, 2) ?>
+            ],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 206, 86, 0.7)',
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(153, 102, 255, 0.7)'
+            ],
+            borderColor: [
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 5
+            }
+        }
+    }
+});
+</script>
