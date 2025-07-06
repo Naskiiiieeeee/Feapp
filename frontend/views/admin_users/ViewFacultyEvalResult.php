@@ -37,25 +37,24 @@ $total_pages = $vm->getTotalPages($limit, $email);
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Student Email</th>
                     <th>Faculty ID</th>
                     <th>Faculty Name</th>
-                    <th>Academic Avg</th>
-                    <th>Core Values Avg</th>
-                    <th>Overall Evaluation</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                 <?php if (!empty($facultyEvaluation)): ?>
                   <?php foreach ($facultyEvaluation as $row): ?>
+                    <?php $token = base64_encode($row['faculty_token'] . '|' . $row['faculty_token']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class=""><?= htmlspecialchars($row['student_email']); ?></td>
                       <td class=""><?= htmlspecialchars($row['faculty_token']); ?></td>
                       <td class=""><?= htmlspecialchars($row['faculty_name']); ?></td>
-                      <td class=""><span class="badge bg-success fs-6"><?= htmlspecialchars($row['academic_avg']); ?></span></td>
-                      <td class=""><span class="badge bg-success fs-6"><?= htmlspecialchars($row['core_values_avg']); ?></span></td>
-                      <td class=""><span class="badge bg-success fs-6"><?= htmlspecialchars($row['overall_score']); ?></span></td>
+                      <td>
+                        <a href="ViewUnitEval?token=<?= urlencode($token); ?>" title="View">
+                          <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>
+                        </a>
+                      </td>
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
