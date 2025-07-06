@@ -24,4 +24,8 @@ class DashboardViewModel{
     public function getForEachStudentResponse(){
         return $this->model->getStudentResponseData();
     }
+    
+    public function getFacultyRankedScores() {
+        return $this->model->getFacultyRanking();
+    }
 }

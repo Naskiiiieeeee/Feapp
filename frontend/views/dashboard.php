@@ -23,6 +23,16 @@ foreach ($studentResponses as $row) {
     $StudentEmail[] = $row['student_email'];
     $StudentEval[] = (int)$row['total'];
 }
+
+// Faculty Rankings
+$facultyRanking = $vm->getFacultyRankedScores();
+$facultyNames = [];
+$facultyScores = [];
+
+foreach ($facultyRanking as $row) {
+    $facultyNames[] = $row['fullname'];
+    $facultyScores[] = (float)$row['average_score'];
+}
 ?>
 <main id="main" class="main">
   <div class="pagetitle">
@@ -213,31 +223,120 @@ foreach ($studentResponses as $row) {
                   </div>
                 </div>
 
-                <?php
-                //   $dates = [];
-                //   $registered = [];
-                //   $dataReadings = [];
-
-                //   for ($i = 6; $i >= 0; $i--) {
-                //       $date = date('Y-m-d', strtotime("-$i days"));
-                      
-                //       $query = "SELECT COUNT(*) AS total_reg FROM `preregistration` WHERE DATE(dateSubmitted) = '$date'";
-                //       $result = mysqli_query($con, $query);
-                //       $data = mysqli_fetch_assoc($result);
-                //       $reg_count = $data['total_reg'] ?? 0;
-                //       $registered[] = $reg_count;
-                      
-                //       $dates[] = date('Y-m-d\TH:i:s.000\Z', strtotime($date));
-                //   }
-                ?>
-              <!-- Reports -->
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Registration <span>/Reports</span></h5>
-                            <div id="reportChart"></div>
-                        </div>
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Faculty Ranking <span>/by Evaluation Score</span></h5>
+                      <div id="facultyRankingChart" style="min-height: 400px;"></div>
+
+                      <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                          const facultyNames = <?php echo json_encode($facultyNames); ?>;
+                          const facultyScores = <?php echo json_encode($facultyScores); ?>;
+
+                          new ApexCharts(document.querySelector("#facultyRankingChart"), {
+                            series: [{
+                              name: "Avg Score",
+                              data: facultyScores
+                            }],
+                            chart: {
+                              type: 'bar',
+                              height: 400
+                            },
+                            plotOptions: {
+                              bar: {
+                                borderRadius: 4,
+                                horizontal: true,
+                                distributed: true
+                              }
+                            },
+                            dataLabels: {
+                              enabled: true,
+                              formatter: val => val.toFixed(2)
+                            },
+                            xaxis: {
+                              categories: facultyNames,
+                              title: {
+                                text: "Faculty"
+                              }
+                            },
+                            yaxis: {
+                              title: {
+                                text: "Average Evaluation Score"
+                              },
+                              min: 0,
+                              max: 5
+                            },
+                            tooltip: {
+                              y: {
+                                formatter: val => `${val} / 5`
+                              }
+                            },
+                            colors: ['#36A2EB', '#2ECC71', '#FFCE56', '#FF6384', '#8E44AD']
+                          }).render();
+                        });
+                      </script>
                     </div>
+                  </div>
+                </div>
+                
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Faculty Status <span>/by Evaluation Score</span></h5>
+                        <div class="row">
+                        <?php foreach ($facultyRanking as $i => $row): ?>
+                          <div class="col-md-6 mb-4">
+                            <div class="card text-center shadow-sm">
+                              <div class="card-body">
+                                <div id="facultyGauge<?= $i ?>" style="height: 250px;"></div>
+                                <h6 class="mt-3"><?= htmlspecialchars($row['fullname']) ?></h6>
+                              </div>
+                            </div>
+                          </div>
+
+                          <script>
+                            document.addEventListener("DOMContentLoaded", () => {
+                              new ApexCharts(document.querySelector("#facultyGauge<?= $i ?>"), {
+                                series: [<?= $row['average_score'] * 20 ?>],
+                                chart: {
+                                  height: 250,
+                                  type: 'radialBar',
+                                },
+                                plotOptions: {
+                                  radialBar: {
+                                    hollow: {
+                                      size: '60%',
+                                    },
+                                    dataLabels: {
+                                      name: {
+                                        show: true,
+                                        fontSize: '14px',
+                                        color: '#666',
+                                        offsetY: -10,
+                                        formatter: function () {
+                                          return "Score";
+                                        }
+                                      },
+                                      value: {
+                                        fontSize: '22px',
+                                        formatter: function () {
+                                          return "<?= number_format($row['average_score'], 2) ?> / 5";
+                                        }
+                                      }
+                                    }
+                                  }
+                                },
+                                labels: ["Score"],
+                                colors: ['#2ECC71']
+                              }).render();
+                            });
+                          </script>
+                        <?php endforeach; ?>
+                        </div>
+
+                    </div>
+                  </div>
                 </div>
               </div>
         </div>
