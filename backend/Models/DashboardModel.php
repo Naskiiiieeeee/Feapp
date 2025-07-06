@@ -21,11 +21,11 @@ class DashboardModel extends BaseModel{
     }
     
     public function countAdmin(){
-        $query = "SELECT COUNT(*) as total_records FROM `endusers` WHERE `role` = 'Admin' ";
+        $query = "SELECT COUNT(*) as total_records FROM `endusers` WHERE `role` = 'Admin' AND `status` = 1 ";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row['total_records'];       
+        return $row['total_records'];
     }
 
 }

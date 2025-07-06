@@ -1,7 +1,18 @@
 <?php 
+require_once __DIR__ . '/../../backend/ViewModels/DashboardViewModel.php';
 include_once __DIR__ . '/../components/header.php';
 include_once __DIR__ . '/../components/navigation.php';
 include_once __DIR__ . '/../components/sidebar.php';
+
+$vm = new DashboardViewModel();
+$totalStudent = null;
+$totalFaculty = null;
+$totalAdmin = null;
+
+$totalStudent = $vm->getTotalStudent();
+$totalFaculty = $vm->getTotalFaculty();
+$totalAdmin = $vm->getTotalAdmins();
+
 ?>
 <main id="main" class="main">
   <div class="pagetitle">
@@ -65,16 +76,12 @@ include_once __DIR__ . '/../components/sidebar.php';
                           </div>
                           <div class="ps-3">
                           <?php 
-                            // $dash_user = "SELECT * FROM `endusers` WHERE `role` = 'Enduser'";
-                            // $dash_users = mysqli_query($con, $dash_user);
-
-                            // if($user_total = mysqli_num_rows($dash_users)){
-                            //   echo '<h6 class="mb-0">'.$user_total.'</h6>';
-                            // }
-                            // else{
-                            //   echo '<h6 class="mb-0">EMPTY</h6>';
-                            // }
+                            if($totalFaculty):
                           ?>
+                            <h6 class="mb-0"> <?= htmlspecialchars($totalFaculty);?></h6>
+                          <?php else:?>
+                            <h6 class="mb-0">No Registered Faculty</h6>
+                          <?php endif;?>
                             <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
                           </div>
                         </div>
@@ -94,16 +101,12 @@ include_once __DIR__ . '/../components/sidebar.php';
                             </div>
                             <div class="ps-3">
                               <?php 
-                                // $dash_user = "SELECT * FROM `endusers` WHERE `role` = 'Admin'";
-                                // $dash_users = mysqli_query($con, $dash_user);
-
-                                // if($user_total = mysqli_num_rows($dash_users)){
-                                //   echo '<h6 class="mb-0">'.$user_total.'</h6>';
-                                // }
-                                // else{
-                                //   echo '<h6 class="mb-0">EMPTY</h6>';
-                                // }
+                                if($totalAdmin):
                               ?>
+                                <h6 class="mb-0"> <?= htmlspecialchars($totalAdmin);?></h6>
+                              <?php else:?>
+                                <h6 class="mb-0">No Registered Admin</h6>
+                              <?php endif;?>
                               <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
                             </div>
                           </div>
@@ -122,15 +125,12 @@ include_once __DIR__ . '/../components/sidebar.php';
                             </div>
                             <div class="ps-3">
                               <?php 
-                                // $dash_user = "SELECT * FROM `user_devices`";
-                                // $dash_users = mysqli_query($con, $dash_user);
-                                // if($user_total = mysqli_num_rows($dash_users)){
-                                //   echo '<h6 class="mb-0">'.$user_total.'</h6>';
-                                // }
-                                // else{
-                                //   echo '<h6 class="mb-0">EMPTY</h6>';
-                                // }
+                                if($totalStudent):
                               ?>
+                                <h6 class="mb-0"> <?= htmlspecialchars($totalStudent);?></h6>
+                              <?php else:?>
+                                <h6 class="mb-0">No Registered Admin</h6>
+                              <?php endif;?>
                               <span class="text-danger small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
                             </div>
                           </div>

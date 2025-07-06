@@ -48,7 +48,6 @@ $total_pages = $vm->getTotalPages($limit);
                 <tbody>
                 <?php if (!empty($studentData)): ?>
                   <?php foreach ($studentData as $row): ?>
-                    <?php $token = base64_encode($row['student_no'] . '|' . $row['student_no']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
                       <td class="id"><?= htmlspecialchars($row['student_no']); ?></td>
@@ -71,9 +70,6 @@ $total_pages = $vm->getTotalPages($limit);
                         ?>
                       </td>
                       <td>
-                        <a href="ViewUnitAdmin?token=<?= urlencode($token); ?>" title="View">
-                          <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>
-                        </a>
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
                                 id="<?= $row['si_id']; ?>"
