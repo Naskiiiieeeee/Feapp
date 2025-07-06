@@ -74,4 +74,18 @@ class EvaluationModel extends BaseModel{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getEvaluationResult($token){
+        $query = "
+            SELECT fe.*, eu.fullname AS faculty_name , eu.department AS faculty_dep, eu.photo AS faculty_img
+            FROM faculty_evaluations fe
+            JOIN endusers eu ON fe.faculty_token = eu.code
+            WHERE fe.faculty_token = ?
+            ORDER BY fe.id DESC
+        ";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$token]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    }
+
 }

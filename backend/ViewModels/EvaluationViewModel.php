@@ -30,5 +30,9 @@ class EvaluationViewModel {
         $offset = ($page - 1) * $limit;
         return $this->model->getPaginatedGroupByResult($offset,$limit);
     }
+
+    public function getunitEvaluationResult($token){
+        return $this->model->getEvaluationResult($token);
+    }
     
 }
