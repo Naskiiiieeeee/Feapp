@@ -40,6 +40,14 @@ class EvaluationModel extends BaseModel{
 
     public function getPagitanedOverallEvaluatedFaculty($offset, $limit){
         $query = "SELECT * FROM `faculty_evaluations` ORDER BY `id` DESC LIMIT :offset, :limit";
+        $query = "
+            SELECT fe.*, eu.fullname AS faculty_name 
+            FROM faculty_evaluations fe
+            JOIN endusers eu ON fe.faculty_token = eu.code
+            ORDER BY fe.id DESC
+            LIMIT :offset, :limit
+        ";
+
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);

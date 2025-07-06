@@ -21,5 +21,9 @@ class EvaluationViewModel {
         return ceil($totalRecords / $limit);
     }
 
-
+    public function getPaginatedOverallFaculty($page = 1, $limit = 4){
+        $offset = ($page - 1) * $limit;
+        return $this->model->getPagitanedOverallEvaluatedFaculty($offset,$limit );
+    }
+    
 }

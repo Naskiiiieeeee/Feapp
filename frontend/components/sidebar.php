@@ -36,8 +36,8 @@
         </a>
       </li>
       <li class="nav-heading">AI Recommender</li>
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item <?= $current_page=='ManageViewUnitEvaluation' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/ManageViewUnitEvaluation">
           <i class="bi bi-app-indicator"></i>
           <span>Response Validation</span>
         </a>
