@@ -11,13 +11,13 @@ $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$facultyEvaluation = $vm->getPaginatedOverallFaculty($page_no, $limit);
+$facultyEvaluation = $vm->getPaginatedGroupBy($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit, $email);
 ?>
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Unit Faculty Evaluation</h1>
+    <h1>Faculty Evaluation Records</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageViewUnitEvaluation">Unit Evaluation</a></li>
@@ -39,6 +39,7 @@ $total_pages = $vm->getTotalPages($limit, $email);
                     <th>#</th>
                     <th>Faculty ID</th>
                     <th>Faculty Name</th>
+                    <th>Department</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -50,6 +51,7 @@ $total_pages = $vm->getTotalPages($limit, $email);
                       <td><?= $count++; ?></td>
                       <td class=""><?= htmlspecialchars($row['faculty_token']); ?></td>
                       <td class=""><?= htmlspecialchars($row['faculty_name']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['faculty_dep']); ?></td>
                       <td>
                         <a href="ViewUnitEval?token=<?= urlencode($token); ?>" title="View">
                           <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>

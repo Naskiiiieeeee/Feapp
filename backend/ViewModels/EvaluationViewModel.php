@@ -25,5 +25,10 @@ class EvaluationViewModel {
         $offset = ($page - 1) * $limit;
         return $this->model->getPagitanedOverallEvaluatedFaculty($offset,$limit );
     }
+
+    public function getPaginatedGroupBy($page = 1, $limit = 4){
+        $offset = ($page - 1) * $limit;
+        return $this->model->getPaginatedGroupByResult($offset,$limit);
+    }
     
 }
