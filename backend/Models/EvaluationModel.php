@@ -4,18 +4,18 @@ require_once __DIR__ . '/../Core/BaseModel.php';
 
 class EvaluationModel extends BaseModel{
 
-    public function countAllEvaluationsFromUsersInput($email = null){ // instead of method overloading I just set null for email if no values needed inside arguments
+    public function countAllEvaluationsFromUsersInput($email){ // instead of method overloading I just set null for email if no values needed inside arguments
+        $query = "SELECT COUNT(*) as total_records FROM `faculty_evaluations` WHERE `student_email` = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_records'];
+    }
 
-        if($email !== null){
-            $query = "SELECT COUNT(*) as total_records FROM `faculty_evaluations` WHERE `student_email` = ?";
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([$email]);
-
-        }else{
-            $query = "SELECT COUNT(*) as total_records FROM `faculty_evaluations`";
-            $stmt = $this->db->prepare($query);
-            $stmt->execute();
-        }
+    public function countAllevaluationsFromStudent(){
+        $query = "SELECT COUNT(*) as total_records FROM `faculty_evaluations`";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total_records'];
     }

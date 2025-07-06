@@ -12,7 +12,7 @@ $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
 $facultyEvaluation = $vm->getPaginatedOverallFaculty($page_no, $limit);
-$total_pages = $vm->getTotalPages($limit, $email);
+$total_pages = $vm->getPages($limit);
 ?>
 
 <main id="main" class="main">
