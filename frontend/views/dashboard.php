@@ -50,41 +50,7 @@ foreach ($facultyRanking as $row) {
 
               <div class="row">
                 <!-- Sales Card -->
-                  <div class="col-xxl-4 col-md-12">
-                      <?php
-                    //   $date = date('Y-m-d');
-                    //   $dash_user = "SELECT * FROM `request_download` WHERE `status` = 0 AND `date` = '$date'";
-                    //   $dash_users = mysqli_query($con, $dash_user);
-                    //   $user_total = 0; 
-                    //   if ($dash_users) {
-                    //       $user_total = mysqli_num_rows($dash_users);
-                    //   }
 
-                    //   $card_glow_class = ''; 
-                    //   if ($user_total > 0) {
-                    //       $card_glow_class = ' pending-glow-card'; 
-                    //   }
-                      ?>
-                      <div class="card info-card sales-card <?= $card_glow_class; ?>">
-                          <div class="card-body">
-                              <h5 class="card-title text-center">Pending Download<span> | Request</span></h5>
-                              <div class="d-flex align-items-center justify-content-center">
-                                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                      <i class="bi bi-cloud-arrow-down"></i>
-                                  </div>
-                                  <div class="ps-3">
-                                      <h6 class="mb-0">
-                                        <!-- <?= $user_total > 0 ? $user_total : 'No Pending Request'; ?> -->
-                                    </h6>
-                                    <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="card-footer bg-secondary-subtle">
-                            <a href="adminmanagerequest" class="btn btn-sm btn-success text-white d-flex align-items-center justify-content-center"><i class="bi bi-eye mx-1"></i> View List</a>
-                          </div>
-                      </div>
-                  </div>
 
                   <div class="col-xxl-4 col-md-6">
                     <div class="card info-card sales-card">
@@ -315,7 +281,7 @@ foreach ($facultyRanking as $row) {
                                         color: '#666',
                                         offsetY: -10,
                                         formatter: function () {
-                                          return "Score";
+                                          return "Ratings";
                                         }
                                       },
                                       value: {
@@ -327,7 +293,7 @@ foreach ($facultyRanking as $row) {
                                     }
                                   }
                                 },
-                                labels: ["Score"],
+                                labels: ["Ratings"],
                                 colors: ['#2ECC71']
                               }).render();
                             });
@@ -366,6 +332,26 @@ foreach ($facultyRanking as $row) {
                   </div>
               </div>
           </div>
+
+          <div class="card info-card sales-card <?= $card_glow_class; ?>">
+            <div class="card-body">
+                <h5 class="card-title text-center">Pending Download<span> | Request</span></h5>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-cloud-arrow-down"></i>
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0">
+                          <!-- <?= $user_total > 0 ? $user_total : 'No Pending Request'; ?> -->
+                      </h6>
+                      <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-secondary-subtle">
+              <a href="adminmanagerequest" class="btn btn-sm btn-success text-white d-flex align-items-center justify-content-center"><i class="bi bi-eye mx-1"></i> View List</a>
+            </div>
+        </div>
         <!-- End News & Updates -->
       </div>
       </div>

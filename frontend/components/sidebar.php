@@ -57,7 +57,7 @@
       </li>
       <li class="nav-heading">User Account</li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="profile">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/profile">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
