@@ -106,7 +106,7 @@ define('BASE_URL', '/feapp');
         dataType: "json",
         success: function (response) {
           if (response.status === "success") {
-            window.location.href = BASE_URL + "/frontend/views/Dashboard.php";
+            window.location.href = BASE_URL + "/frontend/views/dashboard";
           } else {
             Swal.fire({
               icon: "error",

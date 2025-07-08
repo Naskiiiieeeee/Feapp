@@ -76,8 +76,8 @@
         </a>
       </li>
       <li class="nav-heading">Evaluation Reports</li>
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item <?= $current_page=='ViewEvaluationResults' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/faculty_users/ViewEvaluationResults">
           <i class="bi bi-journal-text"></i>
           <span>View Student Evaluation</span>
         </a>
