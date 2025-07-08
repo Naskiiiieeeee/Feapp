@@ -1,10 +1,19 @@
+Options -Indexes
 RewriteEngine On
 
-# Only rewrite if the request is not a real file or directory
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# Disable access to sensitive folders
+RedirectMatch 403 ^/feapp/venv/
+RedirectMatch 403 ^/feapp/database/
+
+# Block sensitive file types
+<FilesMatch "\.(env|sql|log|ini|sh|bat|json|pyc|pkl)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
 
 # Rewrite /folder/file to /folder/file.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.+)$ $1.php [L]
 
 # Custom 404 page
