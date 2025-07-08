@@ -68,6 +68,9 @@ $total_pages = $vm->getPages($limit);
           </div>
 
           <div class="card-footer bg-bg-info-subtle d-flex align-items-center justify-content-between">
+            <button id="deleteAllResponsesBtn" class="btn btn-danger">
+              <i class="bi bi-trash"></i> Delete All Responses
+            </button>
             <nav aria-label="Page navigation">
               <ul class="pagination justify-content-center fw-bold">
                 <li class="page-item <?= ($page_no <= 1) ? 'disabled' : ''; ?>">
@@ -96,4 +99,48 @@ $total_pages = $vm->getPages($limit);
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+const BASE_URL = "<?= BASE_URL ?>";
+
+document.getElementById("deleteAllResponsesBtn").addEventListener("click", function () {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "This will delete ALL student responses permanently!",
+    icon: 'warning',
+    input: 'password',
+    inputLabel: 'Enter your admin password to confirm',
+    inputPlaceholder: 'Enter password...',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete all!',
+    preConfirm: (password) => {
+      if (!password) {
+        Swal.showValidationMessage('Password is required');
+        return false;
+      }
+
+      return fetch(BASE_URL + "/api/api.deleteAllResponses.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ password })
+      })
+      .then(response => response.json())
+      .catch(() => {
+        Swal.showValidationMessage("Request failed");
+      });
+    }
+  }).then(result => {
+    if (result.isConfirmed && result.value && result.value.status === 'success') {
+      Swal.fire('Deleted!', result.value.message, 'success').then(() => {
+        location.reload(); 
+      });
+    } else if (result.value && result.value.status === 'error') {
+      Swal.fire('Error', result.value.message, 'error');
+    }
+  });
+});
+</script>
 
