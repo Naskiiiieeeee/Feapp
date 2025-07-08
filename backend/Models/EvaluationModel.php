@@ -120,4 +120,17 @@ class EvaluationModel extends BaseModel{
         ]);
     }
 
+    public function hasRecentSummary($facultyEmail, $months = 6) {
+        $query = "
+            SELECT COUNT(*) as total 
+            FROM evaluation_summaries 
+            WHERE faculty_email = ? 
+            AND created_at >= DATE_SUB(NOW(), INTERVAL ? MONTH)
+        ";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$facultyEmail, $months]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total'] > 0;
+    }
+
 }

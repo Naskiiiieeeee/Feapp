@@ -339,41 +339,49 @@ $(document).ready(function () {
   });
 
   // Multiple values → add as hidden inputs to form
-  $(".AiRecommendations").each(function () {
-    const value = $(this).text().replace("*", "").trim();
-    $("<input>").attr({
-      type: "hidden",
-      name: "AiRecommendations[]",
-      value: value
-    }).appendTo("#postFacultyData");
-  });
+    $(".AiRecommendations").each(function () {
+        const value = $(this).text().replace("*", "").trim();
+        if (value !== "") {
+            $("<input>").attr({
+                type: "hidden",
+                name: "AiRecommendations[]",
+                value: value
+            }).appendTo("#postFacultyData");
+        }
+    });
 
-  $(".FeedbacksStrengths").each(function () {
-    const value = $(this).text().trim();
-    $("<input>").attr({
-      type: "hidden",
-      name: "FeedbacksStrengths[]",
-      value: value
-    }).appendTo("#postFacultyData");
-  });
+    $(".FeedbacksStrengths").each(function () {
+        const value = $(this).text().trim();
+        if (value !== "") {
+            $("<input>").attr({
+                type: "hidden",
+                name: "FeedbacksStrengths[]",
+                value: value
+            }).appendTo("#postFacultyData");
+        }
+    });
 
-  $(".FeedbackImprovements").each(function () {
+    $(".FeedbackImprovements").each(function () {
     const value = $(this).text().trim();
-    $("<input>").attr({
-      type: "hidden",
-      name: "FeedbackImprovements[]",
-      value: value
-    }).appendTo("#postFacultyData");
-  });
+        if (value !== "") {
+            $("<input>").attr({
+                type: "hidden",
+                name: "FeedbackImprovements[]",
+                value: value
+            }).appendTo("#postFacultyData");
+        }
+    });
 
-  $(".FeedbackComments").each(function () {
+    $(".FeedbackComments").each(function () {
     const value = $(this).text().trim();
-    $("<input>").attr({
-      type: "hidden",
-      name: "FeedbackComments[]",
-      value: value
-    }).appendTo("#postFacultyData");
-  });
+        if (value !== "") {
+            $("<input>").attr({
+                type: "hidden",
+                name: "FeedbackComments[]",
+                value: value
+            }).appendTo("#postFacultyData");
+        }
+    });
 
   // Intercept form submission
   $("#postFacultyData").on("submit", function (e) {
