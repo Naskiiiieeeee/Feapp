@@ -28,4 +28,7 @@ class DashboardViewModel{
     public function getFacultyRankedScores() {
         return $this->model->getFacultyRanking();
     }
+    public function historyRatings($faculty_email){
+        return $this->model->getFacultyHistoricalRatings($faculty_email);
+    }
 }

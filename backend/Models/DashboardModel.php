@@ -37,7 +37,7 @@ class DashboardModel extends BaseModel{
     public function getFacultyRanking() {
         $query = "
             SELECT 
-                eu.fullname, 
+                eu.fullname, eu.email,
                 ROUND(AVG((fe.academic_avg + fe.core_values_avg + fe.overall_score) / 3), 2) AS average_score
             FROM faculty_evaluations fe
             JOIN endusers eu ON fe.faculty_token = eu.code
@@ -45,6 +45,19 @@ class DashboardModel extends BaseModel{
             ORDER BY average_score DESC
         ";
         $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getFacultyHistoricalRatings($faculty_email) {
+        $query = "
+            SELECT overall_rating, created_at 
+            FROM faculty_evaluation_summary 
+            WHERE faculty_email = :email 
+            ORDER BY created_at ASC
+        ";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':email', $faculty_email, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

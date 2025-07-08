@@ -7,7 +7,7 @@ include_once __DIR__ . '/../../components/sidebar.php';
 // Pagination setup
 $vm = new EvaluationViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
-$limit = 4;
+$limit = 10;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
