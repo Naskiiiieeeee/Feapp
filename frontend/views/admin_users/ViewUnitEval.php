@@ -187,6 +187,7 @@ foreach ($facultyData as $row) {
                     <input type="text" name="CoreValuesRating" class="form-control">
                     <input type="text" name="OverallEvaluation" class="form-control">
                     <input type="text" name="OverallRatings" class="form-control">
+                    <button type="submit" name="btnSaveEvaluations" class="btn btn-primary"><i class="bi bi-upload"></i> Upload now !</button>
                 </form>
             </div>
         </div>
@@ -321,115 +322,93 @@ const evaluationChart = new Chart(ctx, {
     }
 });
 </script>
+
 <script>
-
 const BASE_URL = "<?= BASE_URL ?>";
+
 $(document).ready(function () {
-    $("[id]").each(function () {
-        const id = $(this).attr("id");
-        const text = $(this).text().trim();
-        const input = $("input[name='" + id + "']");
-        if (input.length > 0) {
-            const numeric = text.split(" /")[0].trim(); // Remove " / 5.00"
-            input.val(numeric);
-        }
-    });
-
-    // Handle multiple AiRecommendations (array data)
-    $(".AiRecommendations").each(function () {
-        const value = $(this).text().replace("*", "").trim();
-        $("<input>").attr({
-            type: "hidden",
-            name: "AiRecommendations[]",
-            value: value
-        }).appendTo("#postFacultyData");
-    });
-
-    $(".FeedbacksStrengths").each(function (){
-        const value = $(this).text().trim();
-        $("<input>").attr({
-            type: "hidden",
-            name: "FeedbacksStrengths[]",
-            value: value
-        }).appendTo("#postFacultyData");
-    });
-
-    
-    $(".FeedbackImprovements").each(function (){
-        const value = $(this).text().trim();
-        $("<input>").attr({
-            type: "hidden",
-            name: "FeedbackImprovements[]",
-            value: value
-        }).appendTo("#postFacultyData");
-    });
-
-    
-    $(".FeedbackComments").each(function (){
-        const value = $(this).text().trim();
-        $("<input>").attr({
-            type: "hidden",
-            name: "FeedbackComments[]",
-            value: value
-        }).appendTo("#postFacultyData");
-    });
-
-  $.ajax({
-    url: BASE_URL + '/api/api.evaluation.php',
-    type: 'POST',
-    data: $("#postFacultyData").serialize(),
-    contentType: false,
-    processData: false,
-    dataType: 'json',
-    success: function (response) {
-      if (response === "added") {
-        Swal.fire({
-          icon: 'success',
-          title: 'Faculty Evaluation',
-          text: 'Evaluation has been posted successfully!',
-          timer: 2000,
-          showConfirmButton: false
-        }).then(() => {
-          location.href = 'ViewFacultyEvalResult';
-        });
-      } else {
-        Swal.fire('Error', 'Duplicate for this year evaluation', 'error');
-      }
-    },
-    error: function () {
-      Swal.fire('Error', 'Server error. Try again.', 'error');
+  // Fill inputs by matching IDs
+  $("[id]").each(function () {
+    const id = $(this).attr("id");
+    const text = $(this).text().trim();
+    const input = $("input[name='" + id + "']");
+    if (input.length > 0) {
+      const numeric = text.split(" /")[0].trim();
+      input.val(numeric);
     }
+  });
+
+  // Multiple values → add as hidden inputs to form
+  $(".AiRecommendations").each(function () {
+    const value = $(this).text().replace("*", "").trim();
+    $("<input>").attr({
+      type: "hidden",
+      name: "AiRecommendations[]",
+      value: value
+    }).appendTo("#postFacultyData");
+  });
+
+  $(".FeedbacksStrengths").each(function () {
+    const value = $(this).text().trim();
+    $("<input>").attr({
+      type: "hidden",
+      name: "FeedbacksStrengths[]",
+      value: value
+    }).appendTo("#postFacultyData");
+  });
+
+  $(".FeedbackImprovements").each(function () {
+    const value = $(this).text().trim();
+    $("<input>").attr({
+      type: "hidden",
+      name: "FeedbackImprovements[]",
+      value: value
+    }).appendTo("#postFacultyData");
+  });
+
+  $(".FeedbackComments").each(function () {
+    const value = $(this).text().trim();
+    $("<input>").attr({
+      type: "hidden",
+      name: "FeedbackComments[]",
+      value: value
+    }).appendTo("#postFacultyData");
+  });
+
+  // Intercept form submission
+  $("#postFacultyData").on("submit", function (e) {
+    e.preventDefault(); // prevent actual form submit
+
+    const formData = new FormData(this);
+    formData.append("btnSaveEvaluations", true);
+
+    $.ajax({
+      url: BASE_URL + '/api/api.evaluation.php',
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function (response) {
+        if (response === "added") {
+          Swal.fire({
+            icon: 'success',
+            title: 'Faculty Evaluation',
+            text: 'Evaluation has been posted successfully!',
+            timer: 2000,
+            showConfirmButton: false
+          }).then(() => {
+            location.href = 'ViewFacultyEvalResult';
+          });
+        } else {
+          Swal.fire('Error', 'Duplicate for this year evaluation', 'error');
+        }
+      },
+      error: function () {
+        Swal.fire('Error', 'Server error. Try again.', 'error');
+      }
+    });
   });
 });
 </script>
 
-
-<!-- <script>
-$(document).ready(function () {
-    // Loop through all elements with an ID
-    $("[id]").each(function () {
-        const id = $(this).attr("id");
-        const text = $(this).text().trim();
-
-        // Try to find a matching input with the same name
-        const input = $("input[name='" + id + "']");
-        if (input.length > 0) {
-            const numeric = text.split(" /")[0].trim(); // Optional: clean value
-            input.val(numeric);
-        }
-    });
-
-    // Optional: Submit the form via AJAX
-    $.ajax({
-        url: 'your-handler.php', // Replace with actual handler
-        method: 'POST',
-        data: $("#postFacultyData").serialize(),
-        success: function (response) {
-            console.log("Server response:", response);
-        },
-        error: function () {
-            console.error("AJAX error.");
-        }
-    });
-});
-</script> -->
