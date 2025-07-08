@@ -72,4 +72,12 @@ class EvaluationViewModel {
         $totalRecords = $this->model->countfacultyEvaluationAdminSide();
         return ceil($totalRecords / $limit);
     }
+
+    public function getIndiEvaluationResultAdmin($token){
+        return $this->model->getIndividualEvaluationResultAdminSide($token);
+    }
+
+    public function deleteEvalHistory($id){
+        return $this->model->deleteEvaluationHistory($id);
+    }
 }

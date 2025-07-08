@@ -181,4 +181,22 @@ class EvaluationModel extends BaseModel{
         return $row['total_records'];
     }
 
+    public function getIndividualEvaluationResultAdminSide($token){
+        $query = "
+            SELECT fe.*, eu.fullname AS faculty_name , eu.department AS faculty_dep, eu.photo AS faculty_img, eu.email AS faculty_email
+            FROM faculty_evaluation_summary fe
+            JOIN endusers eu ON fe.faculty_id = eu.code
+            WHERE fe.faculty_id = ?
+            ORDER BY fe.id DESC
+        ";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$token]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    }
+    
+    public function deleteEvaluationHistory($id) {
+        $stmt = $this->db->prepare("DELETE FROM `faculty_evaluation_summary` WHERE `id` = ?");
+        return $stmt->execute([$id]);
+    }
+
 }

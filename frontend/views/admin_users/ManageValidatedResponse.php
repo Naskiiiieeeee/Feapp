@@ -56,9 +56,16 @@ $total_pages = $vm->getFacultyEvaluationPagesAdmin($limit);
                       <td class=""><?= htmlspecialchars($row['faculty_department']); ?></td>
                       <td class=""><?= htmlspecialchars($row['created_at']); ?></td>
                       <td>
-                        <a href="ViewUnitFacultyEval?token=<?= urlencode($token); ?>" title="View">
+                        <a href="ViewEvaluationUnitHistory?token=<?= urlencode($token); ?>" title="View">
                           <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>
                         </a>
+                        <button type="button"
+                                class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
+                                id="<?= $row['id']; ?>"
+                                data-name="<?= htmlspecialchars($row['faculty_name']); ?>"
+                                title="Delete">
+                          <i class="fas fa-trash mx-2" aria-hidden="true"></i>
+                        </button>
                       </td>
                     </tr>
                   <?php endforeach; ?>
@@ -100,3 +107,55 @@ include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
 
+<script>
+  const BASE_URL = "<?= BASE_URL ?>";
+  $(document).ready(function () {
+    $(document).on('click', '.deleteuser', function () {
+      var id = $(this).attr('id');
+      var name = $(this).data('name') || "this user";
+
+      const msg = new SpeechSynthesisUtterance(`Are you sure you want to delete ${name}?`);
+      msg.lang = 'en-US';
+      msg.pitch = 1;
+      msg.rate = 1;
+      speechSynthesis.speak(msg);
+
+      setTimeout(() => {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: BASE_URL + '/api/api.evaluation.php',
+              type: 'POST',
+              data: { deleteUser: id },
+              success: function (data) {
+                if (data.trim() === "success") {
+                  Swal.fire({
+                    title: 'Success',
+                    icon: 'success',
+                    text: 'Faculty Evaluation deleted successfully.',
+                    showConfirmButton: false,
+                    timer: 2000,
+                  }).then(() => {
+                    window.location.reload();
+                  });
+                } else {
+                  Swal.fire("Error", "Failed to delete user", "error");
+                }
+              }
+            });
+          } else {
+            Swal.fire("Cancelled", "Delete operation cancelled", "info");
+          }
+        });
+      }, 500);
+    });
+  });
+</script>

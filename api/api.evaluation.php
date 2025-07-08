@@ -39,4 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-echo json_encode("invalid");
+// DELETE EVALUATION HISTORY
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteUser'])) {
+    $userId = $_POST['deleteUser'];
+    $result = $vm->deleteEvalHistory($userId);
+
+    if ($result) {
+        echo json_encode("success");
+    } else {
+        echo json_encode("error");
+    }
+    exit;
+}
