@@ -11,13 +11,13 @@ $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$facultyEvaluation = $vm->getPaginatedGroupBy($page_no, $limit);
-$total_pages = $vm->getPages($limit);
+$facultyEvaluation = $vm->getPaginatedIndividualResultAdmin($page_no, $limit);
+$total_pages = $vm->getFacultyEvaluationPagesAdmin($limit);
 ?>
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Faculty Evaluation Records</h1>
+    <h1>Uploaded Faculty Evaluation Result</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageViewUnitEvaluation">Unit Evaluation</a></li>
@@ -41,20 +41,22 @@ $total_pages = $vm->getPages($limit);
                     <th>Faculty ID</th>
                     <th>Faculty Name</th>
                     <th>Department</th>
+                    <th>Date Posted</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                 <?php if (!empty($facultyEvaluation)): ?>
                   <?php foreach ($facultyEvaluation as $row): ?>
-                    <?php $token = base64_encode($row['faculty_token'] . '|' . $row['faculty_token']); ?>
+                    <?php $token = base64_encode($row['faculty_id'] . '|' . $row['faculty_id']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_token']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['faculty_id']); ?></td>
                       <td class=""><?= htmlspecialchars($row['faculty_name']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_dep']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['faculty_department']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['created_at']); ?></td>
                       <td>
-                        <a href="ViewUnitEval?token=<?= urlencode($token); ?>" title="View">
+                        <a href="ViewUnitFacultyEval?token=<?= urlencode($token); ?>" title="View">
                           <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>
                         </a>
                       </td>

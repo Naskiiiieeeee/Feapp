@@ -137,7 +137,7 @@ class EvaluationModel extends BaseModel{
 
     
     public function getPaginatedIndividualResult($offset, $limit, $email) {
-        $query = "SELECT * FROM `faculty_evaluation_summary` WHERE `faculty_email` = :email LIMIT $offset, $limit";
+        $query = "SELECT * FROM `faculty_evaluation_summary` WHERE `faculty_email` = :email ORDER BY id DESC LIMIT $offset, $limit";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
@@ -164,6 +164,21 @@ class EvaluationModel extends BaseModel{
         $stmt = $this->db->prepare($query);
         $stmt->execute([$token, $email]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    }
+
+    public function getPaginatedIndividualResultAdminSide($offset, $limit) {
+        $query = "SELECT * FROM `faculty_evaluation_summary` ORDER BY id DESC LIMIT $offset, $limit";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countfacultyEvaluationAdminSide(){
+        $query = "SELECT COUNT(*) as total_records FROM `faculty_evaluation_summary`";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_records'];
     }
 
 }

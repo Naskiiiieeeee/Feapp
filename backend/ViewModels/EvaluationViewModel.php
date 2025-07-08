@@ -61,4 +61,15 @@ class EvaluationViewModel {
     public function getIndiEvaluationResult($token, $email){
         return $this->model->getIndividualEvaluationResult($token,$email);
     }
+
+    // for admin view
+    public function getPaginatedIndividualResultAdmin($page = 1, $limit = 4){
+        $offset = ($page -  1 ) * $limit;
+        return $this->model->getPaginatedIndividualResultAdminSide($offset,$limit);
+    }
+
+    public function getFacultyEvaluationPagesAdmin($limit = 4){
+        $totalRecords = $this->model->countfacultyEvaluationAdminSide();
+        return ceil($totalRecords / $limit);
+    }
 }

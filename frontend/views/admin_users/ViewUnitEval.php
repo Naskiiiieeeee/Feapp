@@ -48,6 +48,7 @@ foreach ($facultyData as $row) {
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageViewUnitEvaluation">Unit Evaluation</a></li>
         <li class="breadcrumb-item active"><a href="ViewFacultyEvalResult">Individual Faculty Result</a></li>
+        <li class="breadcrumb-item active"><a href="ManageValidatedResponse">Uploaded Evaluation History</a></li>
       </ol>
     </nav>
   </div>
@@ -407,7 +408,7 @@ $(document).ready(function () {
             timer: 2000,
             showConfirmButton: false
             }).then(() => {
-            location.href = 'ViewFacultyEvalResult';
+            location.href = 'ManageValidatedResponse';
             });
 
         } else if (response === "recent_exists") {
