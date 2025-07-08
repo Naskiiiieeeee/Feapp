@@ -337,6 +337,8 @@ $(document).ready(function () {
     }
   });
 
+  $("#postFacultyData input[name^='AiRecommendations'], #postFacultyData input[name^='FeedbacksStrengths'], #postFacultyData input[name^='FeedbackImprovements'], #postFacultyData input[name^='FeedbackComments']").remove();
+
   // Multiple values → add as hidden inputs to form
     $(".AiRecommendations").each(function () {
         const value = $(this).text().replace("*", "").trim();
