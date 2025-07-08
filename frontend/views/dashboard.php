@@ -47,86 +47,12 @@ foreach ($facultyRanking as $row) {
               <?php 
                 // if($role == "Admin"){ 
                 ?>
-
               <div class="row">
                 <!-- Sales Card -->
-
-
                   <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card sales-card">
-                      <div class="card-body">
-                        <h5 class="card-title">Number of <span>| Faculty</span></h5>
-                        <div class="d-flex align-items-center">
-                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="bi bi-people"></i>
-                          </div>
-                          <div class="ps-3">
-                          <?php 
-                            if($totalFaculty):
-                          ?>
-                            <h6 class="mb-0"> <?= htmlspecialchars($totalFaculty);?></h6>
-                          <?php else:?>
-                            <h6 class="mb-0">No Registered Faculty</h6>
-                          <?php endif;?>
-                            <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+
                   </div>
                   <!-- End Sales Card -->
-
-                    <!-- Revenue Card -->
-                    <div class="col-xxl-4 col-md-6">
-                      <div class="card info-card revenue-card">
-                        <div class="card-body">
-                          <h5 class="card-title">Number of <span>| Administrators</span></h5>
-                          <div class="d-flex align-items-center">
-                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                              <i class="bi bi-bookmarks"></i>
-                            </div>
-                            <div class="ps-3">
-                              <?php 
-                                if($totalAdmin):
-                              ?>
-                                <h6 class="mb-0"> <?= htmlspecialchars($totalAdmin);?></h6>
-                              <?php else:?>
-                                <h6 class="mb-0">No Registered Admin</h6>
-                              <?php endif;?>
-                              <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                <!-- End Revenue Card -->
-
-                <!-- Customers Card -->
-                    <div class="col-xxl-4 col-xl-12">
-                      <div class="card info-card customers-card">
-                        <div class="card-body">
-                          <h5 class="card-title">Registered <span>| Student</span></h5>
-                          <div class="d-flex align-items-center">
-                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                              <i class="bi bi-boxes"></i>
-                            </div>
-                            <div class="ps-3">
-                              <?php 
-                                if($totalStudent):
-                              ?>
-                                <h6 class="mb-0"> <?= htmlspecialchars($totalStudent);?></h6>
-                              <?php else:?>
-                                <h6 class="mb-0">No Registered Admin</h6>
-                              <?php endif;?>
-                              <span class="text-danger small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                <!-- End Customers Card -->
-                <!-- Reports -->
-
                 <!-- Card Container -->
                 <div class="col-12">
                   <div class="card">
@@ -310,6 +236,89 @@ foreach ($facultyRanking as $row) {
 
         <!-- Right side columns -->
         <div class="col-lg-4">
+          <div class="card info-card sales-card">
+            <div class="card-body">
+              <h5 class="card-title">Number of <span>| Faculty</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-people"></i>
+                </div>
+                <div class="ps-3">
+                <?php 
+                  if($totalFaculty):
+                ?>
+                  <h6 class="mb-0"> <?= htmlspecialchars($totalFaculty);?></h6>
+                <?php else:?>
+                  <h6 class="mb-0">No Registered Faculty</h6>
+                <?php endif;?>
+                  <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card info-card customers-card">
+            <div class="card-body">
+              <h5 class="card-title">Registered <span>| Student</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-boxes"></i>
+                </div>
+                <div class="ps-3">
+                  <?php 
+                    if($totalStudent):
+                  ?>
+                    <h6 class="mb-0"> <?= htmlspecialchars($totalStudent);?></h6>
+                  <?php else:?>
+                    <h6 class="mb-0">No Registered Admin</h6>
+                  <?php endif;?>
+                  <span class="text-danger small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card info-card revenue-card">
+            <div class="card-body">
+              <h5 class="card-title">Number of <span>| Administrators</span></h5>
+              <div class="d-flex align-items-center">
+                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-bookmarks"></i>
+                </div>
+                <div class="ps-3">
+                  <?php 
+                    if($totalAdmin):
+                  ?>
+                    <h6 class="mb-0"> <?= htmlspecialchars($totalAdmin);?></h6>
+                  <?php else:?>
+                    <h6 class="mb-0">No Registered Admin</h6>
+                  <?php endif;?>
+                  <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card info-card sales-card <?= $card_glow_class; ?>">
+              <div class="card-body">
+                  <h5 class="card-title text-center">Pending Download<span> | Request</span></h5>
+                  <div class="d-flex align-items-center justify-content-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-cloud-arrow-down"></i>
+                      </div>
+                      <div class="ps-3">
+                          <h6 class="mb-0">
+                            <!-- <?= $user_total > 0 ? $user_total : 'No Pending Request'; ?> -->
+                        </h6>
+                        <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
+                      </div>
+                  </div>
+              </div>
+              <div class="card-footer bg-secondary-subtle">
+                <a href="#" class="btn btn-sm btn-success text-white d-flex align-items-center justify-content-center"><i class="bi bi-eye mx-1"></i> View List</a>
+              </div>
+          </div>
+
           <div class="card">
                 <div class="card-body pb-0">
                   <h5 class="card-title">Data Security<span>| News</span></h5>
@@ -333,25 +342,6 @@ foreach ($facultyRanking as $row) {
               </div>
           </div>
 
-          <div class="card info-card sales-card <?= $card_glow_class; ?>">
-            <div class="card-body">
-                <h5 class="card-title text-center">Pending Download<span> | Request</span></h5>
-                <div class="d-flex align-items-center justify-content-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-cloud-arrow-down"></i>
-                    </div>
-                    <div class="ps-3">
-                        <h6 class="mb-0">
-                          <!-- <?= $user_total > 0 ? $user_total : 'No Pending Request'; ?> -->
-                      </h6>
-                      <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer bg-secondary-subtle">
-              <a href="adminmanagerequest" class="btn btn-sm btn-success text-white d-flex align-items-center justify-content-center"><i class="bi bi-eye mx-1"></i> View List</a>
-            </div>
-        </div>
         <!-- End News & Updates -->
       </div>
       </div>
