@@ -39,5 +39,8 @@ class EvaluationViewModel {
     public function getunitEvaluationResult($token){
         return $this->model->getEvaluationResult($token);
     }
-    
+    public function saveEvaluationSummary($postData){
+        return $this->model->saveEvaluationSummary($postData);
+    }
+        
 }
