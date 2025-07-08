@@ -19,7 +19,7 @@ include_once __DIR__ . '/../../components/sidebar.php';
     <div class="row">
         <form id="AddForm" method="post" enctype="multipart/form-data">
             <div class="row mb-3">
-                <label for="" class="col-md-4 col-lg-3 col-form-label">Upload CSV File</label>
+                <label for="" class="col-md-4 col-lg-3 col-form-label">Upload File <strong>(CSV format ONLY)</strong></label>
                 <div class="col-md-8 col-lg-9">
                     <input type="file" name="studentCSV" id="" class="form-control" required>
                 </div>
@@ -55,19 +55,22 @@ $('#AddForm').submit(function (e) {
     processData: false,
     dataType: 'json',
     success: function (response) {
-      if (response === "added") {
+    if (response === "added" || response.status === "added") {
+        let inserted = response.inserted || 0;
+        let duplicates = response.duplicates || 0;
+
         Swal.fire({
-          icon: 'success',
-          title: 'Student Added',
-          text: 'Student Informations successfully added!',
-          timer: 2000,
-          showConfirmButton: false
+        icon: 'success',
+        title: 'Upload Completed',
+        html: `Inserted: ${inserted}<br>Duplicates Skipped: ${duplicates}`,
+        timer: 3000,
+        showConfirmButton: false
         }).then(() => {
-          location.href = 'ManageStudentView';
+        location.href = 'ManageStudentView';
         });
-      } else {
-        Swal.fire('Warning', 'Duplicate Student Email', "error");
-      }
+    } else {
+        Swal.fire('Warning', response.message || 'Duplicate Student Email', "error");
+    }
     },
     error: function () {
       Swal.fire('Error', 'Server error. Try again.', "error");

@@ -50,3 +50,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveStudentProfile'
     }
     exit;
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['studentCSV'])) {
+    $response = $vm->uploadCSV($_FILES['studentCSV']);
+    echo json_encode($response['status'] === 'added' ? 'added' : $response);
+    exit;
+}
