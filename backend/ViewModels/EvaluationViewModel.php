@@ -47,4 +47,18 @@ class EvaluationViewModel {
     public function saveEvaluationSummary($data) {
         return $this->model->saveEvaluationSummary($data);
     }
+    // for faculty view
+
+    public function getPaginatedIndividualResult($page = 1, $limit = 4, $email){
+        $offset = ($page -  1 ) * $limit;
+        return $this->model->getPaginatedIndividualResult($offset,$limit,$email);
+    }
+
+    public function getFacultyEvaluationPages($limit = 4, $email){
+        $totalRecords = $this->model->countfacultyEvaluation($email);
+        return ceil($totalRecords / $limit);
+    }
+    public function getIndiEvaluationResult($token, $email){
+        return $this->model->getIndividualEvaluationResult($token,$email);
+    }
 }

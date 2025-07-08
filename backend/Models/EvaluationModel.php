@@ -19,6 +19,7 @@ class EvaluationModel extends BaseModel{
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total_records'];
     }
+
     public function getPaginatedEvaluatedFaculty($offset, $limit, $email) {
         $query = "
             SELECT fe.*, eu.fullname AS faculty_name 
@@ -132,6 +133,37 @@ class EvaluationModel extends BaseModel{
         $stmt->execute([$facultyEmail]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total'] > 0;
+    }
+
+    
+    public function getPaginatedIndividualResult($offset, $limit, $email) {
+        $query = "SELECT * FROM `faculty_evaluation_summary` WHERE `faculty_email` = :email LIMIT $offset, $limit";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countfacultyEvaluation($email){
+        $query = "SELECT COUNT(*) as total_records FROM `faculty_evaluation_summary` WHERE `faculty_email` = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$email]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total_records'];
+    }
+    
+    public function getIndividualEvaluationResult($token, $email){
+        $query = "
+            SELECT fe.*, eu.fullname AS faculty_name , eu.department AS faculty_dep, eu.photo AS faculty_img, eu.email AS faculty_email
+            FROM faculty_evaluation_summary fe
+            JOIN endusers eu ON fe.faculty_id = eu.code
+            WHERE fe.faculty_id = ?
+            AND fe.faculty_email = ?
+            ORDER BY fe.id DESC
+        ";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$token, $email]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
     }
 
 }
