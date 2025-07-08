@@ -174,19 +174,18 @@ foreach ($facultyData as $row) {
             </div>
             <div class="card-footer bg-primary-subtle">
                 <form id="postFacultyData">
-                    <input type="text" name="FacultyName" class="form-control">
-                    <input type="text" name="FacultyDep" class="form-control">
-                    <input type="text" name="FacultyID" class="form-control">
-                    <input type="text" name="FacultyEmail" class="form-control">
-                    <input type="text" name="AiRecommendations[]" class="form-control">
-                    <input type="text" name="FeedbacksStrengths[]" class="form-control">
-                    <input type="text" name="FeedbackImprovements[]" class="form-control">
-                    <input type="text" name="FeedbackComments[]" class="form-control">
-
-                    <input type="text" name="AcadsRating" class="form-control">
-                    <input type="text" name="CoreValuesRating" class="form-control">
-                    <input type="text" name="OverallEvaluation" class="form-control">
-                    <input type="text" name="OverallRatings" class="form-control">
+                    <input type="hidden" name="FacultyName" class="form-control">
+                    <input type="hidden" name="FacultyDep" class="form-control">
+                    <input type="hidden" name="FacultyID" class="form-control">
+                    <input type="hidden" name="FacultyEmail" class="form-control">
+                    <input type="hidden" name="AiRecommendations[]" class="form-control">
+                    <input type="hidden" name="FeedbacksStrengths[]" class="form-control">
+                    <input type="hidden" name="FeedbackImprovements[]" class="form-control">
+                    <input type="hidden" name="FeedbackComments[]" class="form-control">
+                    <input type="hidden" name="AcadsRating" class="form-control">
+                    <input type="hidden" name="CoreValuesRating" class="form-control">
+                    <input type="hidden" name="OverallEvaluation" class="form-control">
+                    <input type="hidden" name="OverallRatings" class="form-control">
                     <button type="submit" name="btnSaveEvaluations" class="btn btn-primary"><i class="bi bi-upload"></i> Upload now !</button>
                 </form>
             </div>
@@ -397,21 +396,29 @@ $(document).ready(function () {
       contentType: false,
       processData: false,
       dataType: 'json',
-      success: function (response) {
+        success: function (response) {
         if (response === "added") {
-          Swal.fire({
+            Swal.fire({
             icon: 'success',
             title: 'Faculty Evaluation',
             text: 'Evaluation has been posted successfully!',
             timer: 2000,
             showConfirmButton: false
-          }).then(() => {
+            }).then(() => {
             location.href = 'ViewFacultyEvalResult';
-          });
+            });
+
+        } else if (response === "recent_exists") {
+            Swal.fire({
+            icon: 'warning',
+            title: 'Duplicate Evaluation',
+            text: 'Only one evaluation summary can be submitted every 6 months for this faculty.',
+            });
+
         } else {
-          Swal.fire('Error', 'Duplicate for this year evaluation', 'error');
+            Swal.fire('Error', 'Something went wrong while saving.', 'error');
         }
-      },
+        },
       error: function () {
         Swal.fire('Error', 'Server error. Try again.', 'error');
       }

@@ -93,11 +93,13 @@ class EvaluationModel extends BaseModel{
             INSERT INTO faculty_evaluation_summary (
                 faculty_id, faculty_name, faculty_email, faculty_department,
                 academic_rating, core_values_rating, overall_evaluation, overall_rating,
-                ai_recommendations, feedback_strengths, feedback_improvements, feedback_comments
+                ai_recommendations, feedback_strengths, feedback_improvements, feedback_comments,
+                created_at
             ) VALUES (
-                :faculty_id, :faculty_name, :faculty_email, :faculty_department,
-                :academic_rating, :core_values_rating, :overall_evaluation, :overall_rating,
-                :ai_recommendations, :feedback_strengths, :feedback_improvements, :feedback_comments
+                :faculty_id, :faculty_name, :faculty_email, :faculty_dep,
+                :acad, :core, :overall, :rating,
+                :recommendations, :strengths, :improvements, :comments,
+                NOW()
             )
         ";
 
@@ -106,29 +108,28 @@ class EvaluationModel extends BaseModel{
             ':faculty_id' => $data['FacultyID'],
             ':faculty_name' => $data['FacultyName'],
             ':faculty_email' => $data['FacultyEmail'],
-            ':faculty_department' => $data['FacultyDep'],
-
-            ':academic_rating' => $data['AcadsRating'],
-            ':core_values_rating' => $data['CoreValuesRating'],
-            ':overall_evaluation' => $data['OverallEvaluation'],
-            ':overall_rating' => $data['OverallRatings'],
-
-            ':ai_recommendations' => json_encode($data['AiRecommendations']),
-            ':feedback_strengths' => json_encode($data['FeedbacksStrengths']),
-            ':feedback_improvements' => json_encode($data['FeedbackImprovements']),
-            ':feedback_comments' => json_encode($data['FeedbackComments']),
+            ':faculty_dep' => $data['FacultyDep'],
+            ':acad' => $data['AcadsRating'],
+            ':core' => $data['CoreValuesRating'],
+            ':overall' => $data['OverallEvaluation'],
+            ':rating' => $data['OverallRatings'],
+            ':recommendations' => implode(", ", $data['AiRecommendations']),
+            ':strengths' => implode(" | ", $data['FeedbacksStrengths']),
+            ':improvements' => implode(" | ", $data['FeedbackImprovements']),
+            ':comments' => implode(" | ", $data['FeedbackComments']),
         ]);
     }
 
-    public function hasRecentSummary($facultyEmail, $months = 6) {
+
+    public function hasRecentEvaluation($facultyEmail) {
         $query = "
             SELECT COUNT(*) as total 
-            FROM evaluation_summaries 
+            FROM faculty_evaluation_summary 
             WHERE faculty_email = ? 
-            AND created_at >= DATE_SUB(NOW(), INTERVAL ? MONTH)
+            AND created_at >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
         ";
         $stmt = $this->db->prepare($query);
-        $stmt->execute([$facultyEmail, $months]);
+        $stmt->execute([$facultyEmail]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total'] > 0;
     }

@@ -39,11 +39,12 @@ class EvaluationViewModel {
     public function getunitEvaluationResult($token){
         return $this->model->getEvaluationResult($token);
     }
-    public function saveEvaluationSummary($postData){
-        return $this->model->saveEvaluationSummary($postData);
+    
+    public function checkIfCanSubmit($email) {
+        return !$this->model->hasRecentEvaluation($email);
     }
 
-    public function checkIfCanSubmit($facultyEmail) {
-        return !$this->model->hasRecentSummary($facultyEmail);
+    public function saveEvaluationSummary($data) {
+        return $this->model->saveEvaluationSummary($data);
     }
 }

@@ -1,6 +1,5 @@
 <?php
 require_once '../backend/ViewModels/EvaluationViewModel.php';
-
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -22,7 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Save to DB
+        $facultyEmail = $_POST['FacultyEmail'];
+
+        if (!$vm->checkIfCanSubmit($facultyEmail)) {
+            echo json_encode("recent_exists");
+            exit;
+        }
+
         $isSaved = $vm->saveEvaluationSummary($_POST);
 
         if ($isSaved) {
