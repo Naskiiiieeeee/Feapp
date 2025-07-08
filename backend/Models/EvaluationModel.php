@@ -77,7 +77,7 @@ class EvaluationModel extends BaseModel{
 
     public function getEvaluationResult($token){
         $query = "
-            SELECT fe.*, eu.fullname AS faculty_name , eu.department AS faculty_dep, eu.photo AS faculty_img
+            SELECT fe.*, eu.fullname AS faculty_name , eu.department AS faculty_dep, eu.photo AS faculty_img, eu.email AS faculty_email
             FROM faculty_evaluations fe
             JOIN endusers eu ON fe.faculty_token = eu.code
             WHERE fe.faculty_token = ?

@@ -59,8 +59,10 @@ foreach ($facultyData as $row) {
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
         <?php if ($firstRow): ?>
             <img src="<?= BASE_URL ?>/<?= htmlspecialchars($firstRow['faculty_img']) ?>" alt="Profile" class="rounded-circle" width="150">
-            <h2><?= htmlspecialchars($firstRow['faculty_name']) ?></h2>
-            <h3><?= htmlspecialchars($firstRow['faculty_dep']) ?></h3>
+            <h2 id="FacultyName"><?= htmlspecialchars($firstRow['faculty_name']) ?></h2>
+            <h3 id="FacultyID"><?= htmlspecialchars($firstRow['faculty_token']) ?></h3>
+            <h3 id="FacultyDep"><?= htmlspecialchars($firstRow['faculty_dep']) ?></h3>
+            <h3 id="FacultyEmail"><?= htmlspecialchars($firstRow['faculty_email']) ?></h3>
         <?php else: ?>
             <p class="text-danger">User not found or invalid token.</p>
         <?php endif; ?>
@@ -97,7 +99,7 @@ foreach ($facultyData as $row) {
                         <?php foreach ($uniqueRecommendations as $rec): ?>
                             <?php $count = $recommendationCount[$rec] ?? 0; ?>
                             <tr>
-                                <td>* <?= htmlspecialchars($rec) ?></td>
+                                <td class="AiRecommendations">* <?= htmlspecialchars($rec) ?></td>
                                 <td><?= $count ?> mention<?= $count > 1 ? 's' : '' ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -125,7 +127,6 @@ foreach ($facultyData as $row) {
                     
                     <?php if (!empty($facultyData)): ?>
                         <?php
-                        // Aggregate scores
                         $academicTotal = 0;
                         $coreValuesTotal = 0;
                         $overallTotal = 0;
@@ -146,22 +147,22 @@ foreach ($facultyData as $row) {
 
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 label"><i class="bi bi-bar-chart"></i> Academic Rating:</div>
-                            <div class="col-lg-8 col-md-8"><?= number_format($academicAvg, 2) ?> / 5.00</div>
+                            <div class="col-lg-8 col-md-8" id="AcadsRating"><?= number_format($academicAvg, 2) ?> / 5.00</div>
                         </div>
 
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 label"><i class="bi bi-heart-pulse"></i> Core Values Rating:</div>
-                            <div class="col-lg-8 col-md-8"><?= number_format($coreValuesAvg, 2) ?> / 5.00</div>
+                            <div class="col-lg-8 col-md-8" id="CoreValuesRating"><?= number_format($coreValuesAvg, 2) ?> / 5.00</div>
                         </div>
 
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 label"><i class="bi bi-award"></i> Overall Evaluation:</div>
-                            <div class="col-lg-8 col-md-8"><?= number_format($overallAvg, 2) ?> / 5.00</div>
+                            <div class="col-lg-8 col-md-8" id="OverallEvaluation"><?= number_format($overallAvg, 2) ?> / 5.00</div>
                         </div>
 
                         <div class="row mb-2">
                             <div class="col-lg-4 col-md-4 label"><i class="bi bi-star-half"></i> Overall Rating:</div>
-                            <div class="col-lg-8 col-md-8"><?= number_format($overallRatings, 2) ?> / 5.00</div>
+                            <div class="col-lg-8 col-md-8" id="OverallRatings"><?= number_format($overallRatings, 2) ?> / 5.00</div>
                         </div>
                         
 
@@ -171,7 +172,23 @@ foreach ($facultyData as $row) {
                     </div>
                 </div>
             </div>
-            <div class="card-footer bg-primary-subtle"></div>
+            <div class="card-footer bg-primary-subtle">
+                <form id="postFacultyData">
+                    <input type="text" name="FacultyName" class="form-control">
+                    <input type="text" name="FacultyDep" class="form-control">
+                    <input type="text" name="FacultyID" class="form-control">
+                    <input type="text" name="FacultyEmail" class="form-control">
+                    <input type="text" name="AiRecommendations[]" class="form-control">
+                    <input type="text" name="FeedbacksStrengths[]" class="form-control">
+                    <input type="text" name="FeedbackImprovements[]" class="form-control">
+                    <input type="text" name="FeedbackComments[]" class="form-control">
+
+                    <input type="text" name="AcadsRating" class="form-control">
+                    <input type="text" name="CoreValuesRating" class="form-control">
+                    <input type="text" name="OverallEvaluation" class="form-control">
+                    <input type="text" name="OverallRatings" class="form-control">
+                </form>
+            </div>
         </div>
     </div>
 
@@ -198,8 +215,6 @@ foreach ($facultyData as $row) {
           $overallRatings = ($academicAvg + $coreValuesAvg + $overallAvg) / 3;
           ?>
           <canvas id="evaluationBarChart" width="400" height="300"></canvas>
-
-
           <?php else: ?>
               <div class="text-center">No evaluation data found.</div>
           <?php endif; ?>
@@ -234,9 +249,9 @@ foreach ($facultyData as $row) {
                         <?php if (!empty($facultyData)): ?>
                             <?php foreach ($facultyData as $row): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($row['feedback_strengths']) ?></td>
-                                    <td><?= htmlspecialchars($row['feedback_improvements']) ?></td>
-                                    <td><?= htmlspecialchars($row['feedback_comments']) ?></td>
+                                    <td class="FeedbacksStrengths"><?= htmlspecialchars($row['feedback_strengths']) ?></td>
+                                    <td class="FeedbackImprovements"><?= htmlspecialchars($row['feedback_improvements']) ?></td>
+                                    <td class="FeedbackComments"><?= htmlspecialchars($row['feedback_comments']) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -306,3 +321,115 @@ const evaluationChart = new Chart(ctx, {
     }
 });
 </script>
+<script>
+
+const BASE_URL = "<?= BASE_URL ?>";
+$(document).ready(function () {
+    $("[id]").each(function () {
+        const id = $(this).attr("id");
+        const text = $(this).text().trim();
+        const input = $("input[name='" + id + "']");
+        if (input.length > 0) {
+            const numeric = text.split(" /")[0].trim(); // Remove " / 5.00"
+            input.val(numeric);
+        }
+    });
+
+    // Handle multiple AiRecommendations (array data)
+    $(".AiRecommendations").each(function () {
+        const value = $(this).text().replace("*", "").trim();
+        $("<input>").attr({
+            type: "hidden",
+            name: "AiRecommendations[]",
+            value: value
+        }).appendTo("#postFacultyData");
+    });
+
+    $(".FeedbacksStrengths").each(function (){
+        const value = $(this).text().trim();
+        $("<input>").attr({
+            type: "hidden",
+            name: "FeedbacksStrengths[]",
+            value: value
+        }).appendTo("#postFacultyData");
+    });
+
+    
+    $(".FeedbackImprovements").each(function (){
+        const value = $(this).text().trim();
+        $("<input>").attr({
+            type: "hidden",
+            name: "FeedbackImprovements[]",
+            value: value
+        }).appendTo("#postFacultyData");
+    });
+
+    
+    $(".FeedbackComments").each(function (){
+        const value = $(this).text().trim();
+        $("<input>").attr({
+            type: "hidden",
+            name: "FeedbackComments[]",
+            value: value
+        }).appendTo("#postFacultyData");
+    });
+
+  $.ajax({
+    url: BASE_URL + '/api/api.evaluation.php',
+    type: 'POST',
+    data: $("#postFacultyData").serialize(),
+    contentType: false,
+    processData: false,
+    dataType: 'json',
+    success: function (response) {
+      if (response === "added") {
+        Swal.fire({
+          icon: 'success',
+          title: 'Faculty Evaluation',
+          text: 'Evaluation has been posted successfully!',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          location.href = 'ViewFacultyEvalResult';
+        });
+      } else {
+        Swal.fire('Error', 'Duplicate for this year evaluation', 'error');
+      }
+    },
+    error: function () {
+      Swal.fire('Error', 'Server error. Try again.', 'error');
+    }
+  });
+});
+</script>
+
+
+<!-- <script>
+$(document).ready(function () {
+    // Loop through all elements with an ID
+    $("[id]").each(function () {
+        const id = $(this).attr("id");
+        const text = $(this).text().trim();
+
+        // Try to find a matching input with the same name
+        const input = $("input[name='" + id + "']");
+        if (input.length > 0) {
+            const numeric = text.split(" /")[0].trim(); // Optional: clean value
+            input.val(numeric);
+        }
+    });
+
+    // Optional: Submit the form via AJAX
+    $.ajax({
+        url: 'your-handler.php', // Replace with actual handler
+        method: 'POST',
+        data: $("#postFacultyData").serialize(),
+        success: function (response) {
+            console.log("Server response:", response);
+        },
+        error: function () {
+            console.error("AJAX error.");
+        }
+    });
+});
+</script> -->
