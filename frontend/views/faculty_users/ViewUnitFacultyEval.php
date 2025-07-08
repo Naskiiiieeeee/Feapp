@@ -21,12 +21,54 @@ if (isset($_GET['token'])) {
 $firstRow = !empty($facultyData) ? $facultyData[0] : null;
 
 $uniqueRecommendations = [];
+$strengths = [];
+$improvements = [];
+$Comments = [];
 
 if (!empty($facultyData)) {
     foreach ($facultyData as $row) {
-        $rec = trim($row['ai_recommendations']);
-        if (!empty($rec) && !in_array($rec, $uniqueRecommendations)) {
-            $uniqueRecommendations[] = $rec;
+        $recList = explode(", ", $row['ai_recommendations']);
+        foreach ($recList as $rec) {
+            $rec = trim($rec);
+            if (!in_array($rec, $uniqueRecommendations)) {
+                $uniqueRecommendations[] = $rec;
+            }
+        }
+    }
+}
+
+if (!empty($facultyData)) {
+    foreach ($facultyData as $row) {
+        $strengthsList = explode(" | ", $row['feedback_strengths']);
+        foreach ($strengthsList as $rec) {
+            $rec = trim($rec);
+            if (!in_array($rec, $strengths)) {
+                $strengths[] = $rec;
+            }
+        }
+    }
+}
+
+if (!empty($facultyData)) {
+    foreach ($facultyData as $row) {
+        $improvementsList = explode(" | ", $row['feedback_improvements']);
+        foreach ($improvementsList as $rec) {
+            $rec = trim($rec);
+            if (!in_array($rec, $improvements)) {
+                $improvements[] = $rec;
+            }
+        }
+    }
+}
+
+if (!empty($facultyData)) {
+    foreach ($facultyData as $row) {
+        $commentList = explode(" | ", $row['feedback_comments']);
+        foreach ($commentList as $rec) {
+            $rec = trim($rec);
+            if (!in_array($rec, $Comments)) {
+                $Comments[] = $rec;
+            }
         }
     }
 }
@@ -84,9 +126,8 @@ if (!empty($facultyData)) {
                     </thead>
                     <tbody>
                         <?php foreach ($uniqueRecommendations as $rec): ?>
-                            <?php $count = $recommendationCount[$rec] ?? 0; ?>
                             <tr>
-                                <td class="">* <?= htmlspecialchars($rec) ?></td>
+                                <td><li><?= htmlspecialchars($rec)?></li> </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -113,22 +154,12 @@ if (!empty($facultyData)) {
                     
                     <?php if (!empty($facultyData)): ?>
                         <?php
-                        $academicTotal = 0;
-                        $coreValuesTotal = 0;
-                        $overallTotal = 0;
-                        $count = count($facultyData);
-
-                        foreach ($facultyData as $row) {
-                            $academicTotal += floatval($row['academic_rating']);
-                            $coreValuesTotal += floatval($row['core_values_rating']);
-                            $overallTotal += floatval($row['overall_evaluation']);
-                        }
-
-                        $academicAvg = $academicTotal / $count;
-                        $coreValuesAvg = $coreValuesTotal / $count;
-                        $overallAvg = $overallTotal / $count;
-
-                        $overallRatings = ($academicAvg + $coreValuesAvg + $overallAvg) / 3;
+                            foreach ($facultyData as $row) {
+                                $academicAvg = $row['academic_rating'];
+                                $coreValuesAvg = $row['core_values_rating'];
+                                $overallAvg = $row['overall_evaluation'];
+                                $overallRatings = $row['overall_rating'];
+                            }
                         ?>
 
                         <div class="row mb-2">
@@ -169,22 +200,12 @@ if (!empty($facultyData)) {
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
           <?php if (!empty($facultyData)): ?>
           <?php
-          $academicTotal = 0;
-          $coreValuesTotal = 0;
-          $overallTotal = 0;
-          $count = count($facultyData);
-
-          foreach ($facultyData as $row) {
-              $academicTotal += floatval($row['academic_rating']);
-              $coreValuesTotal += floatval($row['core_values_rating']);
-              $overallTotal += floatval($row['overall_evaluation']);
-          }
-
-          $academicAvg = $academicTotal / $count;
-          $coreValuesAvg = $coreValuesTotal / $count;
-          $overallAvg = $overallTotal / $count;
-
-          $overallRatings = ($academicAvg + $coreValuesAvg + $overallAvg) / 3;
+            foreach ($facultyData as $row) {
+                $academicAvg = $row['academic_rating'];
+                $coreValuesAvg = $row['core_values_rating'];
+                $overallAvg = $row['overall_evaluation'];
+                $overallRatings = $row['overall_rating'];
+            }
           ?>
           <canvas id="evaluationBarChart" width="400" height="300"></canvas>
           <?php else: ?>
@@ -221,9 +242,29 @@ if (!empty($facultyData)) {
                         <?php if (!empty($facultyData)): ?>
                             <?php foreach ($facultyData as $row): ?>
                                 <tr>
-                                    <td class="FeedbacksStrengths"><?= htmlspecialchars($row['feedback_strengths']) ?></td>
-                                    <td class="FeedbackImprovements"><?= htmlspecialchars($row['feedback_improvements']) ?></td>
-                                    <td class="FeedbackComments"><?= htmlspecialchars($row['feedback_comments']) ?></td>
+                                    <td class="FeedbacksStrengths">
+                                        <ul>
+                                            <?php foreach ($strengths as $s): ?>
+                                                <li><?= htmlspecialchars(trim($s)) ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>   
+                                    </td>
+                                    <td class="FeedbackImprovements">
+                                        <ul>
+                                            <?php foreach ($improvements as $i): ?>
+                                                <li><?= htmlspecialchars(trim($i)) ?></li>
+                                            <?php endforeach; ?>
+
+                                        </ul>
+                                    </td>
+                                    <td class="FeedbackComments">
+                                        <ul>
+                                            <?php foreach ($Comments as $c): ?>
+                                                <li><?= htmlspecialchars(trim($c)) ?></li>
+                                            <?php endforeach; ?>
+
+                                        </ul>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
