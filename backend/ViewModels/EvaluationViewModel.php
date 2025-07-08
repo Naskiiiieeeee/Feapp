@@ -42,5 +42,8 @@ class EvaluationViewModel {
     public function saveEvaluationSummary($postData){
         return $this->model->saveEvaluationSummary($postData);
     }
-        
+
+    public function checkIfCanSubmit($facultyEmail) {
+        return !$this->model->hasRecentSummary($facultyEmail);
+    }
 }
