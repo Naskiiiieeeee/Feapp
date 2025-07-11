@@ -1,10 +1,7 @@
 <?php
 require_once '../backend/ViewModels/UserAdminViewModel.php';
-
 header("Content-Type: application/json");
-
 $vm = new UserAdminViewModel();
-
 // DELETE ADMIN USER
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteUser'])) {
     $userId = $_POST['deleteUser'];
@@ -17,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteUser'])) {
     }
     exit;
 }
-
 // UPDATE STATUS
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])) {
     $id = $_POST['id'];
@@ -31,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])) {
     }
     exit;
 }
-
 // ADD NEW ADMIN
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile'])) {
     $fullname = $_POST['fullname'];
@@ -49,11 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile']
 
     $isDuplicate = $vm->getUserEmail($email);
     if(!$isDuplicate){
-
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
         }
-
         if (move_uploaded_file($photo['tmp_name'], $targetFile)) {
             $result = $vm->addNewAdmin($relativePath, $fullname, $email, $password, $department, $role, $code);
             echo json_encode($result ? "added" : "error");
@@ -65,5 +58,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile']
             echo json_encode("error");
     }
     exit;
-
 }
