@@ -424,82 +424,81 @@ foreach ($facultyRanking as $row) {
       <?php }else{?>
         <div class="col-lg-8">
           <div class="row">
-                            <div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Overall Faculty Semester Rankings<span> Evaluation Score</span></h5>
-                      <div class="row">
-                        <?php foreach ($facultyRanking as $i => $row): ?>
-                          <?php
-                            $facultyEmail = $row['email'];
-                            $historicalData = $vm->historyRatings($facultyEmail);
+              <div class="col-12 col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title"><?= $fullname;?><span> Evaluation Performance</span></h5>
+                    <div class="row">
+                      <?php
+                      $historicalData = $vm->historyRatings($email);
+                      $dates = [];
+                      $ratings = [];
 
-                            // Prepare data
-                            $dates = [];
-                            $ratings = [];
-
-                            foreach ($historicalData as $record) {
-                                $dates[] = date("M Y", strtotime($record['created_at']));
-                                $ratings[] = floatval($record['overall_rating']);
-                            }
-
-                            // Skip if no historical data
-                            if (empty($dates)) continue;
-                          ?>
-                          <div class="col-md-6 mb-4">
-                            <div class="card text-center shadow-sm">
-                              <div class="card-body">
-                                <h6 class="mb-2"><?= htmlspecialchars($row['fullname']) ?></h6>
-                                <canvas id="facultyLineChart<?= $i ?>" height="200"></canvas>
-                              </div>
-                            </div>
+                      foreach ($historicalData as $record) {
+                          $dates[] = date("M Y", strtotime($record['created_at']));
+                          $ratings[] = floatval($record['overall_rating']);
+                      }
+                      ?>
+                    <?php if (!empty($dates)): ?>
+                      <div class="card text-center shadow-sm w-100">
+                        <div class="card-body">
+                          <div style="position: relative; height: 300px;">
+                            <canvas id="facultyLineChart"></canvas>
                           </div>
+                        </div>
+                      </div>
 
-                          <script>
-                          document.addEventListener("DOMContentLoaded", () => {
-                            new Chart(document.getElementById("facultyLineChart<?= $i ?>"), {
-                              type: 'line',
-                              data: {
-                                labels: <?= json_encode($dates) ?>,
-                                datasets: [{
-                                  label: '<?= addslashes($row['fullname']) ?>',
-                                  data: <?= json_encode($ratings) ?>,
-                                  backgroundColor: 'rgba(46, 204, 113, 0.2)',
-                                  borderColor: 'rgba(46, 204, 113, 1)',
-                                  borderWidth: 2,
-                                  fill: true,
-                                  tension: 0.3,
-                                  pointBackgroundColor: '#2ecc71'
-                                }]
+                      <script>
+                      document.addEventListener("DOMContentLoaded", () => {
+                        new Chart(document.getElementById("facultyLineChart"), {
+                          type: 'line',
+                          data: {
+                            labels: <?= json_encode($dates) ?>,
+                            datasets: [{
+                              label: '<?= addslashes($fullname) ?>',
+                              data: <?= json_encode($ratings) ?>,
+                              backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                              borderColor: 'rgba(46, 204, 113, 1)',
+                              borderWidth: 2,
+                              fill: true,
+                              tension: 0.3,
+                              pointBackgroundColor: '#2ecc71'
+                            }]
+                          },
+                          options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                              y: {
+                                beginAtZero: true,
+                                max: 5
+                              }
+                            },
+                            plugins: {
+                              legend: {
+                                display: true
                               },
-                              options: {
-                                scales: {
-                                  y: {
-                                    beginAtZero: true,
-                                    max: 5
-                                  }
-                                },
-                                plugins: {
-                                  legend: {
-                                    display: true
-                                  },
-                                  tooltip: {
-                                    callbacks: {
-                                      label: function(ctx) {
-                                        return ctx.dataset.label + ": " + ctx.formattedValue + " / 5.00";
-                                      }
-                                    }
+                              tooltip: {
+                                callbacks: {
+                                  label: function(ctx) {
+                                    return ctx.dataset.label + ": " + ctx.formattedValue + " / 5.00";
                                   }
                                 }
                               }
-                            });
-                          });
-                          </script>
-                        <?php endforeach; ?>
+                            }
+                          }
+                        });
+                      });
+                      </script>
+                    <?php else: ?>
+                      <div class="col-md-6">
+                        <div class="alert alert-info">No evaluation data available yet.</div>
                       </div>
+                    <?php endif; ?>
                     </div>
                   </div>
                 </div>
+              </div>
           </div>
         </div>
         <div class="col-lg-4">
