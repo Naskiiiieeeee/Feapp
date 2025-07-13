@@ -43,11 +43,10 @@ foreach ($facultyRanking as $row) {
     <section class="section dashboard">
       <div class="row">
         <!-- Left side columns -->
-                       
+          <?php 
+            if($role == "Admin"){ 
+            ?>
           <div class="col-lg-8">
-              <?php 
-                // if($role == "Admin"){ 
-                ?>
               <div class="row">
                 <!-- Sales Card -->
                   <div class="col-xxl-4 col-md-6">
@@ -309,7 +308,7 @@ foreach ($facultyRanking as $row) {
                   </div>
                 </div>
               </div>
-        </div>
+          </div>
     <!-- End Left side columns -->
 
         <!-- Right side columns -->
@@ -422,6 +421,114 @@ foreach ($facultyRanking as $row) {
 
         <!-- End News & Updates -->
       </div>
+      <?php }else{?>
+        <div class="col-lg-8">
+          <div class="row">
+                            <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Overall Faculty Semester Rankings<span> Evaluation Score</span></h5>
+                      <div class="row">
+                        <?php foreach ($facultyRanking as $i => $row): ?>
+                          <?php
+                            $facultyEmail = $row['email'];
+                            $historicalData = $vm->historyRatings($facultyEmail);
+
+                            // Prepare data
+                            $dates = [];
+                            $ratings = [];
+
+                            foreach ($historicalData as $record) {
+                                $dates[] = date("M Y", strtotime($record['created_at']));
+                                $ratings[] = floatval($record['overall_rating']);
+                            }
+
+                            // Skip if no historical data
+                            if (empty($dates)) continue;
+                          ?>
+                          <div class="col-md-6 mb-4">
+                            <div class="card text-center shadow-sm">
+                              <div class="card-body">
+                                <h6 class="mb-2"><?= htmlspecialchars($row['fullname']) ?></h6>
+                                <canvas id="facultyLineChart<?= $i ?>" height="200"></canvas>
+                              </div>
+                            </div>
+                          </div>
+
+                          <script>
+                          document.addEventListener("DOMContentLoaded", () => {
+                            new Chart(document.getElementById("facultyLineChart<?= $i ?>"), {
+                              type: 'line',
+                              data: {
+                                labels: <?= json_encode($dates) ?>,
+                                datasets: [{
+                                  label: '<?= addslashes($row['fullname']) ?>',
+                                  data: <?= json_encode($ratings) ?>,
+                                  backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                                  borderColor: 'rgba(46, 204, 113, 1)',
+                                  borderWidth: 2,
+                                  fill: true,
+                                  tension: 0.3,
+                                  pointBackgroundColor: '#2ecc71'
+                                }]
+                              },
+                              options: {
+                                scales: {
+                                  y: {
+                                    beginAtZero: true,
+                                    max: 5
+                                  }
+                                },
+                                plugins: {
+                                  legend: {
+                                    display: true
+                                  },
+                                  tooltip: {
+                                    callbacks: {
+                                      label: function(ctx) {
+                                        return ctx.dataset.label + ": " + ctx.formattedValue + " / 5.00";
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            });
+                          });
+                          </script>
+                        <?php endforeach; ?>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card">
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Data Security<span>| News</span></h5>
+                  <div class="news">
+                      <div class="post-item clearfix">
+                        <img src="../src/assets/img/prosec.jpg" alt="">
+                        <h4><a href="#">Data Encryption</a></h4>
+                        <p>Maintain security of the system through timely security updates, fixes, and patches to ensure data privacy and timely responses to threats. Maintain playbooks with guidelines for decommissioning. Establish standardized third-party governance and ensure that stakeholders meet the required standards and requirements.</p>
+                      </div>
+                      <div class="post-item clearfix">
+                        <img src="../src/assets/img/prosales.png" alt="">
+                        <h4><a href="#">Realtime Fetching</a></h4>
+                        <p>Realtime fetching of results inevitably lead to greater profits. You need to increase your monthly sales volume, for example, to achieve greater profits. Profit margins are the most important barometer of a company's health, according to "Bloomberg Businessweek" online.</p>
+                      </div>
+                      <div class="post-item clearfix">
+                        <img src="../src/assets/img/prostock.jpg" alt="">
+                        <h4><a href="#">Data Storage</a></h4>
+                        <p>Investment product is the umbrella term for all the stocks, bonds, options, derivatives and other financial instruments that people put money into in hopes of earning profits.</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+        <!-- End News & Updates -->
+      </div>
+      <?php }?>
       </div>
     </section>
 </main>
