@@ -81,5 +81,11 @@ class EvaluationViewModel {
         return $this->model->deleteEvaluationHistory($id);
     }
 
+    public function fetchallFacultyRecommendation(){
+        return $this->model->getAllResultofRecommendationsFacultyside();
+    }
 
+    public function fetchIndividualFacultyRecommendations($id, $email){
+        return $this->model->getRecommendationsforeachSemesterFacultySide($id, $email);
+    }
 }
