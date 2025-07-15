@@ -97,4 +97,12 @@ class EvaluationViewModel {
     public function saveUploadedCertificate($data) {
         return $this->model->insertCertificate($data);
     }
+
+    public function getUpdateSummary($id){
+        return $this->model->getUpdateEvaluationSummary($id);
+    }
+
+    public function isExistCertificate($id){
+        return !empty($this->model->getCertificateById($id));
+    }
 }

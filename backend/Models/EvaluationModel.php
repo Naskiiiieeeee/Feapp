@@ -229,4 +229,16 @@ class EvaluationModel extends BaseModel{
         ]);
     }
 
+    public function getCertificateById($id){
+        $stmt = $this->db->prepare("SELECT * FROM `certificates` WHERE `certificate_id` = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getUpdateEvaluationSummary($id){
+        $status = 1;
+        $stmt = $this->db->prepare("UPDATE `faculty_evaluation_summary` SET `status` = ? WHERE `id` = ? ");
+        return $stmt->execute([$status, $id]);
+    }
+
 }

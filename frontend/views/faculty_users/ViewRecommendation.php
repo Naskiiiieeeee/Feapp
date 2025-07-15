@@ -60,7 +60,11 @@ $facultyRecommendationResults = $vm->fetchAllRecommendationsByEmail($email);
             </div>
             <div class="card-footer bg-primary-subtle">
               <strong><?= htmlspecialchars($rec['created_at']); ?></strong>
-              <a href="ComplyCertificates?token=<?= urlencode($token);?>" class="btn bg-success float-end"> <span class="badge bg-succes"> Comply now!</span></a>
+                <?php if($rec['status'] == 0):?>
+                  <a href="ComplyCertificates?token=<?= urlencode($token);?>" class="btn bg-success float-end"> <span class="badge bg-succes"> Comply now!</span></a>
+                <?php else:?>
+                  <strong class="float-end"><i class="bi bi-check-circle"></i> Completed</strong>
+                <?php endif;?>
             </div>
           </div>
         </div>
