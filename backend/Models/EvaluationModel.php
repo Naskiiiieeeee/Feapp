@@ -212,7 +212,7 @@ class EvaluationModel extends BaseModel{
     }
 
     public function getAllRecommendationsForFaculty($email){
-        $stmt = $this->db->prepare("SELECT * FROM `faculty_evaluation_summary` WHERE `faculty_email` = ?");
+        $stmt = $this->db->prepare("SELECT * FROM `faculty_evaluation_summary` WHERE `faculty_email` = ? ORDER BY `id` DESC");
         $stmt->execute([$email]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

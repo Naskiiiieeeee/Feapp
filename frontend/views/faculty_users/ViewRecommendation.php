@@ -50,6 +50,11 @@ $facultyRecommendationResults = $vm->fetchAllRecommendationsByEmail($email);
                     <?php endforeach; ?>
                   </tbody>
                 </table>
+                    <?php if($rec['status'] == 0):?>
+                        <span class="badge bg-warning fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>
+                    <?php else:?>
+                         <span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Completed</span>
+                    <?php endif;?>
               </div>
             </div>
             <div class="card-footer bg-primary-subtle">
