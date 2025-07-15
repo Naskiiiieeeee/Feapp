@@ -85,8 +85,8 @@ class EvaluationViewModel {
         return $this->model->getAllResultofRecommendationsFacultyside();
     }
 
-    public function fetchIndividualFacultyRecommendations($id, $email){
-        return $this->model->getRecommendationsforeachSemesterFacultySide($id, $email);
+    public function fetchIndividualFacultyRecommendations($id){
+        return $this->model->getRecommendationsforeachSemesterFacultySide($id);
     }
 
     public function fetchAllRecommendationsByEmail($email){

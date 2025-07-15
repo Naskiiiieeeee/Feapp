@@ -199,9 +199,9 @@ class EvaluationModel extends BaseModel{
         return $stmt->execute([$id]);
     }
 
-    public function getRecommendationsforeachSemesterFacultySide($id, $email){
-        $stmt = $this->db->prepare("SELECT * FROM `faculty_evaluation_summary` WHERE `id` = ? AND `faculty_email` = ? ");
-        $stmt->execute([$id, $email]);
+    public function getRecommendationsforeachSemesterFacultySide($id){
+        $stmt = $this->db->prepare("SELECT * FROM `faculty_evaluation_summary` WHERE `id` = ? ");
+        $stmt->execute([$id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC); 
     }
 

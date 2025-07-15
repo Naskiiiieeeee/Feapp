@@ -23,6 +23,7 @@ $facultyRecommendationResults = $vm->fetchAllRecommendationsByEmail($email);
       <?php foreach ($facultyRecommendationResults as $rec): ?>
         <?php
           $recommendations = explode(',', $rec['ai_recommendations']);
+          $token = base64_encode($rec['id'] . '|' . $rec['id']);
         ?>
         <div class="col-xl-6">
           <div class="card">
@@ -59,6 +60,7 @@ $facultyRecommendationResults = $vm->fetchAllRecommendationsByEmail($email);
             </div>
             <div class="card-footer bg-primary-subtle">
               <strong><?= htmlspecialchars($rec['created_at']); ?></strong>
+              <a href="ComplyCertificates?token=<?= urlencode($token);?>" class="btn bg-success float-end"> <span class="badge bg-succes"> Comply now!</span></a>
             </div>
           </div>
         </div>
