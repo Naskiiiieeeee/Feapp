@@ -84,8 +84,8 @@
       </li>
 
       <li class="nav-heading">AI Recommender</li>
-      <li class="nav-item <?= $current_page=='#' || $current_page=='#'  ? 'active' : null ?>">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item <?= $current_page=='ViewRecommendation' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/faculty_users/ViewRecommendation">
           <i class="bi bi-filetype-ai"></i>
           <span>System Recommendation</span>
         </a>
