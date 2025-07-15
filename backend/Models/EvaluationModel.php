@@ -217,4 +217,16 @@ class EvaluationModel extends BaseModel{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function insertCertificate($data){
+        $stmt = $this->db->prepare("INSERT INTO `certificates`(`seminar_title`, `seminar_name`, `certificate_path`, `faculty_email`, `faculty_name`, `certificate_id`) VALUES (?,?,?,?,?,?) ");
+        return $stmt->execute([
+            $data['seminar_title'],
+            $data['seminar_name'],
+            $data['certificate_path'],
+            $data['faculty_email'],
+            $data['faculty_name'],
+            $data['certificate_id']
+        ]);
+    }
+
 }

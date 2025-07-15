@@ -92,4 +92,9 @@ class EvaluationViewModel {
     public function fetchAllRecommendationsByEmail($email){
         return $this->model->getAllRecommendationsForFaculty($email);
     }
+
+    // for certificates
+    public function saveUploadedCertificate($data) {
+        return $this->model->insertCertificate($data);
+    }
 }

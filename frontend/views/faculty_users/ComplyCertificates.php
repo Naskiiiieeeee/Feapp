@@ -32,6 +32,11 @@ if (isset($_GET['token'])) {
   <form id="myForm" enctype="multipart/form-data">
     <section class="section profile">
       <div class="row">
+        <div>
+            <input type="hidden" name="faculty_email" value="<?= $email;?>">
+            <input type="hidden" name="fullname" value="<?= $fullname;?>">
+            <input type="hidden" name="CertificateID" value="<?= $code;?>">
+        </div>
         <?php if (is_array($facultyData) && count($facultyData) > 0): ?>
           <?php foreach ($facultyData as $rec): ?>
             <?php $recommendations = explode(',', $rec['ai_recommendations']); ?>
@@ -62,11 +67,7 @@ if (isset($_GET['token'])) {
 
                             <div id="uploadForm<?= $index ?>" class="mt-3" style="display: none;">
                               <div class="row mb-2">
-                                <div>
-                                    <input type="hidden" name="faculty_email" value="<?= $email;?>">
-                                    <input type="hidden" name="fullname" value="<?= $fullname;?>">
-                                    <input type="hidden" name="CertificateID" value="<?= $code;?>">
-                                </div>
+
                                 <div class="col-lg-6">
                                   <label>Certificate File</label>
                                   <input type="file" name="certificate[<?= $index ?>]" class="form-control">
@@ -173,7 +174,7 @@ document.getElementById('btnSaveCertificates').addEventListener('click', functio
     if (result.isConfirmed) {
       const formData = new FormData(form);
 
-      fetch( BASE_URL + '/api/api.evaluation.php', {
+      fetch( BASE_URL + '/api/api.certificates.php', {
         method: 'POST',
         body: formData
       })
