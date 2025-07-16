@@ -182,6 +182,10 @@ $username = $userData['username'];
             timer: 2000,
             showConfirmButton: false
           });
+            $('#resetPasswordForm')[0].reset();
+            $('#passwordMatchMsg').text('');
+            $('#submitBtn').prop('disabled', true);
+
         } else if(response.status === "passwordNotSave"){
           Swal.fire({
             icon: 'Warning',

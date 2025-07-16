@@ -48,24 +48,31 @@ class Helpers extends BaseModel{
             }
             $url = "http://localhost/feapp/frontend/Authentication/resetpassword?code=" . $code;
             $mail->Body = '
-            <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #0F828C; color: #fff;">
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <img src="cid:' . $cid . '" alt="Logo" style="height: 120px;"><br>
-                    <h2 style="color: #F2C078;">Reset Your Password</h2>
+            <div style="background-color: #f2f2f2; padding: 40px; font-family: Arial, sans-serif;">
+            <div style="max-width: 500px; margin: auto; background-color: #ffffff; border-radius: 12px; padding: 30px; box-shadow: 0 0 10px rgba(50, 205, 50, 0.3); border: 2px solid rgba(50, 205, 50, 0.4); position: relative;">
+                <div style="text-align: center;">
+                <img src="cid:' . $cid . '" alt="Logo" style="height: 80px; margin-bottom: 20px;">
+                <h2 style="color: #0F828C; margin: 10px 0;">Reset Your Password</h2>
                 </div>
-                <p style="text-align: center;">Dear User, ' . htmlspecialchars($emailTo) . '</p>
-                <p style="text-align: center;">We received a request to reset your password. If this was you, please click the button below to proceed.</p>
+                
+                <p style="text-align: center; font-size: 15px; color: #333;">Hi <strong>' . htmlspecialchars($emailTo) . '</strong>,</p>
+                <p style="text-align: center; font-size: 14px; color: #444;">
+                We received a request to reset your password. Please click the button below to continue.
+                </p>
 
                 <div style="text-align: center; margin: 30px 0;">
-                    <a href="' . $url . '" style="background-color: #F2C078; padding: 10px 20px; color: #0F828C; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                        Reset Password
-                    </a>
+                <a href="' . $url . '" 
+                    style="display: inline-block; background-color: #0F828C; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    Reset Password
+                </a>
                 </div>
 
-                <p style="text-align: center;">If you did not request a password reset, please ignore this email or contact support.</p>
-                <p style="text-align: center;">Regards,<br><strong>BOCS_APP Team</strong></p>
-                <hr style="border-color: #555;">
-                <small style="color: #aaa;">This is an automated message. Please do not reply.</small>
+                <p style="text-align: center; font-size: 13px; color: #666;">If you did not request this, please ignore this email or contact support.</p>
+                <p style="text-align: center; font-size: 13px; color: #666;">Regards,<br><strong>BOCS_APP Team</strong></p>
+
+                <hr style="margin-top: 20px; border: none; border-top: 1px solid #ddd;">
+                <p style="text-align: center; font-size: 11px; color: #aaa;">This is an automated message. Please do not reply.</p>
+            </div>
             </div>';
 
             $mail->send();

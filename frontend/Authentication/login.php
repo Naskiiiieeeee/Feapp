@@ -138,7 +138,8 @@ define('BASE_URL', '/feapp');
               text: 'Link has been sent to your email. Kindly Check it!',
               timer: 2000,
               showConfirmButton: false
-            })
+            });
+            $('#resetPassword')[0].reset();
           } else {
             Swal.fire('Error', 'Failed to process email notification!', "error");
           }
