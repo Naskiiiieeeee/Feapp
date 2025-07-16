@@ -10,14 +10,19 @@ class UserPasswordModel extends Helpers{
     }
 
     public function getUserCredentials($email){
-        $stmt = $this->db->prepare("SELECT * FROM `endusers` WHERE `email` = ? ");
+        $stmt = $this->db->prepare("SELECT `email` AS userEmail FROM `endusers` WHERE `email` = ? ");
         $stmt->execute([$email]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function setNewUserpassword($fetchEmail, $password){
+        $stmt = $this->db->prepare("SELECT * FROM `endusers` WHERE `email` = ? ");
+        $stmt->execute([$fetchEmail]);
         if($stmt->rowCount() > 0){
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $stmtfaculty = $this->db->prepare("UPDATE `endusers` SET `password` = ? WHERE `email` = ? ");
+            return $stmtfaculty->execute([$password,$fetchEmail]);
         }else{
-            $stmt1 = $this->db->prepare("SELECT * FROM `student_info` WHERE `student_email` = ?");
-            $stmt1->execute([$email]);
-            return $stmt1->fetchAll(PDO::FETCH_ASSOC);
+            return false;
         }
     }
 }

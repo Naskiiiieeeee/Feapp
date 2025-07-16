@@ -20,10 +20,7 @@ class Helpers extends BaseModel{
         $stmt->bindParam('code', $code);
         $stmt->bindParam('username',$emailTo);
         if (!$stmt->execute()) {
-            return [
-                'message' => 'Database error while generating reset code.',
-                'status' => 'error'
-            ];
+            return false;
         }
         try {
             $mail->isSMTP();
@@ -68,14 +65,9 @@ class Helpers extends BaseModel{
             </div>';
 
             $mail->send();
-            return [
-                'status' => 'success'
-            ];
+            return true;
         } catch (Exception $e) {
-            return [
-                'message' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}",
-                'status' => 'error'
-            ];
+            return false;
         }
     }
     public function randomStringGenerator($length = 8) {

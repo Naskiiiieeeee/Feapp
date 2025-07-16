@@ -15,4 +15,8 @@ class UserPasswordViewModel {
     public function getUsersFullDetails($email){
         return $this->model->getUserCredentials($email);
     }
+
+    public function setnewpassword($email, $pass){
+        return $this->model->setNewUserpassword($email,$pass);
+    }
 }

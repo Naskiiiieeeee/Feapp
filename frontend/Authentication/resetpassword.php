@@ -15,6 +15,9 @@ foreach($userData as $row){
     $username = $row['username'];
 }
 
+// add a count of save username on resetpassword, make sure deleted.
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -177,17 +180,25 @@ foreach($userData as $row){
         if (response.status === "success") {
           Swal.fire({
             icon: 'success',
-            title: 'Request Password',
-            text: 'Link has been sent to your email. Kindly Check it!',
+            title: 'Password Updated',
+            text: 'Kindly login to our system and insert your new password. Thanks!',
             timer: 2000,
             showConfirmButton: false
           });
-        } else {
-          Swal.fire('Error', 'Failed to process email notification!', "error");
+        } else if(response.status === "passwordNotSave"){
+          Swal.fire({
+            icon: 'Warning',
+            title: 'Failed to save new password!',
+            text: 'Please try again. Thanks!',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        }else {
+          Swal.fire('Error', 'Email not found in our database!', "error");
         }
       },
       error: function () {
-        Swal.fire('Error', 'Server error. Try again.', 'error');
+        Swal.fire('Error', 'Server error. Try again.', "error");
       }
     });
   });
