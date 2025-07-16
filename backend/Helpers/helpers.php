@@ -6,8 +6,8 @@ use PHPMailer\PHPMailer\SMTP;
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
-require_once __DIR__ . '/../Core/BaseModel.php';
 
+require_once __DIR__ . '/../Core/BaseModel.php';
 
 class Helpers extends BaseModel{
     
@@ -77,6 +77,19 @@ class Helpers extends BaseModel{
                 'status' => 'error'
             ];
         }
+    }
+    public function randomStringGenerator($length = 8) {
+        return bin2hex(random_bytes($length / 2));
+    }
+
+    public function emailBlocker($email, $allowedDomain) {
+        if (!str_ends_with($email, $allowedDomain)) {
+            echo "<script>alert('Invalid Email Domain'); window.location='index.php';</script>";
+            exit;
+        }
+    }
+    public function clean_input($data) {
+        return htmlspecialchars(trim($data), ENT_QUOTES, 'UTF-8');
     }
 }
 
