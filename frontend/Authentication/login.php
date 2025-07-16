@@ -69,14 +69,14 @@ define('BASE_URL', '/feapp');
       </div>
         <div class="signup-form">
           <div class="title">Forget Password?</div>
-              <form action="#" method="post">
+              <form  id="resetPassword">
                   <div class="input-boxes">
                     <div class="input-box">
                     <i class="fas fa-envelope"></i>
                       <input type="email" name="email" placeholder="Email" required>
                     </div>
                     <div class="button input-box">
-                      <input type="submit" value="Sumbit" name="btnPreRegister" autofocus>
+                      <input type="submit" value="submit" name="btnForgetPassword" autofocus>
                     </div>
                     <div class="text sign-up-text">Proceed to <label for="flip">Log In</label></div>
                   </div>
@@ -90,13 +90,10 @@ define('BASE_URL', '/feapp');
   
   <script>
     const BASE_URL = "<?= BASE_URL ?>";
-
     $('#loginForm').submit(function (e) {
       e.preventDefault();
-
       const formData = new FormData(this);
       formData.append("btnLogin", true);
-
       $.ajax({
         url: BASE_URL + "/api/api.auth.php",
         type: "POST",
@@ -117,6 +114,37 @@ define('BASE_URL', '/feapp');
         },
         error: function () {
           Swal.fire("Error", "Server issue. Try again.", "error");
+        }
+      });
+    });
+
+      // AJAX reset password
+    $('#resetPassword').submit(function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      formData.append("btnForgetPassword", true); 
+      $.ajax({
+        url: BASE_URL + '/api/api.userforgetpassword.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function (response) {
+          if (response.status === "success") {
+            Swal.fire({
+              icon: 'success',
+              title: 'Request Password',
+              text: 'Link has been sent to your email. Kindly Check it!',
+              timer: 2000,
+              showConfirmButton: false
+            })
+          } else {
+            Swal.fire('Error', 'Failed to process email notification!', "error");
+          }
+        },
+        error: function () {
+          Swal.fire('Error', 'Server error. Try again.', 'error');
         }
       });
     });
