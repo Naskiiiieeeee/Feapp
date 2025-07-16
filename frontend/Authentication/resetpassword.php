@@ -1,5 +1,13 @@
 <?php
 define('BASE_URL', '/feapp');
+require_once __DIR__ . '/../../backend/ViewModels/DashboardViewModel.php';
+
+
+if (!isset($_GET["code"])) {
+    exit("Page in the link does not exist!");
+}
+$codes = $_GET["code"];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
