@@ -46,3 +46,19 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdatePassword'])){
     }
     exit;
 }
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnRecoverAccount'])){
+    $studentEmail = filter_input(INPUT_POST , 'studentID', FILTER_SANITIZE_SPECIAL_CHARS);
+    try{
+        $result = $vm->RecoveryAccount($studentEmail); 
+        if($result){
+            echo json_encode(["status" => "success"]);
+        }else{
+            echo json_encode(["status" => "accountNotFound"]);
+        }
+        exit;
+    }catch(Exception $e){
+        echo json_encode(["status" => "error", "message"=> $e->getMessage()]);
+    }
+    exit;
+}

@@ -63,21 +63,21 @@ define('BASE_URL', '/feapp');
                 <div class="button input-box">
                   <input type="submit" value="Submit" name="btnLogin">
                 </div>
-                <div class="text sign-up-text">Proceed to <label for="flip">Forget Password</label></div>
+                <div class="text sign-up-text">Proceed to <label for="flip">Account Recovery</label></div>
                 <div class="text sign-up-text">Login as <a href="<?= BASE_URL ?>/frontend/Authentication/login">Faculty</a></div>
               </div>
           </form>
       </div>
         <div class="signup-form">
-          <div class="title">Forget Password?</div>
-              <form action="action.php" method="post">
+          <div class="title">Recover your Account?</div>
+              <form id="RecoverAccount">
                   <div class="input-boxes">
                     <div class="input-box">
                     <i class="fas fa-envelope"></i>
-                      <input type="email" name="email" placeholder="Email" required>
+                      <input type="text" name="studentID" placeholder="Enter Student ID No." required>
                     </div>
                     <div class="button input-box">
-                      <input type="submit" value="Sumbit" name="btnPreRegister" autofocus>
+                      <input type="submit" value="Submit" name="btnRecoverAccount" autofocus>
                     </div>
                     <div class="text sign-up-text">Proceed to <label for="flip">Log In</label></div>
                   </div>
@@ -118,6 +118,38 @@ define('BASE_URL', '/feapp');
         },
         error: function () {
           Swal.fire("Error", "Server issue. Try again.", "error");
+        }
+      });
+    });
+
+    // AJAX reset password
+    $('#RecoverAccount').submit(function (e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      formData.append("btnRecoverAccount", true); 
+      $.ajax({
+        url: BASE_URL + '/api/api.userforgetpassword.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: 'json',
+        success: function (response) {
+          if (response.status === "success") {
+            Swal.fire({
+              icon: 'success',
+              title: 'Account Recovery',
+              text: 'We have sent your account details to the email address associated with your account. Could you check it?',
+              timer: 5000,
+              showConfirmButton: false
+            });
+            $('#RecoverAccount')[0].reset();
+          } else {
+            Swal.fire('Error', 'Account not found!', "error");
+          }
+        },
+        error: function () {
+          Swal.fire('Error', 'Server error. Try again.', 'error');
         }
       });
     });
