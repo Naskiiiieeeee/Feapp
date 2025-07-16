@@ -69,7 +69,7 @@ define('BASE_URL', '/feapp');
       </div>
         <div class="signup-form">
           <div class="title">Forget Password?</div>
-              <form action="action.php" method="post">
+              <form action="#" method="post">
                   <div class="input-boxes">
                     <div class="input-box">
                     <i class="fas fa-envelope"></i>
