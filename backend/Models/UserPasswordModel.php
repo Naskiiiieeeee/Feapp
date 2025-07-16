@@ -5,7 +5,8 @@ class UserPasswordModel extends Helpers{
 
     public function getRequestCredentials($code){
         $stmt = $this->db->prepare("SELECT * FROM `resetpassword` WHERE `code` = ? ");
-        return $stmt->execute([$code]);
+        $stmt->execute([$code]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 
