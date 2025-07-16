@@ -69,8 +69,8 @@ foreach($userData as $row){
               <div class="input-box">
                 <i class="fas fa-key"></i>
                 <input type="password" name="password" id="password" placeholder="Password" title="At least 8 characters, including numbers and symbols" required>
-                <input type="text" name="code" value="<?= $codes ?? '' ?>">
-                <input type="text" name="email" value="<?= $username ?? '' ?>">
+                <input type="hidden" name="code" value="<?= $codes ?? '' ?>">
+                <input type="hidden" name="email" value="<?= $username ?? '' ?>">
               </div>
               <div class="input-box">
                 <i class="fas fa-key"></i>
