@@ -94,12 +94,6 @@
       <li class="nav-heading">System Reports</li>
       <li class="nav-item">
         <a class="nav-link collapsed" href="#">
-          <i class="bi bi-file-earmark-bar-graph"></i>
-          <span>Overall Reports</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
           <i class="bi bi-file-earmark-lock"></i>
           <span>Print Evaluation Result</span>
         </a>
