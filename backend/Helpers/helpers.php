@@ -1,4 +1,6 @@
 <?php
+define('BASE_URL', 'http://localhost/feapp'); 
+
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -45,7 +47,7 @@ class Helpers extends BaseModel{
             if (file_exists($imagePath)) {
                 $mail->addEmbeddedImage($imagePath, $cid, 'logo.png');
             }
-            $url = "http://" . $_SERVER["HTTP_HOST"] . dirname($_SERVER["PHP_SELF"]) . "/resetpassword?code=$code";
+            $url = BASE_URL . "/frontend/Authentication/resetpassword?code=" . $code;
             $mail->Body = '
             <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #0F828C; color: #fff;">
                 <div style="text-align: center; margin-bottom: 20px;">
