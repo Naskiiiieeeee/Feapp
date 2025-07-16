@@ -11,4 +11,8 @@ class UserPasswordViewModel {
     public function getUserCredentials($code){
         return $this->model->getRequestCredentials($code);
     }
+
+    public function getUsersFullDetails($email){
+        return $this->model->getUserCredentials($email);
+    }
 }
