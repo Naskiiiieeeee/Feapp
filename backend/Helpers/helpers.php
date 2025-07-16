@@ -1,6 +1,4 @@
 <?php
-define('BASE_URL', 'http://localhost/feapp'); 
-
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

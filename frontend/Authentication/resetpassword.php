@@ -1,12 +1,19 @@
 <?php
 define('BASE_URL', '/feapp');
-require_once __DIR__ . '/../../backend/ViewModels/DashboardViewModel.php';
-
+require_once __DIR__ . '/../../backend/ViewModels/UserPasswordViewModel.php';
+$vm = new UserPasswordViewModel();
 
 if (!isset($_GET["code"])) {
     exit("Page in the link does not exist!");
 }
 $codes = $_GET["code"];
+$userData = null;
+
+$userData = $vm->getUserCredentials($codes);
+
+foreach($userData as $row){
+    $username = $row['username'];
+}
 
 ?>
 <!DOCTYPE html>
@@ -62,8 +69,8 @@ $codes = $_GET["code"];
               <div class="input-box">
                 <i class="fas fa-key"></i>
                 <input type="password" name="password" id="password" placeholder="Password" title="At least 8 characters, including numbers and symbols" required>
-                <input type="hidden" name="code" value="<?= $codes ?? '' ?>">
-                <input type="hidden" name="email" value="<?= $userAccount ?? '' ?>">
+                <input type="text" name="code" value="<?= $codes ?? '' ?>">
+                <input type="text" name="email" value="<?= $username ?? '' ?>">
               </div>
               <div class="input-box">
                 <i class="fas fa-key"></i>
