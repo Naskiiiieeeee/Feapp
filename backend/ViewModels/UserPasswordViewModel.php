@@ -8,7 +8,7 @@ class UserPasswordViewModel {
         $this->model = new UserPasswordModel();
     }
 
-    public function getUserCredentials($code){
+    public function getUserEmail($code){
         return $this->model->getRequestCredentials($code);
     }
 
@@ -18,5 +18,9 @@ class UserPasswordViewModel {
 
     public function setnewpassword($email, $pass){
         return $this->model->setNewUserpassword($email,$pass);
+    }
+
+    public function deleteDatainresetDB($code){
+        return $this->model->deleteSaveDataOnResetDB($code);
     }
 }

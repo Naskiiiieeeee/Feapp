@@ -21,7 +21,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnForgetPassword'])){
     exit;
 }
 
-
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdatePassword'])){
     $code = filter_input(INPUT_POST, 'code' , FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -30,10 +29,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdatePassword'])){
         $saveDatas = $userDatas->getUsersFullDetails($email);
         if($saveDatas){
             foreach($saveDatas as $row){
-                $fetchEmail = $row['userEmail'];
+                $fetchEmail = $row['email'];
             }
-            $setpassword = $userDatas->setnewpassword($email,$password);
+            $setpassword = $userDatas->setnewpassword($fetchEmail,$password);
             if($setpassword){
+                $userDatas->deleteDatainresetDB($code);
                 echo json_encode(["status" => "success"]);
             }else{
                 echo json_encode(["status" => "passwordNotSave"]);
@@ -44,4 +44,5 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdatePassword'])){
     }catch(Exception $e){
         echo json_encode(["status" => "error", "message" => $e->getMessage()]);
     }
+    exit;
 }

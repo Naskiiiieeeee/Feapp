@@ -6,11 +6,11 @@ class UserPasswordModel extends Helpers{
     public function getRequestCredentials($code){
         $stmt = $this->db->prepare("SELECT * FROM `resetpassword` WHERE `code` = ? ");
         $stmt->execute([$code]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getUserCredentials($email){
-        $stmt = $this->db->prepare("SELECT `email` AS userEmail FROM `endusers` WHERE `email` = ? ");
+        $stmt = $this->db->prepare("SELECT * FROM `endusers` WHERE `email` = ? ");
         $stmt->execute([$email]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -24,6 +24,11 @@ class UserPasswordModel extends Helpers{
         }else{
             return false;
         }
+    }
+
+    public function deleteSaveDataOnResetDB($code){
+        $stmt = $this->db->prepare("DELETE FROM `resetpassword` WHERE `code` = ? ");
+        return $stmt->execute([$code]);
     }
 }
 

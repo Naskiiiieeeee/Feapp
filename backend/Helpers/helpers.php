@@ -1,4 +1,5 @@
 <?php
+
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -20,7 +21,10 @@ class Helpers extends BaseModel{
         $stmt->bindParam('code', $code);
         $stmt->bindParam('username',$emailTo);
         if (!$stmt->execute()) {
-            return false;
+            return [
+                'message' => 'Database error while generating reset code.',
+                'status' => 'error'
+            ];
         }
         try {
             $mail->isSMTP();
@@ -42,7 +46,7 @@ class Helpers extends BaseModel{
             if (file_exists($imagePath)) {
                 $mail->addEmbeddedImage($imagePath, $cid, 'logo.png');
             }
-            $url = BASE_URL . "/frontend/Authentication/resetpassword?code=" . $code;
+            $url = "http://localhost/feapp/frontend/Authentication/resetpassword?code=" . $code;
             $mail->Body = '
             <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #0F828C; color: #fff;">
                 <div style="text-align: center; margin-bottom: 20px;">
@@ -65,9 +69,14 @@ class Helpers extends BaseModel{
             </div>';
 
             $mail->send();
-            return true;
+            return [
+                'status' => 'success'
+            ];
         } catch (Exception $e) {
-            return false;
+            return [
+                'message' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}",
+                'status' => 'error'
+            ];
         }
     }
     public function randomStringGenerator($length = 8) {

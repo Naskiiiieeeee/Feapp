@@ -1,23 +1,20 @@
 <?php
 define('BASE_URL', '/feapp');
 require_once __DIR__ . '/../../backend/ViewModels/UserPasswordViewModel.php';
-$vm = new UserPasswordViewModel();
 
+$vm = new UserPasswordViewModel();
 if (!isset($_GET["code"])) {
     exit("Page in the link does not exist!");
 }
+
 $codes = $_GET["code"];
-$userData = null;
+$userData = $vm->getUserEmail($codes);
 
-$userData = $vm->getUserCredentials($codes);
-
-foreach($userData as $row){
-    $username = $row['username'];
+// check natin dito kung nageexist pa yung code
+if (!$userData || empty($userData['username'])) {
+    exit("Page not exist! Reset code is invalid or already used.");
 }
-
-// add a count of save username on resetpassword, make sure deleted.
-
-
+$username = $userData['username'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +70,7 @@ foreach($userData as $row){
                 <i class="fas fa-key"></i>
                 <input type="password" name="password" id="password" placeholder="Password" title="At least 8 characters, including numbers and symbols" required>
                 <input type="hidden" name="code" value="<?= $codes ?? '' ?>">
-                <input type="hidden" name="email" value="<?= $username ?? '' ?>">
+                <input type="hidden" name="email" value="<?= $username ?? 'NA' ?>">
               </div>
               <div class="input-box">
                 <i class="fas fa-key"></i>
