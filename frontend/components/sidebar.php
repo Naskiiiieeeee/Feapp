@@ -43,10 +43,10 @@
         </a>
       </li>
       <li class="nav-heading">Reports</li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+      <li class="nav-item <?= $current_page=='ManageViewUnitEvaluation' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/ManageCertificates">
           <i class="bi-file-earmark-ruled"></i>
-          <span>System Reports</span>
+          <span>Certificates</span>
         </a>
       </li>
       <li class="nav-item">
