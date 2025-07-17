@@ -32,7 +32,7 @@ if (isset($_GET['token'])) {
 
 <section class="section profile">
   <div class="row">
-    <div class="col-xl-8">
+    <div class="col-xl-12">
       <div class="card">
         <div class="card-body pt-3">
           <ul class="nav nav-tabs nav-tabs-bordered">
