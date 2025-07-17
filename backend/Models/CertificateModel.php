@@ -18,4 +18,10 @@ class CertificateModel extends BaseModel{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getcertificateByID($id){
+        $stmt = $this->db->prepare("SELECT * FROM `certificates` WHERE `id` = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

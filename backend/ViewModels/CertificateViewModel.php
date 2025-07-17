@@ -15,6 +15,10 @@ class CertificateViewModel{
         $totalRecords = $this->model->countAllcertificate();
         return ceil($totalRecords / $limit);
     }
+
+    public function getcertificateByID($id){
+        return $this->model->getcertificateByID($id);
+    }
 }
 
 ?>
