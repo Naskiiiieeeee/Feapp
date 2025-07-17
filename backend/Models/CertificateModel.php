@@ -10,7 +10,7 @@ class CertificateModel extends BaseModel{
         return $row['total_records'] ?? 0;
     }
 
-    public function getFacultiesPaginated($offset, $limit) {
+    public function getCertificates($offset, $limit) {
         $query = "SELECT * FROM `certificates` ORDER BY `id` DESC LIMIT :offset, :limit";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
