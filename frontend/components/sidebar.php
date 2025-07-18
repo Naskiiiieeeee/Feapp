@@ -35,6 +35,12 @@
           <span>Manage Student Account</span>
         </a>
       </li>
+      <li class="nav-item <?= $current_page=='ManageDepartment' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/ManageDepartment">
+          <i class="bi bi-building-gear"></i>
+          <span>Department and Courses</span>
+        </a>
+      </li>
       <li class="nav-heading">AI Recommender</li>
       <li class="nav-item <?= $current_page=='ManageViewUnitEvaluation' || $current_page=='#'  ? 'active' : null ?>">
         <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/ManageViewUnitEvaluation">
