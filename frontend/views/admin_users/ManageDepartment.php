@@ -151,20 +151,19 @@ $total_pages = $vm->getTotalPages($limit);
 <!-- Edit Modal -->
 <div class="modal fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form id="updateForm" method="post">
+    <form id="updateForm">
       <div class="modal-content">
         <div class="modal-header bg-secondary">
-          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel">Update Department Status</h5>
+          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Department Status</h5>
         </div>
         <div class="modal-body">
-          <input type="hidden" name="id" id="id">
           <div class="form-group px-2 mt-1">
             <label class="fw-bold">Department Code</label>
-            <input type="email" id="id" class="form-control mt-2" readonly/>
+            <input type="text" name="id" id="id" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
             <label class="fw-bold">Description</label>
-            <input type="text" id="description" class="form-control mt-2" readonly/>
+            <input type="text" name="description" id="description" class="form-control mt-2" required/>
           </div>
           <div class="form-group px-2 mt-1">
             <label class="fw-bold mt-2">Status</label>
@@ -196,7 +195,7 @@ include_once __DIR__ . '/../../components/footscript.php';
     $('.editbutton').click(function () {
       var $row = $(this).closest('tr');
       $('#id').val($row.find('.id').text());
-      $('#description').val($row.find('.email').text());
+      $('#description').val($row.find('.description').text());
 
       $('#verifyModal').modal('show');
     });
@@ -270,7 +269,7 @@ $('#updateForm').submit(function(e){
     processData: false,        
     dataType: 'json',
     success(data) {
-      if (data === "updated") {
+      if (data.status === "updated") {
         Swal.fire({
           icon: 'success',
           title: 'Department Updated',
@@ -318,7 +317,7 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Failed to Add', "error");
+        Swal.fire('Error', 'Department Code Already Exist', "error");
       }
     },
     error() {

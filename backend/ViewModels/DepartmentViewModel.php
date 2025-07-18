@@ -21,4 +21,8 @@ class DepartmentViewModel{
     public function insertDepartment($code, $description){
         return $this->model->createNewDepartment($code, $description);
     }
+
+    public function getupdateDepartment($code, $status, $description){
+        return $this->model->updateDepartment($code, $status, $description);
+    }
 }

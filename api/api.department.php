@@ -14,8 +14,27 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveDepartment'])){
         }else{
             echo json_encode(['status' => 'isDuplicate']);
         }
+        exit;
     }catch(Exception $e){
         echo json_encode(['status' => 'error' .$e->getMessage()]);
+    }
+    exit;
+}
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
+    $depCode = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+    $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
+    $status = $_POST['status'];
+    
+    try{
+        $result = $vm->getupdateDepartment($depCode,$status,$description);
+        if($result){
+            echo json_encode(['status' => 'updated']);
+        }else{
+            echo json_encode(['status' => 'error']);
+        }
+    }catch(Exception $e){
+        echo json_encode(['status' => 'error'. $e->getMessage()]);
     }
 }
 

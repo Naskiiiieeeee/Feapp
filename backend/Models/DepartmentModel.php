@@ -29,4 +29,9 @@ class DepartmentModel extends BaseModel{
             return $stmt->execute([$code, $description]);
         }
     }
+
+    public function updateDepartment($code, $status, $description){
+        $stmt = $this->db->prepare("UPDATE `department` SET `status` = ? , `description` = ? WHERE `code` = ? ");
+        return $stmt->execute([$status, $description, $code]);
+    }
 }
