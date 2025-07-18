@@ -15,8 +15,8 @@ class UserStudentViewModel {
         return $this->model->deleteStudent($id);
     }
 
-    public function addStudent($email, $studentNo, $fullname, $section, $yearLvl, $role){
-        return $this->model->createNewStudent($email, $studentNo, $fullname, $section, $yearLvl, $role);
+    public function addStudent($email, $studentNo, $fullname, $section, $yearLvl, $role, $course, $dep){
+        return $this->model->createNewStudent($email, $studentNo, $fullname, $section, $yearLvl, $role, $course, $dep);
     }
     public function updateStudent($id, $status){
         return $this->model->updateStatus($id, $status);

@@ -28,10 +28,10 @@ class UserStudentModel extends BaseModel{
         return $stmt->execute([$status, $id]);
     }
 
-    public function createNewStudent($email, $studentNo, $fullname, $section, $yearLvl, $role){
-        $query = "INSERT INTO `student_info`(`student_email`, `student_no`, `student_name`, `student_section`, `student_year`, `role`) VALUES (?, ?, ?, ?, ?, ?)";
+    public function createNewStudent($email, $studentNo, $fullname, $section, $yearLvl, $role , $course, $dep){
+        $query = "INSERT INTO `student_info`(`student_email`, `student_no`, `student_name`, `student_section`, `student_year`, `student_course`, `student_dep`, `role`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
-        return $stmt->execute([$email, $studentNo, $fullname, $section, $yearLvl, $role]);
+        return $stmt->execute([$email, $studentNo, $fullname, $section, $yearLvl , $course, $dep, $role]);
     }
     public function getByEmail($email){
         $stmt = $this->db->prepare("SELECT * FROM `student_info` WHERE `student_email` = ? AND `status` = 1 ");

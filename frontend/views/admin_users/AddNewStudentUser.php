@@ -98,37 +98,6 @@ $departmentInfo = $vm->getAllValidatedDepartment();
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
-<script>
-  const BASE_URL = "<?= BASE_URL ?>";
-
-  $('#departmentSelect').change(function () {
-    const selectedDept = $(this).val();
-
-    $.ajax({
-      url: BASE_URL + '/api/api.course.php',
-      method: 'POST',
-      data: { departmentCode: selectedDept },
-      dataType: 'json',
-      success: function (response) {
-        const courseSelect = $('select[name="course"]');
-        courseSelect.empty();
-        courseSelect.append('<option selected disabled>Please Choose</option>');
-
-        if (response.length > 0) {
-          response.forEach(course => {
-            courseSelect.append(`<option value="${course.code}">${course.description}</option>`);
-          });
-        } else {
-          courseSelect.append('<option disabled>No course available</option>');
-        }
-      },
-      error: function () {
-        console.error('Error fetching courses');
-      }
-    });
-  });
-</script>
-
 
 <script>
   const BASE_URL = "<?= BASE_URL ?>";
@@ -162,6 +131,33 @@ $('#AddForm').submit(function (e) {
     },
     error: function () {
       Swal.fire('Error', 'Server error. Try again.', "error");
+    }
+  });
+});
+
+$('#departmentSelect').change(function () {
+  const selectedDept = $(this).val();
+
+  $.ajax({
+    url: BASE_URL + '/api/api.course.php',
+    method: 'POST',
+    data: { departmentCode: selectedDept },
+    dataType: 'json',
+    success: function (response) {
+      const courseSelect = $('select[name="course"]');
+      courseSelect.empty();
+      courseSelect.append('<option selected disabled>Please Choose</option>');
+
+      if (response.length > 0) {
+        response.forEach(course => {
+          courseSelect.append(`<option value="${course.code}">${course.description}</option>`);
+        });
+      } else {
+        courseSelect.append('<option disabled>No course available</option>');
+      }
+    },
+    error: function () {
+      console.error('Error fetching courses');
     }
   });
 });
