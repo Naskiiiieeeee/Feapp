@@ -230,7 +230,7 @@ include_once __DIR__ . '/../../components/footscript.php';
             $.ajax({
               url: BASE_URL + '/api/api.department.php',
               type: 'POST',
-              data: { deleteUser: id },
+              data: { deleteDep: id },
               success: function (data) {
                 if (data.trim() === "success") {
                   Swal.fire({

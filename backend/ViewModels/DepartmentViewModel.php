@@ -25,4 +25,8 @@ class DepartmentViewModel{
     public function getupdateDepartment($code, $status, $description){
         return $this->model->updateDepartment($code, $status, $description);
     }
+
+    public function getDeleteDepartment($id){
+        return $this->model->deleteDepartment($id);
+    }
 }

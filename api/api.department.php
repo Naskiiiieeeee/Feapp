@@ -38,4 +38,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
     }
 }
 
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteDep'])){
+    $deleteDep = filter_input(INPUT_POST, 'deleteDep' , FILTER_SANITIZE_SPECIAL_CHARS);
+    $result = $vm->getDeleteDepartment($deleteDep);
+
+    if($result){
+        echo json_encode("success");
+    }else{
+        echo json_encode("error");
+    }
+    exit;
+}
 ?>
