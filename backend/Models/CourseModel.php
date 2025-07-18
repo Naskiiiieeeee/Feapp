@@ -9,7 +9,6 @@ class CourseModel extends BaseModel{
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total_records'] ?? 0;
     }
-
     public function getCoursePaginated($offset, $limit) {
         $query = "SELECT * FROM `courses` ORDER BY `id` DESC LIMIT :offset, :limits";
         $stmt = $this->db->prepare($query);
@@ -18,7 +17,6 @@ class CourseModel extends BaseModel{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     public function addNewCourse($code, $description, $department){
         $selectQuery = $this->db->prepare("SELECT * FROM `courses` WHERE `course` = ?");
         $selectQuery->execute([$code]);
@@ -28,6 +26,11 @@ class CourseModel extends BaseModel{
             $stmt = $this->db->prepare("INSERT INTO `courses`(`code`, `description`, `department`) VALUES (?, ? ,?)");
             return $stmt->execute([$code, $description, $department]);
         }
+    }
+    public function getActivatedDepartment(){
+        $stmt = $this->db->prepare("SELECT * FROM `department` WHERE `status` = 1");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);   
     }
 }
 ?>

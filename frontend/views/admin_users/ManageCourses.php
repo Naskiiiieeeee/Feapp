@@ -1,18 +1,21 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/DepartmentViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/CourseViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
-$vm = new DepartmentViewModel();
+$vm = new CourseViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$departmentData = $vm->getDepartmentPaginated($page_no, $limit);
+$courseData = $vm->getCoursePaginated($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
+
+$departmentInfo = $vm->getAllValidatedDepartment();
+
 ?>
 
 <main id="main" class="main">
@@ -49,14 +52,15 @@ $total_pages = $vm->getTotalPages($limit);
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($departmentData)): ?>
-                  <?php foreach ($departmentData as $row): ?>
+                <?php if (!empty($courseData)): ?>
+                  <?php foreach ($courseData as $row): ?>
                     <?php $token = base64_encode($row['code'] . '|' . $row['code']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
                       <td class="id"><?= htmlspecialchars($row['code']); ?></td>
-                      <td class="description"><?= htmlspecialchars($row['description']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['created_at']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['description']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['department']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['created_date']); ?></td>
                       <td>
                         <?php
                           switch ($row['status']) {
@@ -131,12 +135,22 @@ $total_pages = $vm->getTotalPages($limit);
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="">Department Code</label>
-                            <input type="text" name="depCode" id="" class="form-control" placeholder="CSD" required>
+                            <label for="">Course Code</label>
+                            <input type="text" name="courseCode" id="" class="form-control" placeholder="BSIT" required>
                         </div>
                         <div class="form-group">
                             <label for="">Description</label>
-                            <input type="text" name="Description" id="" class="form-control" placeholder="Computer Studies Department" required>
+                            <input type="text" name="Description" id="" class="form-control" placeholder="BS Information Technology" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Department</label>
+                            <select name="department" id="" class="form-control">
+                                <?php
+                                    foreach($departmentInfo as $rows):
+                                ?>
+                                <option value="<? $rows['code']; ?>"><?=  $rows['description'];?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </form>
                 </div>
