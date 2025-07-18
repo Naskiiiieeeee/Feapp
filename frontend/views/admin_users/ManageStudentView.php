@@ -42,6 +42,8 @@ $total_pages = $vm->getTotalPages($limit);
                     <th>Registered Email</th>
                     <th>Fullname</th>
                     <th>Section</th>
+                    <th>Course</th>
+                    <th>Department</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
@@ -54,7 +56,9 @@ $total_pages = $vm->getTotalPages($limit);
                       <td class="id"><?= htmlspecialchars($row['student_no']); ?></td>
                       <td class="email"><?= htmlspecialchars($row['student_email']); ?></td>
                       <td class="fullname"><?= htmlspecialchars($row['student_name']); ?></td>
-                      <td class="department"><?= htmlspecialchars($row['student_section']); ?></td>
+                      <td class="section"><?= htmlspecialchars($row['student_section']); ?></td>
+                      <td class="course"><?= htmlspecialchars($row['student_course']); ?></td>
+                      <td class="department"><?= htmlspecialchars($row['student_dep']); ?></td>
                       <td>
                         <?php
                           switch ($row['status']) {
@@ -140,6 +144,14 @@ $total_pages = $vm->getTotalPages($limit);
           </div>
           <div class="form-group px-2 mt-1">
             <label class="fw-bold">Section</label>
+            <input type="text" name="section" id="section" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold">Course</label>
+            <input type="text" name="course" id="course" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold">Department</label>
             <input type="text" name="department" id="department" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
@@ -174,6 +186,8 @@ include_once __DIR__ . '/../../components/footscript.php';
       $('#id').val($row.find('.id').text());
       $('#email').val($row.find('.email').text());
       $('#fullname').val($row.find('.fullname').text());
+      $('#section').val($row.find('.section').text());
+      $('#course').val($row.find('.course').text());
       $('#department').val($row.find('.department').text());
 
       $('#verifyModal').modal('show');
