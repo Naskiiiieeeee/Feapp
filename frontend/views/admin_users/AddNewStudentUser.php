@@ -2,6 +2,11 @@
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
+require_once __DIR__ . '/../../../backend/ViewModels/CourseViewModel.php';
+
+$vm = new CourseViewModel();
+$departmentInfo = $vm->getAllValidatedDepartment();
+
 ?>
 
 <main id="main" class="main">
@@ -46,6 +51,27 @@ include_once __DIR__ . '/../../components/sidebar.php';
             </div>
 
             <div class="row mb-3">
+              <label for="" class="col-md-4 col-lg-3 col-form-label"> Department</label>
+              <div class="col-md-8 col-lg-9">
+                <select name="department" id="departmentSelect" class="form-control" required>
+                  <option selected disabled>Please Choose</option>
+                  <?php foreach($departmentInfo as $row): ?>
+                    <option value="<?= $row['description']; ?>"><?= $row['description']; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row mb-3">
+              <label for="" class="col-md-4 col-lg-3 col-form-label">Course</label>
+              <div class="col-md-8 col-lg-9">
+                <select name="course" id="" class="form-control">
+                  
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
                 <label for="Address" class="col-md-4 col-lg-3 col-form-label">Email</label>
                 <div class="col-md-8 col-lg-9">
                     <input name="email" type="email" class="form-control" required>
@@ -72,6 +98,37 @@ include_once __DIR__ . '/../../components/sidebar.php';
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
+<script>
+  const BASE_URL = "<?= BASE_URL ?>";
+
+  $('#departmentSelect').change(function () {
+    const selectedDept = $(this).val();
+
+    $.ajax({
+      url: BASE_URL + '/api/api.course.php',
+      method: 'POST',
+      data: { departmentCode: selectedDept },
+      dataType: 'json',
+      success: function (response) {
+        const courseSelect = $('select[name="course"]');
+        courseSelect.empty();
+        courseSelect.append('<option selected disabled>Please Choose</option>');
+
+        if (response.length > 0) {
+          response.forEach(course => {
+            courseSelect.append(`<option value="${course.code}">${course.description}</option>`);
+          });
+        } else {
+          courseSelect.append('<option disabled>No course available</option>');
+        }
+      },
+      error: function () {
+        console.error('Error fetching courses');
+      }
+    });
+  });
+</script>
+
 
 <script>
   const BASE_URL = "<?= BASE_URL ?>";

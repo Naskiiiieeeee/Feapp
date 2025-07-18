@@ -32,6 +32,10 @@ class CourseViewModel{
     public function getDeleteCourse($id){
         return $this->model->deleteCourse($id);
     }
+
+    public function getCoursesByDepartment($departmentCode){
+        return $this->model->getCoursesByDepartment($departmentCode);
+    }
 }
 
 ?>

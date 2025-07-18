@@ -42,5 +42,11 @@ class CourseModel extends BaseModel{
         $stmt = $this->db->prepare("DELETE FROM `courses` WHERE `id` = ? ");
         return $stmt->execute([$id]);
     }
+
+    public function getCoursesByDepartment($departmentCode) {
+        $stmt = $this->db->prepare("SELECT * FROM `courses` WHERE `department` = ?");
+        $stmt->execute([$departmentCode]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

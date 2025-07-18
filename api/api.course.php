@@ -57,4 +57,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteCourse'])){
     }
     exit;
 }
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['departmentCode'])) {
+    $departmentCode = $_POST['departmentCode'];
+    $vm = new CourseViewModel();
+    $courses = $vm->getCoursesByDepartment($departmentCode);
+    echo json_encode($courses);
+} else {
+    echo json_encode([]);
+}
+
 ?>
