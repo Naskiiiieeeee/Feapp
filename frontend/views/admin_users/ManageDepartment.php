@@ -306,7 +306,7 @@ $('#AddForm').submit(function(e){
     processData: false,        
     dataType: 'json',
     success(data) {
-      if (data === "added") {
+      if (data.status === "added") {
         Swal.fire({
           icon: 'success',
           title: 'Department Added',

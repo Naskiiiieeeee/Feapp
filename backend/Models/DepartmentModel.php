@@ -12,17 +12,21 @@ class DepartmentModel extends BaseModel{
     }
 
     public function getDepartmentPaginated($offset, $limit) {
-        $query = "SELECT * FROM `department`ORDER BY `id` DESC LIMIT :offset, :limit";
+        $query = "SELECT * FROM `department` ORDER BY `id` DESC LIMIT :offset, :limits";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':limits', (int)$limit, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
     public function createNewDepartment($code , $description){
-        $stmt =  $this->db->prepare("INSERT INTO `department`(`code`, `description`) VALUES (?, ?)");
-        return $stmt->execute([$code, $description]);
+        $ifExist = $this->db->prepare("SELECT * FROM `department` WHERE `code` = ?");
+        $ifExist->execute([$code]);
+        if($ifExist->rowCount() > 0){
+            return false;
+        }else{
+            $stmt =  $this->db->prepare("INSERT INTO `department`(`code`, `description`) VALUES (?, ?)");
+            return $stmt->execute([$code, $description]);
+        }
     }
 }
