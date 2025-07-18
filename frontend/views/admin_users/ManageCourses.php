@@ -20,7 +20,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Manage Department and Courses</h1>
+    <h1>Manage Courses</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
@@ -148,7 +148,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
                                 <?php
                                     foreach($departmentInfo as $rows):
                                 ?>
-                                <option value="<? $rows['code']; ?>"><?=  $rows['description'];?></option>
+                                <option value="<?= $rows['description']; ?>"><?=  $rows['description'];?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -156,7 +156,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="btnSaveDepartment" class="btn btn-primary">Save changes</button>
+                    <button type="submit" name="btnSaveCourse" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -243,7 +243,7 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.department.php',
+              url: BASE_URL + '/api/api.course.php',
               type: 'POST',
               data: { deleteDep: id },
               success: function (data) {
@@ -277,7 +277,7 @@ $('#updateForm').submit(function(e){
   formData.append("btnUpdateAccess", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.department.php',
+    url: BASE_URL + '/api/api.course.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -310,10 +310,10 @@ $('#AddForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveDepartment", true); 
+  formData.append("btnSaveCourse", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.department.php',
+    url: BASE_URL + '/api/api.course.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -323,8 +323,8 @@ $('#AddForm').submit(function(e){
       if (data.status === "added") {
         Swal.fire({
           icon: 'success',
-          title: 'Department Added',
-          text: 'New Department Information Successfully Added!',
+          title: 'Course Added',
+          text: 'New Course Information Successfully Added!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -332,7 +332,7 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Department Code Already Exist', "error");
+        Swal.fire('Error', 'Course Code Already Exist', "error");
       }
     },
     error() {

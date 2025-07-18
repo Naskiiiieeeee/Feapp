@@ -18,7 +18,7 @@ class CourseModel extends BaseModel{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     public function addNewCourse($code, $description, $department){
-        $selectQuery = $this->db->prepare("SELECT * FROM `courses` WHERE `course` = ?");
+        $selectQuery = $this->db->prepare("SELECT * FROM `courses` WHERE `code` = ?");
         $selectQuery->execute([$code]);
         if($selectQuery->rowCount() > 0){
             return false;
