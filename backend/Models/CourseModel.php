@@ -37,5 +37,10 @@ class CourseModel extends BaseModel{
         $stmt = $this->db->prepare("UPDATE `courses` SET `status` = ? WHERE `code` = ? ");
         return $stmt->execute([$status, $code]);
     }
+
+    public function deleteCourse($id){
+        $stmt = $this->db->prepare("DELETE FROM `courses` WHERE `id` = ? ");
+        return $stmt->execute([$id]);
+    }
 }
 ?>

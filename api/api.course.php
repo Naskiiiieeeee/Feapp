@@ -34,8 +34,26 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
         }else{
             echo json_encode(["status" => "error"]);
         }
+        exit;
     }catch(Exception $exception){
         echo json_encode(["status" => "error". $exception->getMessage()]);
+    }
+    exit;
+}
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteCourse'])){
+    $id = filter_input(INPUT_POST, 'deleteCourse', FILTER_SANITIZE_SPECIAL_CHARS);
+
+    try{
+        $result = $vm->getDeleteCourse($id);
+        if($result){
+            echo json_encode("success");
+        }else{
+            echo json_encode("error");
+        }
+        exit;
+    }catch(Exception $exception){
+        echo json_encode("error".$exception->getMessage());
     }
     exit;
 }

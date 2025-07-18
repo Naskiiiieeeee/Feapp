@@ -28,6 +28,10 @@ class CourseViewModel{
     public function getUpdateCourseStatus($code,  $status){
         return $this->model->updateCourseStatus($code,  $status);
     }
+
+    public function getDeleteCourse($id){
+        return $this->model->deleteCourse($id);
+    }
 }
 
 ?>
