@@ -58,7 +58,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
                     <tr>
                       <td><?= $count++; ?></td>
                       <td class="id"><?= htmlspecialchars($row['code']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['description']); ?></td>
+                      <td class="description"><?= htmlspecialchars($row['description']); ?></td>
                       <td class=""><?= htmlspecialchars($row['department']); ?></td>
                       <td class=""><?= htmlspecialchars($row['created_date']); ?></td>
                       <td>
@@ -131,7 +131,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
-                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Department Details</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Course Details</h5>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
@@ -169,7 +169,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
     <form id="updateForm">
       <div class="modal-content">
         <div class="modal-header bg-secondary">
-          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Department Status</h5>
+          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Course Status</h5>
         </div>
         <div class="modal-body">
           <div class="form-group px-2 mt-1">
@@ -178,11 +178,11 @@ $departmentInfo = $vm->getAllValidatedDepartment();
           </div>
           <div class="form-group px-2 mt-1">
             <label class="fw-bold">Description</label>
-            <input type="text" name="description" id="description" class="form-control mt-2" required/>
+            <input type="text" name="description" id="description" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
             <label class="fw-bold mt-2">Status</label>
-            <select name="status" class="form-control">
+            <select name="status" class="form-control" required>
               <option selected disabled>Please Select</option>
               <option value="1">Activate</option>
               <option value="2">Restrict</option>
@@ -223,7 +223,7 @@ include_once __DIR__ . '/../../components/footscript.php';
   $(document).ready(function () {
     $(document).on('click', '.deleteuser', function () {
       var id = $(this).attr('id');
-      var name = $(this).data('name') || "this department";
+      var name = $(this).data('name') || "this course";
 
       const msg = new SpeechSynthesisUtterance(`Are you sure you want to delete ${name}?`);
       msg.lang = 'en-US';
@@ -245,20 +245,20 @@ include_once __DIR__ . '/../../components/footscript.php';
             $.ajax({
               url: BASE_URL + '/api/api.course.php',
               type: 'POST',
-              data: { deleteDep: id },
+              data: { deleteCourse: id },
               success: function (data) {
                 if (data.trim() === "success") {
                   Swal.fire({
                     title: 'Success',
                     icon: 'success',
-                    text: 'Department information deleted successfully.',
+                    text: 'Course information deleted successfully.',
                     showConfirmButton: false,
                     timer: 2000,
                   }).then(() => {
                     window.location.reload();
                   });
                 } else {
-                  Swal.fire("Error", "Failed to delete department", "error");
+                  Swal.fire("Error", "Failed to delete course", "error");
                 }
               }
             });
@@ -287,8 +287,8 @@ $('#updateForm').submit(function(e){
       if (data.status === "updated") {
         Swal.fire({
           icon: 'success',
-          title: 'Department Updated',
-          text: 'Department information successfully updated!',
+          title: 'Course Updated',
+          text: 'Course information successfully updated!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {

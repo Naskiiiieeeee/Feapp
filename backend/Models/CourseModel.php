@@ -33,9 +33,9 @@ class CourseModel extends BaseModel{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);   
     }
 
-    public function updateCourseStatus($code){
+    public function updateCourseStatus($code,  $status){
         $stmt = $this->db->prepare("UPDATE `courses` SET `status` = ? WHERE `code` = ? ");
-        return $stmt->execute([$code]);
+        return $stmt->execute([$status, $code]);
     }
 }
 ?>

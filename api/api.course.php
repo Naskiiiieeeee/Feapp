@@ -22,32 +22,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveCourse'])){
     exit;
 }
 
-// if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
-//     $depCode = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
-//     $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
-//     $status = $_POST['status'];
-    
-//     try{
-//         $result = $vm->getupdateDepartment($depCode,$status,$description);
-//         if($result){
-//             echo json_encode(['status' => 'updated']);
-//         }else{
-//             echo json_encode(['status' => 'error']);
-//         }
-//     }catch(Exception $e){
-//         echo json_encode(['status' => 'error'. $e->getMessage()]);
-//     }
-// }
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
+    $code = filter_input(INPUT_POST , 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+    $status = filter_input(INPUT_POST , 'status', FILTER_SANITIZE_SPECIAL_CHARS);
 
-// if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteDep'])){
-//     $deleteDep = filter_input(INPUT_POST, 'deleteDep' , FILTER_SANITIZE_SPECIAL_CHARS);
-//     $result = $vm->getDeleteDepartment($deleteDep);
+    try{
+        $result = $vm->getUpdateCourseStatus($code, $status);
 
-//     if($result){
-//         echo json_encode("success");
-//     }else{
-//         echo json_encode("error");
-//     }
-//     exit;
-// }
+        if($result){
+            echo json_encode(["status" => "updated"]);
+        }else{
+            echo json_encode(["status" => "error"]);
+        }
+    }catch(Exception $exception){
+        echo json_encode(["status" => "error". $exception->getMessage()]);
+    }
+    exit;
+}
 ?>

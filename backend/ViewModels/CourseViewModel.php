@@ -24,6 +24,10 @@ class CourseViewModel{
     public function getAllValidatedDepartment(){
         return $this->model->getActivatedDepartment();
     }
+
+    public function getUpdateCourseStatus($code,  $status){
+        return $this->model->updateCourseStatus($code,  $status);
+    }
 }
 
 ?>
