@@ -40,8 +40,9 @@ $total_pages = $vm->getTotalPages($limit);
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Department Code</th>
-                    <th>Department Description</th>
+                    <th>Course Code</th>
+                    <th>Course Description</th>
+                    <th>Department</th>
                     <th>Date Created</th>
                     <th>Status</th>
                     <th>Action</th>
