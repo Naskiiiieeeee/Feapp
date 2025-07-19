@@ -32,7 +32,7 @@ class UserStudentViewModel {
         return ceil($totalRecords / $limit);
     }
 
-public function uploadCSV($file) {
+    public function uploadCSV($file) {
         if (($handle = fopen($file['tmp_name'], "r")) !== false) {
             $header = fgetcsv($handle, 1000, ",");
             if (isset($header[0])) {
@@ -77,4 +77,9 @@ public function uploadCSV($file) {
             'message' => 'Unable to read CSV file.'
         ];
     }
+
+    public function searchStudents($keyword) {
+        return $this->model->searchStudents($keyword);
+    }
+
 }

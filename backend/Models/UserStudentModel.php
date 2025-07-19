@@ -56,4 +56,20 @@ class UserStudentModel extends BaseModel{
         return $stmt->execute([$email, $no, $name, $section, $year, $role]);
     }
 
+    public function searchStudents($keyword) {
+        $keyword = "%$keyword%";
+        $query = "SELECT * FROM `student_info` 
+                WHERE `role` = 'Student' AND (
+                    `student_no` LIKE :keyword OR
+                    `student_email` LIKE :keyword OR
+                    `student_name` LIKE :keyword OR
+                    `student_course` LIKE :keyword
+                )
+                ORDER BY `si_id` DESC";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':keyword', $keyword, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
