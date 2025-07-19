@@ -45,15 +45,15 @@ class UserStudentModel extends BaseModel{
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function insertStudent($email, $no, $name, $section, $year) {
+    public function insertStudent($email, $no, $name, $section, $year , $course, $department) {
         $stmt = $this->db->prepare("SELECT COUNT(*) FROM `student_info` WHERE `student_email` = ?");
         $stmt->execute([$email]);
         if ($stmt->fetchColumn() > 0) {
             return false; // Duplicate
         }
         $role = "Student";
-        $stmt = $this->db->prepare("INSERT INTO `student_info` (`student_email`, `student_no`, `student_name`, `student_section`, `student_year`, `role`) VALUES (?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([$email, $no, $name, $section, $year, $role]);
+        $stmt = $this->db->prepare("INSERT INTO `student_info` (`student_email`, `student_no`, `student_name`, `student_section`, `student_year`, `student_course` ,`student_dep` , `role`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$email, $no, $name, $section, $year, $course, $department, $role]);
     }
 
     public function searchStudents($keyword) {

@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
             echo "<td class='course'>" . htmlspecialchars($row['student_course']) . "</td>";
             echo "<td class='department'>" . htmlspecialchars($row['student_dep']) . "</td>";
 
-            // Status Badge
             $status = match ($row['status']) {
                 1 => '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Verified</span>',
                 2 => '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle"></i> Restricted</span>',
@@ -27,7 +26,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
 
             echo "<td>{$status}</td>";
 
-            // Action buttons
             echo '<td>
                     <button type="button" class="btn btn-danger mt-1 px-1 btn-sm deleteuser" id="' . $row['si_id'] . '" data-name="' . htmlspecialchars($row['student_name']) . '">
                         <i class="fas fa-trash mx-2"></i>
@@ -42,6 +40,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
     } else {
         echo '<tr class="text-center"><td colspan="9">No matching records found.</td></tr>';
     }
-
     exit;
 }

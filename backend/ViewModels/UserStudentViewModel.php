@@ -42,7 +42,7 @@ class UserStudentViewModel {
             $header = array_map('strtolower', $header);
             $header = array_map(fn($h) => preg_replace('/[^a-z0-9_]/', '', $h), $header);
 
-            $required = ['student_email', 'student_no', 'student_name', 'student_section', 'student_year'];
+            $required = ['student_email', 'student_no', 'student_name', 'student_section', 'student_year', 'student_course', 'student_dep'];
 
             if ($header !== $required) {
                 return [
@@ -56,8 +56,8 @@ class UserStudentViewModel {
             while (($data = fgetcsv($handle, 1000, ",")) !== false) {
                 if (count($data) < 5) continue; // skip incomplete rows
 
-                [$email, $no, $name, $section, $year] = array_map('trim', $data);
-                $success = $this->model->insertStudent($email, $no, $name, $section, $year);
+                [$email, $no, $name, $section, $year, $course, $department] = array_map('trim', $data);
+                $success = $this->model->insertStudent($email, $no, $name, $section, $year, $course, $department);
 
                 if ($success) {
                     $inserted++;
