@@ -34,6 +34,9 @@ $total_pages = $vm->getTotalPages($limit);
           <div class="card-body">
             <h5 class="card-title">Recent Records</h5>
             <div class="table-responsive">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="searchBox" placeholder="Search by Student No., Email, Name, or Course">
+              </div>
               <table class="table">
                 <thead>
                   <tr>
@@ -280,6 +283,25 @@ $('#updateForm').submit(function(e){
     error() {
       Swal.fire('Error', 'Server error. Try again.', "error");
     }
+  });
+});
+
+
+$(document).ready(function () {
+  $('#searchBox').on('keyup', function () {
+    let query = $(this).val();
+
+    $.ajax({
+      url: "<?= BASE_URL ?>/api/api.studentuser.php",
+      type: "POST",
+      data: {
+        action: "search",
+        keyword: query
+      },
+      success: function (response) {
+        $('tbody').html(response); // Replace tbody with new filtered data
+      }
+    });
   });
 });
 
