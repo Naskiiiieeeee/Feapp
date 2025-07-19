@@ -105,4 +105,8 @@ class EvaluationViewModel {
     public function isExistCertificate($id){
         return !empty($this->model->getCertificateById($id));
     }
+
+    public function searchFacultyEvaluation($keyword){
+        return $this->model->searchFacultyinEvaluation($keyword);
+    }
 }

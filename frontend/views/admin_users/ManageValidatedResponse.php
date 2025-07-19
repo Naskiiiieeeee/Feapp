@@ -34,6 +34,9 @@ $total_pages = $vm->getFacultyEvaluationPagesAdmin($limit);
           <div class="card-body">
             <h5 class="card-title">Recent Records</h5>
             <div class="table-responsive">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="searchBox" placeholder="Search by Student No., Email, Name, or Course">
+              </div>
               <table class="table">
                 <thead>
                   <tr>
@@ -51,10 +54,10 @@ $total_pages = $vm->getFacultyEvaluationPagesAdmin($limit);
                     <?php $token = base64_encode($row['faculty_id'] . '|' . $row['faculty_id']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_id']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_name']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_department']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['created_at']); ?></td>
+                      <td class="facultyID"><?= htmlspecialchars($row['faculty_id']); ?></td>
+                      <td class="facultyName"><?= htmlspecialchars($row['faculty_name']); ?></td>
+                      <td class="facultyDep"><?= htmlspecialchars($row['faculty_department']); ?></td>
+                      <td class="dateCreate"><?= htmlspecialchars($row['created_at']); ?></td>
                       <td>
                         <a href="ViewEvaluationUnitHistory?token=<?= urlencode($token); ?>" title="View">
                           <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>
@@ -158,4 +161,24 @@ include_once __DIR__ . '/../../components/footscript.php';
       }, 500);
     });
   });
+
+$(document).ready(function () {
+  $('#searchBox').on('keyup', function () {
+    let query = $(this).val();
+
+    $.ajax({
+      url: "<?= BASE_URL ?>/api/api.EvaluationSearch.php",
+      type: "POST",
+      data: {
+        action: "search",
+        keyword: query
+      },
+      success: function (response) {
+        $('tbody').html(response);
+      }
+    });
+  });
+});
+
+
 </script>
