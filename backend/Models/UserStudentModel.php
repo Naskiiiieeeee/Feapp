@@ -63,7 +63,9 @@ class UserStudentModel extends BaseModel{
                     `student_no` LIKE :keyword OR
                     `student_email` LIKE :keyword OR
                     `student_name` LIKE :keyword OR
-                    `student_course` LIKE :keyword
+                    `student_section` LIKE :keyword OR
+                    `student_course` LIKE :keyword OR
+                    `student_dep` LIKE :keyword
                 )
                 ORDER BY `si_id` DESC";
         $stmt = $this->db->prepare($query);

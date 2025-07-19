@@ -292,14 +292,14 @@ $(document).ready(function () {
     let query = $(this).val();
 
     $.ajax({
-      url: "<?= BASE_URL ?>/api/api.studentuser.php",
+      url: "<?= BASE_URL ?>/api/api.studentuserSearch.php",
       type: "POST",
       data: {
         action: "search",
         keyword: query
       },
       success: function (response) {
-        $('tbody').html(response); // Replace tbody with new filtered data
+        $('tbody').html(response); // bale ito yung way para mapalitan yung mga content ng table via search
       }
     });
   });
