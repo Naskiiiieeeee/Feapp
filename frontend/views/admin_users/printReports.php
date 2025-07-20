@@ -62,7 +62,8 @@ if (!empty($from) && !empty($to)) {
                     <th>Department</th>
                     <th>Academic</th>
                     <th>Core Values</th>
-                    <th>Overall</th>
+                    <th>Overall Evaluation</th>
+                    <th>Overall Ratings</th>
                     <th>Recommendation</th>
                     <th>Date</th>
                   </tr>
@@ -73,7 +74,14 @@ if (!empty($from) && !empty($to)) {
                       <td colspan="9" class="text-center">No records found.</td>
                     </tr>
                   <?php else: ?>
-                    <?php foreach ($results as $i => $row): ?>
+                    <?php foreach ($results as $i => $row):
+                          $recommendations = explode(',', $row['ai_recommendations']);
+                          $recommendationList = '<ul>';
+                          foreach ($recommendations as $rec) {
+                              $recommendationList .= '<li>' . htmlspecialchars(trim($rec)) . '</li>';
+                          }
+                          $recommendationList .= '</ul>';
+                      ?>
                       <tr>
                         <td><?= $i + 1 ?></td>
                         <td><?= htmlspecialchars($row['faculty_name']) ?></td>
@@ -81,8 +89,9 @@ if (!empty($from) && !empty($to)) {
                         <td><?= htmlspecialchars($row['faculty_department']) ?></td>
                         <td><?= $row['academic_rating'] ?></td>
                         <td><?= $row['core_values_rating'] ?></td>
+                        <td><?= $row['overall_evaluation'] ?></td>
                         <td><?= $row['overall_rating'] ?></td>
-                        <td><?= htmlspecialchars($row['ai_recommendations']) ?></td>
+                        <td><?= $recommendationList; ?></td>
                         <td><?= date('Y-m-d', strtotime($row['created_at'])) ?></td>
                       </tr>
                     <?php endforeach; ?>

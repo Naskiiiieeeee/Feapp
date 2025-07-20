@@ -15,14 +15,14 @@ $vm = new EvaluationSummaryViewModel();
 $data = $vm->getEvaluationSummary($from, $to);
 
 if ($type === 'pdf') {
-    $logoPath = __DIR__ . '/../../../frontend/src/img/logo.png';
+    $logoPath = __DIR__ . '/../../../frontend/src/img/clientlogo.jpg';
     $logoBase64 = base64_encode(file_get_contents($logoPath));
     $logo = 'data:image/png;base64,' . $logoBase64;
 
     $html = '
         <div style="text-align: center; margin-bottom: 20px;">
             <img src="' . $logo . '" style="width: 100px;">
-            <h2 style="margin: 0;">Faculty Evaluation Summary</h2>
+            <h2 style="margin: 0;">COLM Faculty Evaluation Summary</h2>
         </div>';
 
     $html .= '<table border="1" cellpadding="5" cellspacing="0" width="100%">
@@ -34,13 +34,22 @@ if ($type === 'pdf') {
             <th>Department</th>
             <th>Academic</th>
             <th>Core Values</th>
-            <th>Overall</th>
+            <th>Overall Evaluation</th>
+            <th>Overall Ratings</th>
             <th>Recommendation</th>
             <th>Date</th>
         </tr>
     </thead><tbody>';
 
     foreach ($data as $i => $row) {
+        // Explode the AI recommendations string into an array
+        $recommendations = explode(',', $row['ai_recommendations']);
+        $recommendationList = '<ul>';
+        foreach ($recommendations as $rec) {
+            $recommendationList .= '<li>' . htmlspecialchars(trim($rec)) . '</li>';
+        }
+        $recommendationList .= '</ul>';
+
         $html .= '<tr>
             <td>' . ($i + 1) . '</td>
             <td>' . htmlspecialchars($row['faculty_name']) . '</td>
@@ -48,8 +57,9 @@ if ($type === 'pdf') {
             <td>' . htmlspecialchars($row['faculty_department']) . '</td>
             <td>' . $row['academic_rating'] . '</td>
             <td>' . $row['core_values_rating'] . '</td>
+            <td>' . $row['overall_evaluation'] . '</td>
             <td>' . $row['overall_rating'] . '</td>
-            <td>' . htmlspecialchars($row['ai_recommendations']) . '</td>
+            <td>' . $recommendationList . '</td>
             <td>' . date('Y-m-d', strtotime($row['created_at'])) . '</td>
         </tr>';
     }
@@ -72,7 +82,7 @@ if ($type === 'pdf') {
 
     $sheet->fromArray([
         '#', 'Faculty Name', 'Email', 'Department',
-        'Academic', 'Core Values', 'Overall',
+        'Academic', 'Core Values', 'Overall Evaluation', 'Overall Ratings',
         'Recommendation', 'Date'
     ], NULL, 'A1');
 
@@ -85,6 +95,7 @@ if ($type === 'pdf') {
             $row['faculty_department'],
             $row['academic_rating'],
             $row['core_values_rating'],
+            $row['overall_evaluation'],
             $row['overall_rating'],
             $row['ai_recommendations'],
             date('Y-m-d', strtotime($row['created_at']))
