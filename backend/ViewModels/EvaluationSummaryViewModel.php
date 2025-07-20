@@ -11,6 +11,12 @@ class EvaluationSummaryViewModel{
     public function getEvaluationSummary($from, $to){
         return $this->model->getEvaluationSummaryByDateRange($from, $to);
     }
+
+    public function getIndividualResponse($from, $to , $email){
+        return $this->model->getIndividualInsertion($from, $to , $email);
+    }
+
+
 }
 
 ?>
