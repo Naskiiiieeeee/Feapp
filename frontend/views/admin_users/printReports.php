@@ -6,7 +6,6 @@ include_once __DIR__ . '/../../components/sidebar.php';
 
 $vm = new EvaluationSummaryViewModel();
 
-// Handle filtering
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 $results = [];
