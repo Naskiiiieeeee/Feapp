@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])) {
     exit;
 }
 
-// ADD NEW ADMIN
+// ADD NEW Faculty
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile'])) {
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];

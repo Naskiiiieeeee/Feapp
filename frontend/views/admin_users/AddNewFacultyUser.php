@@ -2,6 +2,10 @@
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
+require_once __DIR__ . '/../../../backend/ViewModels/CourseViewModel.php';
+
+$vm = new CourseViewModel();
+$departmentInfo = $vm->getAllValidatedDepartment();
 ?>
 
 <main id="main" class="main">
@@ -37,7 +41,12 @@ include_once __DIR__ . '/../../components/sidebar.php';
             <div class="row mb-3">
                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Department</label>
                 <div class="col-md-8 col-lg-9">
-                    <input name="department" type="text" class="form-control" required>
+                  <select name="department" id="departmentSelect" class="form-control" required>
+                    <option selected disabled>Please Choose</option>
+                      <?php foreach($departmentInfo as $row): ?>
+                        <option value="<?= $row['description']; ?>"><?= $row['description']; ?></option>
+                      <?php endforeach; ?>
+                  </select>
                 </div>
             </div>
 
