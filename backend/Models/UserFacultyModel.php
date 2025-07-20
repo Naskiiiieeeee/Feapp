@@ -63,4 +63,19 @@ class UserFaculty extends BaseModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function searchFaculty($keyword) {
+        $keyword = "%$keyword%";
+        $query = "SELECT * FROM `endusers` 
+                WHERE `role` = 'Faculty' AND (
+                    `code` LIKE :keyword OR
+                    `email` LIKE :keyword OR
+                    `fullname` LIKE :keyword OR
+                    `department` LIKE :keyword OR
+                )
+                ORDER BY `eu_id` DESC";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':keyword', $keyword, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
