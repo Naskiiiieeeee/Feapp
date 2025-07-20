@@ -52,10 +52,10 @@ $total_pages = $vm->getTotalPages($limit);
                     <?php $token = base64_encode($row['id'] . '|' . $row['id']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class=""><?= htmlspecialchars($row['seminar_title']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['seminar_name']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_name']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['uploaded_at']); ?></td>
+                      <td class="seminarTitle"><?= htmlspecialchars($row['seminar_title']); ?></td>
+                      <td class="seminarName"><?= htmlspecialchars($row['seminar_name']); ?></td>
+                      <td class="facultyName"><?= htmlspecialchars($row['faculty_name']); ?></td>
+                      <td class="dateUploaded"><?= htmlspecialchars($row['uploaded_at']); ?></td>
                       <td>
                         <a href="ViewUnitCertificate?token=<?= urlencode($token); ?>" title="View">
                           <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>

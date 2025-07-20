@@ -283,4 +283,22 @@ class EvaluationModel extends BaseModel{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    public function searchCertificate($keyword){
+        $keyword = "%$keyword%";
+        $query = "SELECT * FROM `certificates` WHERE 
+        (
+            `seminar_title` LIKE :keyword OR
+            `seminar_name` LIKE :keyword OR
+            `faculty_name` LIKE :keyword OR
+            `uploaded_at` LIKE :keyword 
+        )
+        ORDER BY `id` DESC ";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':keyword', $keyword, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

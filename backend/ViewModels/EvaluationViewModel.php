@@ -113,4 +113,8 @@ class EvaluationViewModel {
     public function searchByGroupEvaluation($keyword){
         return $this->model->searchByGroupEval($keyword);
     }
+
+    public function searchCertificate($keyword){
+        return $this->model->searchCertificate($keyword);
+    }
 }
