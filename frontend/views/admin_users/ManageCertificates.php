@@ -32,6 +32,9 @@ $total_pages = $vm->getTotalPages($limit);
           <div class="card-body">
             <h5 class="card-title">Recent Records</h5>
             <div class="table-responsive">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="searchBox" placeholder="Search by Seminar Title, Feapp recommendation , FacultyName , Date Uploaded">
+              </div>  
               <table class="table">
                 <thead>
                   <tr>
@@ -39,7 +42,7 @@ $total_pages = $vm->getTotalPages($limit);
                     <th>Seminar Title</th>
                     <th>FEAPP Recommendation</th>
                     <th>Faculty Name</th>
-                    <th>Data Uploaded</th>
+                    <th>Date Uploaded</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -96,3 +99,24 @@ $total_pages = $vm->getTotalPages($limit);
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
+
+<script>
+  const BASE_URL = "<?= BASE_URL ?>";
+    $(document).ready(function () {
+      $('#searchBox').on('keyup', function () {
+        let query = $(this).val();
+
+        $.ajax({
+          url: "<?= BASE_URL ?>/api/api.certificateSearch.php",
+          type: "POST",
+          data: {
+            action: "search",
+            keyword: query
+          },
+          success: function (response) {
+            $('tbody').html(response); 
+          }
+        });
+      });
+    });
+</script>
