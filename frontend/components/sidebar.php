@@ -56,7 +56,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="printReports">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/printReports">
           <i class="bi bi-gear"></i>
           <span>Export Files</span>
         </a>

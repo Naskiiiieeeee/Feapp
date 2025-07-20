@@ -12,7 +12,7 @@ $to = $_GET['to'] ?? '';
 $results = [];
 
 if (!empty($from) && !empty($to)) {
-    $results = $vm->getEvaluationSummaryByDateRange($from, $to);
+    $results = $vm->getEvaluationSummary($from, $to);
 }
 ?>
 
@@ -42,14 +42,14 @@ if (!empty($from) && !empty($to)) {
                 <input type="date" name="to" class="form-control" value="<?= htmlspecialchars($to) ?>" required>
               </div>
               <div class="col-md-2 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">Filter</button>
+                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-filter"></i> Filter</button>
               </div>
             </form>
 
             <?php if (!empty($results)): ?>
               <div class="d-flex justify-content-end mb-3">
-                <a href="ExportEvaluationSummary.php?from=<?= urlencode($from) ?>&to=<?= urlencode($to) ?>&type=pdf" class="btn btn-danger btn-sm me-2">Export PDF</a>
-                <a href="ExportEvaluationSummary.php?from=<?= urlencode($from) ?>&to=<?= urlencode($to) ?>&type=excel" class="btn btn-success btn-sm">Export Excel</a>
+                <a href="ExportEvaluationSummary.php?from=<?= urlencode($from) ?>&to=<?= urlencode($to) ?>&type=pdf" class="btn btn-danger btn-sm me-2"><i class="bi bi-filetype-pdf"></i> Export PDF</a>
+                <a href="ExportEvaluationSummary.php?from=<?= urlencode($from) ?>&to=<?= urlencode($to) ?>&type=excel" class="btn btn-success btn-sm"><i class="bi bi-file-earmark-spreadsheet"></i> Export Excel</a>
               </div>
             <?php endif; ?>
 
