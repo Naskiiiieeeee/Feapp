@@ -109,4 +109,8 @@ class EvaluationViewModel {
     public function searchFacultyEvaluation($keyword){
         return $this->model->searchFacultyinEvaluation($keyword);
     }
+
+    public function searchByGroupEvaluation($keyword){
+        return $this->model->searchByGroupEval($keyword);
+    }
 }
