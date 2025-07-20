@@ -11,7 +11,7 @@ $limit = 10;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$facultyUsers = $vm->getPaginatedCertificates($page_no, $limit);
+$certificateData = $vm->getPaginatedCertificates($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
 ?>
 
@@ -47,8 +47,8 @@ $total_pages = $vm->getTotalPages($limit);
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($facultyUsers)): ?>
-                  <?php foreach ($facultyUsers as $row): ?>
+                <?php if (!empty($certificateData)): ?>
+                  <?php foreach ($certificateData as $row): ?>
                     <?php $token = base64_encode($row['id'] . '|' . $row['id']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
