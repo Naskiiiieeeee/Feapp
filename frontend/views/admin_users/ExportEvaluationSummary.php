@@ -2,56 +2,60 @@
 require_once __DIR__ . '/../../../backend/ViewModels/EvaluationSummaryViewModel.php';
 require_once __DIR__ . '/../../../frontend/vendor/autoload.php';
 
-// Use statements at the top
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-// Parameters
 $type = $_GET['type'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
 
-// Get data from ViewModel
 $vm = new EvaluationSummaryViewModel();
 $data = $vm->getEvaluationSummary($from, $to);
 
 if ($type === 'pdf') {
-    // Prepare HTML
-    $html = '<h3 style="text-align:center;">Faculty Evaluation Summary</h3>';
-    $html .= '<table border="1" cellpadding="5" cellspacing="0" width="100%">';
-    $html .= '<thead>
-                <tr>
-                  <th>#</th>
-                  <th>Faculty Name</th>
-                  <th>Email</th>
-                  <th>Department</th>
-                  <th>Academic</th>
-                  <th>Core Values</th>
-                  <th>Overall</th>
-                  <th>Recommendation</th>
-                  <th>Date</th>
-                </tr>
-              </thead><tbody>';
+    $logoPath = __DIR__ . '/../../../frontend/src/img/logo.png';
+    $logoBase64 = base64_encode(file_get_contents($logoPath));
+    $logo = 'data:image/png;base64,' . $logoBase64;
+
+    $html = '
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="' . $logo . '" style="width: 100px;">
+            <h2 style="margin: 0;">Faculty Evaluation Summary</h2>
+        </div>';
+
+    $html .= '<table border="1" cellpadding="5" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Faculty Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Academic</th>
+            <th>Core Values</th>
+            <th>Overall</th>
+            <th>Recommendation</th>
+            <th>Date</th>
+        </tr>
+    </thead><tbody>';
 
     foreach ($data as $i => $row) {
         $html .= '<tr>
-                    <td>' . ($i + 1) . '</td>
-                    <td>' . htmlspecialchars($row['faculty_name']) . '</td>
-                    <td>' . htmlspecialchars($row['faculty_email']) . '</td>
-                    <td>' . htmlspecialchars($row['faculty_department']) . '</td>
-                    <td>' . $row['academic_rating'] . '</td>
-                    <td>' . $row['core_values_rating'] . '</td>
-                    <td>' . $row['overall_rating'] . '</td>
-                    <td>' . htmlspecialchars($row['ai_recommendations']) . '</td>
-                    <td>' . date('Y-m-d', strtotime($row['created_at'])) . '</td>
-                  </tr>';
+            <td>' . ($i + 1) . '</td>
+            <td>' . htmlspecialchars($row['faculty_name']) . '</td>
+            <td>' . htmlspecialchars($row['faculty_email']) . '</td>
+            <td>' . htmlspecialchars($row['faculty_department']) . '</td>
+            <td>' . $row['academic_rating'] . '</td>
+            <td>' . $row['core_values_rating'] . '</td>
+            <td>' . $row['overall_rating'] . '</td>
+            <td>' . htmlspecialchars($row['ai_recommendations']) . '</td>
+            <td>' . date('Y-m-d', strtotime($row['created_at'])) . '</td>
+        </tr>';
     }
 
     $html .= '</tbody></table>';
 
-    // Generate PDF
     $options = new Options();
     $options->set('isHtml5ParserEnabled', true);
 
@@ -63,7 +67,6 @@ if ($type === 'pdf') {
     exit;
 
 } elseif ($type === 'excel') {
-    // Generate Excel
     $spreadsheet = new Spreadsheet();
     $sheet = $spreadsheet->getActiveSheet();
 
