@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
     if (!empty($results)) {
         $count = 1;
         foreach ($results as $row) {
-            $token = urlencode($row['faculty_id']); // or generate your own token
+            $token = base64_encode($row['faculty_id'] . '|' . $row['faculty_id']);
             ?>
             <tr>
                 <td><?= $count ?></td>
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
                 <td class="facultyDep"><?= htmlspecialchars($row['faculty_department']) ?></td>
                 <td class="dateCreate"><?= htmlspecialchars($row['created_at']) ?></td>
                 <td>
-                    <a href="ViewEvaluationUnitHistory?token=<?= $token ?>" title="View">
+                    <a href="ViewEvaluationUnitHistory?token=<?= urlencode($token); ?>" title="View">
                         <div class="btn btn-secondary mt-1 px-1 btn-sm text-white">
                             <i class="fa fa-eye mx-2"></i>
                         </div>
