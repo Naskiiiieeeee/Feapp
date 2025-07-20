@@ -70,7 +70,7 @@ class UserFaculty extends BaseModel {
                     `code` LIKE :keyword OR
                     `email` LIKE :keyword OR
                     `fullname` LIKE :keyword OR
-                    `department` LIKE :keyword OR
+                    `department` LIKE :keyword
                 )
                 ORDER BY `eu_id` DESC";
         $stmt = $this->db->prepare($query);

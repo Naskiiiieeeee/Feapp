@@ -1,15 +1,15 @@
 <?php
-require_once __DIR__ . '/../backend/ViewModels/UserStudentViewModel.php';
+require_once __DIR__ . '/../backend/ViewModels/UserFacultyViewModel.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
     $keyword = trim($_POST['keyword']);
-    $vm = new UserStudentViewModel();
-    $results = $vm->searchStudents($keyword);
+    $vm = new UserFacultyViewModel();
+    $results = $vm->searchFaculty($keyword);
 
     if (!empty($results)) {
         $count = 1;
         foreach ($results as $row) {
-            $token = base64_encode($row['faculty_id'] . '|' . $row['faculty_id']);
+            $token = base64_encode($row['code'] . '|' . $row['code']);
             echo '<tr>';
             echo "<td>{$count}</td>";
             echo "<td class='id'>" . htmlspecialchars($row['code']) . "</td>";

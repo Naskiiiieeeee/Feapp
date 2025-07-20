@@ -42,4 +42,8 @@ class UserFacultyViewModel {
         return $this->model->getByRole();
     }
 
+    public function searchFaculty($keyword){
+        return $this->model->searchFaculty($keyword);
+    }
+
 }
