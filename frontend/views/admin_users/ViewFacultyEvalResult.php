@@ -53,9 +53,9 @@ $total_pages = $vm->getPages($limit);
                     <?php $token = base64_encode($row['faculty_token'] . '|' . $row['faculty_token']); ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_token']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_name']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['faculty_dep']); ?></td>
+                      <td class="facutlyID"><?= htmlspecialchars($row['faculty_token']); ?></td>
+                      <td class="fullname"><?= htmlspecialchars($row['faculty_name']); ?></td>
+                      <td class="department"><?= htmlspecialchars($row['faculty_dep']); ?></td>
                       <td>
                         <a href="ViewUnitEval?token=<?= urlencode($token); ?>" title="View">
                           <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>
@@ -108,7 +108,7 @@ $(document).ready(function () {
     let query = $(this).val();
 
     $.ajax({
-      url: "<?= BASE_URL ?>/api/api.EvaluationSearch.php",
+      url: "<?= BASE_URL ?>/api/api.GroupEvaluationSearch.php",
       type: "POST",
       data: {
         action: "search",

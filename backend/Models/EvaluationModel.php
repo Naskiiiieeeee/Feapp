@@ -257,9 +257,13 @@ class EvaluationModel extends BaseModel{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function searchByGroupEval($keyword){
+    public function searchByGroupEval($keyword) {
+        $keyword = "%$keyword%";
         $query = "
-            SELECT fe.*, eu.fullname AS faculty_name , eu.department AS faculty_dep
+            SELECT 
+                fe.*, 
+                eu.fullname AS faculty_name, 
+                eu.department AS faculty_dep
             FROM faculty_evaluations fe
             JOIN (
                 SELECT MAX(id) AS latest_id
@@ -268,16 +272,15 @@ class EvaluationModel extends BaseModel{
             ) grouped_fe ON fe.id = grouped_fe.latest_id
             JOIN endusers eu ON fe.faculty_token = eu.code
             WHERE (
-                `faculty_name` LIKE :keyword OR
-                `faculty_department` LIKE :keyword OR
-                `created_at` LIKE :keyword 
+                eu.fullname LIKE :keyword OR
+                eu.department LIKE :keyword OR
+                fe.submitted_at LIKE :keyword 
             )
-            ORDER BY `id` DESC
+            ORDER BY fe.id DESC
         ";
         $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':keyword' , $keyword);
+        $stmt->bindValue(':keyword', $keyword, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }
