@@ -33,6 +33,9 @@ $total_pages = $vm->getTotalPages($limit);
           <div class="card-body">
             <h5 class="card-title">Recent Records</h5>
             <div class="table-responsive">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="searchBox" placeholder="Search by User-Code., Email, Name, or Department">
+              </div>              
               <table class="table">
                 <thead>
                   <tr>
@@ -270,5 +273,25 @@ $('#updateForm').submit(function(e){
     }
   });
 });
+
+
+$(document).ready(function () {
+  $('#searchBox').on('keyup', function () {
+    let query = $(this).val();
+
+    $.ajax({
+      url: "<?= BASE_URL ?>/api/api.facultyuserSearch.php",
+      type: "POST",
+      data: {
+        action: "search",
+        keyword: query
+      },
+      success: function (response) {
+        $('tbody').html(response); // bale ito yung way para mapalitan yung mga content ng table via search
+      }
+    });
+  });
+});
+
 
 </script>
