@@ -33,11 +33,15 @@ include_once __DIR__ . '/../../components/sidebar.php';
 <main id="main" class="main">
   <div class="pagetitle">
     <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/student_users/dashboardstudent">Back to Dashboard</a></li>
+      </ol>
+    </nav>
   </div>
 
   <section class="section dashboard">
     <div class="row">
-
       <!-- Left: Vision & Mission -->
       <div class="col-lg-8">
         <div class="card vision-mission-card shadow">
