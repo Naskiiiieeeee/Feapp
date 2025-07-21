@@ -3,271 +3,92 @@ include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 ?>
+
+<style>
+  .vision-mission-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .vision-mission-card::before {
+    content: "";
+    background: url('<?= BASE_URL ?>/frontend/src/img/clientlogo.jpg') no-repeat center center;
+    background-size: contain;
+    opacity: 0.1;
+    filter: blur(2px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .vision-mission-content {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
 <main id="main" class="main">
   <div class="pagetitle">
     <h1>Dashboard</h1>
   </div>
-<!-- End Page Title -->
-    <section class="section dashboard">
-      <div class="row">
-        <!-- Left side columns -->
-                       
-          <div class="col-lg-8">
-              <?php 
-                // if($role == "Admin"){ 
-                ?>
 
-              <div class="row">
-                <!-- Sales Card -->
-                  <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card sales-card">
-                      <div class="card-body">
-                        <h5 class="card-title">Number of <span>| Faculty</span></h5>
-                        <div class="d-flex align-items-center">
-                          <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                            <i class="bi bi-people"></i>
-                          </div>
-                          <div class="ps-3">
-                          <?php 
-                            // $dash_user = "SELECT * FROM `endusers` WHERE `role` = 'Enduser'";
-                            // $dash_users = mysqli_query($con, $dash_user);
+  <section class="section dashboard">
+    <div class="row">
 
-                            // if($user_total = mysqli_num_rows($dash_users)){
-                            //   echo '<h6 class="mb-0">'.$user_total.'</h6>';
-                            // }
-                            // else{
-                            //   echo '<h6 class="mb-0">EMPTY</h6>';
-                            // }
-                          ?>
-                            <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- End Sales Card -->
+      <!-- Left: Vision & Mission -->
+      <div class="col-lg-8">
+        <div class="card vision-mission-card shadow">
+          <div class="card-body vision-mission-content">
+            <h5 class="card-title text-center">Our School Philosophy</h5>
+            <p class="fs-5 text-center">
+              Teaching the way students learn.
+            </p>
 
-                    <!-- Revenue Card -->
-                    <div class="col-xxl-4 col-md-6">
-                      <div class="card info-card revenue-card">
-                        <div class="card-body">
-                          <h5 class="card-title">Number of <span>| Response</span></h5>
-                          <div class="d-flex align-items-center">
-                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                              <i class="bi bi-bookmarks"></i>
-                            </div>
-                            <div class="ps-3">
-                              <?php 
-                                // $dash_user = "SELECT * FROM `endusers` WHERE `role` = 'Admin'";
-                                // $dash_users = mysqli_query($con, $dash_user);
+            <h5 class="card-title text-center">Vision</h5>
+            <p class="fs-5 text-center">
+              College of Our Lady of Mercy envisions itself as a Center of excellence within the region in the areas of Instructions, Research and Community Service.
+            </p>
 
-                                // if($user_total = mysqli_num_rows($dash_users)){
-                                //   echo '<h6 class="mb-0">'.$user_total.'</h6>';
-                                // }
-                                // else{
-                                //   echo '<h6 class="mb-0">EMPTY</h6>';
-                                // }
-                              ?>
-                              <span class="text-success small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- End Revenue Card -->
-
-                <!-- Customers Card -->
-                    <div class="col-xxl-4 col-xl-12">
-                      <div class="card info-card customers-card">
-                        <div class="card-body">
-                          <h5 class="card-title">Unevaluate <span>| Faculty</span></h5>
-                          <div class="d-flex align-items-center">
-                            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                              <i class="bi bi-exclamation-triangle"></i>
-                            </div>
-                            <div class="ps-3">
-                              <?php 
-                                // $dash_user = "SELECT * FROM `user_devices`";
-                                // $dash_users = mysqli_query($con, $dash_user);
-                                // if($user_total = mysqli_num_rows($dash_users)){
-                                //   echo '<h6 class="mb-0">'.$user_total.'</h6>';
-                                // }
-                                // else{
-                                //   echo '<h6 class="mb-0">EMPTY</h6>';
-                                // }
-                              ?>
-                              <span class="text-danger small pt-1 fw-bold">Data Fetching</span> <span class="text-muted small pt-2 ps-1"></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div><!-- End Customers Card -->
-                <!-- Reports -->
-
-                <?php
-                    // $query = "
-                    //     SELECT e.fullname, COUNT(d.ud_id) AS device_count
-                    //     FROM user_devices d
-                    //     INNER JOIN endusers e ON d.email = e.email
-                    //     GROUP BY e.fullname
-                    //     ORDER BY device_count DESC
-                    // ";
-
-                    // $result = mysqli_query($con, $query);
-
-                    // $owners = [];
-                    // $deviceCounts = [];
-
-                    // while ($row = mysqli_fetch_assoc($result)) {
-                    //     $owners[] = $row['fullname'];
-                    //     $deviceCounts[] = (int)$row['device_count'];
-                    // }
-                ?>
-
-                <!-- Card Container -->
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <h5 class="card-title">Student Response <span>/Analytics</span></h5>
-                      <div id="deviceAnalyticsChart" style="min-height: 400px;"></div>
-
-                      <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                          const owners = <?php echo json_encode($owners); ?>;
-                          const deviceCounts = <?php echo json_encode($deviceCounts); ?>;
-
-                          new ApexCharts(document.querySelector("#deviceAnalyticsChart"), {
-                            series: [{
-                              name: "Registered Devices",
-                              data: deviceCounts
-                            }],
-                            chart: {
-                              type: 'bar',
-                              height: 400
-                            },
-                            plotOptions: {
-                              bar: {
-                                borderRadius: 4,
-                                horizontal: false,
-                              }
-                            },
-                            dataLabels: {
-                              enabled: true
-                            },
-                            xaxis: {
-                              categories: owners,
-                              title: {
-                                text: "End Users"
-                              }
-                            },
-                            yaxis: {
-                              title: {
-                                text: "Device Count"
-                              }
-                            },
-                            tooltip: {
-                              y: {
-                                formatter: val => `${val} device(s)`
-                              }
-                            },
-                            colors: ['#255F38']
-                          }).render();
-                        });
-                      </script>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        </div>
-    <!-- End Left side columns -->
-
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-          <div class="card">
-                <div class="card-body pb-0">
-                  <h5 class="card-title">Data Security<span>| News</span></h5>
-                  <div class="news">
-                      <div class="post-item clearfix">
-                        <img src="<?= BASE_URL ?>/frontend/src/assets/img/prosec.jpg" alt="">
-                        <h4><a href="#">Data Encryption</a></h4>
-                        <p>Maintain security of the system through timely security updates, fixes, and patches to ensure data privacy and timely responses to threats. Maintain playbooks with guidelines for decommissioning. Establish standardized third-party governance and ensure that stakeholders meet the required standards and requirements.</p>
-                      </div>
-                      <div class="post-item clearfix">
-                        <img src="<?= BASE_URL ?>/frontend/src/assets/img/prosales.png" alt="">
-                        <h4><a href="#">Realtime Fetching</a></h4>
-                        <p>Realtime fetching of results inevitably lead to greater profits. You need to increase your monthly sales volume, for example, to achieve greater profits. Profit margins are the most important barometer of a company's health, according to "Bloomberg Businessweek" online.</p>
-                      </div>
-                      <div class="post-item clearfix">
-                        <img src="<?= BASE_URL ?>/frontend/src/assets/img/prostock.jpg" alt="">
-                        <h4><a href="#">Data Storage</a></h4>
-                        <p>Investment product is the umbrella term for all the stocks, bonds, options, derivatives and other financial instruments that people put money into in hopes of earning profits.</p>
-                      </div>
-                  </div>
-              </div>
+            <h5 class="card-title text-center mt-4">Mission</h5>
+            <p class="fs-5 text-center">
+              College of Our Lady of Mercy as a non-profit organization, commits itself to offer relevant affordable programs through high quality education responsive to the needs of the industries and the communities that will develop well-rounded and competent graduates imbued with Christian Values.
+            </p>
           </div>
-        <!-- End News & Updates -->
+        </div>
       </div>
+
+      <!-- Right: News Section -->
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-body pb-0">
+            <h5 class="card-title">Data Security<span>| News</span></h5>
+            <div class="news">
+              <div class="post-item clearfix">
+                <img src="<?= BASE_URL ?>/frontend/src/assets/img/prosec.jpg" alt="">
+                <h4><a href="#">Data Encryption</a></h4>
+                <p>Maintain security of the system through timely security updates, fixes, and patches to ensure data privacy and timely responses to threats. Maintain playbooks with guidelines for decommissioning. Establish standardized third-party governance and ensure that stakeholders meet the required standards and requirements.</p>
+              </div>
+              <div class="post-item clearfix">
+                <img src="<?= BASE_URL ?>/frontend/src/assets/img/prosales.png" alt="">
+                <h4><a href="#">Realtime Fetching</a></h4>
+                <p>Realtime fetching of results inevitably lead to greater profits. You need to increase your monthly sales volume, for example, to achieve greater profits. Profit margins are the most important barometer of a company's health, according to "Bloomberg Businessweek" online.</p>
+              </div>
+              <div class="post-item clearfix">
+                <img src="<?= BASE_URL ?>/frontend/src/assets/img/prostock.jpg" alt="">
+                <h4><a href="#">Data Storage</a></h4>
+                <p>Investment product is the umbrella term for all the stocks, bonds, options, derivatives and other financial instruments that people put money into in hopes of earning profits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </section>
+
+    </div> <!-- row -->
+  </section>
 </main>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const dates = <?php echo json_encode($dates); ?>;
-        const registered = <?php echo json_encode($registered); ?>;
-        const logout = <?php echo json_encode($logout); ?>;
-
-        new ApexCharts(document.querySelector("#reportsChart"), {
-            series: [
-                {
-                    name: 'Login',
-                    data: registered
-                },
-                {
-                    name: 'Logout',
-                    data: logout
-                }
-            ],
-            chart: {
-                height: 350,
-                type: 'area',
-                toolbar: {
-                    show: false
-                }
-            },
-            markers: {
-                size: 4
-            },
-            colors: ['#E57068', '#2eca6a'],
-            fill: {
-                type: "gradient",
-                gradient: {
-                    shadeIntensity: 1,
-                    opacityFrom: 0.3,
-                    opacityTo: 0.4,
-                    stops: [0, 90, 100]
-                }
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth',
-                width: 2
-            },
-            xaxis: {
-                type: 'datetime',
-                categories: dates
-            },
-            tooltip: {
-                x: {
-                    format: 'dd/MM/yy HH:mm'
-                }
-            }
-        }).render();
-    });
-</script>
 
 <?php 
 include_once __DIR__ . '/../../components/footer.php';
