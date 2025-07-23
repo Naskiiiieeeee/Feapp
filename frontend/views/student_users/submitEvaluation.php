@@ -703,7 +703,7 @@ $('#evaluationForm').submit(function (e) {
       if (response === "added") {
         // Step 2: Ask AI for recommendation
         $.ajax({
-          url: 'http://localhost:5000/recommend-training',
+          url: 'http://recommenderfe-env.eba-c3pyts5p.ap-southeast-1.elasticbeanstalk.com/recommend-training',
           method: 'POST',
           contentType: 'application/json',
           data: JSON.stringify({
