@@ -1,5 +1,5 @@
-#### header
-#### footscript
-#### login
+#### header check
+#### footscript check
+#### login check
 #### 404
 #### helpers // fixed but needs to be test in deployment
