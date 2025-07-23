@@ -26,6 +26,8 @@ def recommend_training():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#Required for AWS EB(WSGI servers)
+application = app
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
-    application = app
