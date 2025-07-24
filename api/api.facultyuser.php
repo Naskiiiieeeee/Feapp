@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])) {
 }
 
 // ADD NEW Faculty
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveNewFaculty'])) {
     $fullname = $_POST['fullname'];
     $email = $_POST['email'];
     $department = $_POST['department'];

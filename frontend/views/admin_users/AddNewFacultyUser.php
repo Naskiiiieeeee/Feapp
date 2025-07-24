@@ -66,7 +66,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-primary" name="btnSaveAdminProfile"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save User Information</button>
+                <button type="submit" class="btn btn-primary" name="btnSaveNewFaculty"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save User Information</button>
             </div>
         </form>
     </div>
@@ -103,7 +103,7 @@ $('#AddForm').submit(function (e) {
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveAdminProfile", true); 
+  formData.append("btnSaveNewFaculty", true); 
 
   $.ajax({
     url: BASE_URL + '/api/api.facultyuser.php',
