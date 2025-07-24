@@ -46,4 +46,8 @@ class UserFacultyViewModel {
         return $this->model->searchFaculty($keyword);
     }
 
+    public function getNewEmail($email){
+        return $this->model->getNewEmail($email);
+    }
+
 }
