@@ -117,7 +117,6 @@ define('BASE_URL', '/feapp');
         }
       });
     });
-
       // AJAX reset password
     $('#resetPassword').submit(function (e) {
       e.preventDefault();
