@@ -58,3 +58,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['studentCSV'])) {
     echo json_encode($response['status'] === 'added' ? 'added' : $response);
     exit;
 }
+

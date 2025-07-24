@@ -73,5 +73,10 @@ class UserStudentModel extends BaseModel{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function validateAllStudent($status){
+        $restricted = 2;
+        $stmt = $this->db->prepare("UPDATE `student_info` SET `status` = ? WHERE `status` != ? ");
+        return $stmt->execute([$status, $restricted]);
+    }
 
 }
