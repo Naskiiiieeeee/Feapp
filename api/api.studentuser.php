@@ -59,3 +59,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['studentCSV'])) {
     exit;
 }
 
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['validateALLStudent'])){
+    $status = filter_input(INPUT_POST , 'status', FILTER_SANITIZE_SPECIAL_CHARS);
+    try{
+        $result = $vm->setVerifyAllStudents($status);
+        if($result){
+            echo json_encode(["status" => "updated"]);
+        }else{
+            echo json_encode(["status" => "error"]);
+        }
+    }catch(Exception $e){
+        echo json_encode(["stattus" => 'error' . $e->getMessage()]);
+    }
+}
