@@ -82,4 +82,8 @@ class UserStudentViewModel {
         return $this->model->searchStudents($keyword);
     }
 
+    public function setVerifyAllStudents($status){
+        return $this->model->validateAllStudent($status);
+    }
+
 }
