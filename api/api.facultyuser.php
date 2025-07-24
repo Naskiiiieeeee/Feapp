@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile']
     $targetFile = $uploadDir . $fileName;
     $relativePath = 'uploads/faculty/' . $fileName; 
 
-    $isduplicate = $vm->getUserEmail($email);
+    $isduplicate = $vm->getNewEmail($email);
 
     if(!$isduplicate){
         if (!file_exists($uploadDir)) {
