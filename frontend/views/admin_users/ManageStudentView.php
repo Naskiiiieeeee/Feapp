@@ -309,4 +309,53 @@ $(document).ready(function () {
   });
 });
 
+$('#VerifiedAllStudents').submit(function(e){
+  e.preventDefault();
+  var formData = new FormData(this);
+  formData.append("validateALLStudent", true); 
+
+  setTimeout(() => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Verify it!'
+    }).then((result) =>{
+      if (result.isConfirmed){
+        $.ajax({
+          url: BASE_URL + '/api/api.studentuser.php',
+          type: 'POST',
+          data: formData,
+          contentType: false,       
+          processData: false,        
+          dataType: 'json',
+          success(data) {
+            if (data.status === "updated") {
+              Swal.fire({
+                icon: 'success',
+                title: 'Student Updated',
+                text: 'Student information successfully updated!',
+                timer: 2000,
+                showConfirmButton: false
+              });
+            } else {
+              Swal.fire('Error', 'Failed to update', "error");
+            }
+          },
+          error() {
+            Swal.fire('Error', 'Server error. Try again.', "error");
+          }
+        });
+      }else{
+         Swal.fire("Cancelled", "Verify all students operation cancelled", "info");
+      }
+    });
+  });
+
+
+});
+
 </script>
