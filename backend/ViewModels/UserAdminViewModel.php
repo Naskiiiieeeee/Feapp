@@ -38,8 +38,8 @@ class UserAdminViewModel {
         return $this->model->getByEmail($email);
     }
 
-    public function getNewEmail($email){
-        return $this->getNewEmail($email);
+    public function getNewEmail($email, $role){
+        return $this->getNewEmail($email, $role);
     }
 
 }

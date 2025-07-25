@@ -54,7 +54,7 @@ class UserAdminModel extends BaseModel {
     public function getByEmail($email){
         $stmt = $this->db->prepare("SELECT * FROM `endusers` WHERE `email` = ? AND `status` = 1 ");
         $stmt->execute([$email]);
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getNewEmail($email, $role){
