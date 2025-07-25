@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveAdminProfile']
     $targetFile = $uploadDir . $fileName;
     $relativePath = 'uploads/admin/' . $fileName; 
 
-    $isDuplicate = $vm->getNewEmail($email);
+    $isDuplicate = $vm->getNewEmail($email,$role);
     if(!$isDuplicate){
         if (!file_exists($uploadDir)) {
             mkdir($uploadDir, 0777, true);
