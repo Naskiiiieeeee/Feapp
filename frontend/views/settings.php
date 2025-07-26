@@ -1,11 +1,22 @@
 <?php
 require_once __DIR__ . '/../../backend/ViewModels/CourseViewModel.php';
+require_once __DIR__ . '/../../backend/ViewModels/SchedEvalViewModel.php';
+
 include_once __DIR__ . '/../components/header.php';
 include_once __DIR__ . '/../components/navigation.php';
 include_once __DIR__ . '/../components/sidebar.php';
 
 $vm = new CourseViewModel();
 $departmentInfo = $vm->getAllValidatedDepartment();
+
+$evm = new SchedEvalViewModel();
+
+$page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
+$limit = 4;
+$count = ($page_no - 1) * $limit + 1;
+
+$evalSched = $evm->getSchedPaginated($page_no, $limit);
+$total_pages = $evm->getTotalPages($limit);
 ?>
 
 <main id="main" class="main">
@@ -51,11 +62,96 @@ $departmentInfo = $vm->getAllValidatedDepartment();
           </ul>
           <div class="tab-content pt-2">
             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-              <h5 class="card-title">Account Details</h5>
-
               <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-upc-scan"></i> Fullname</div>
-                <div class="col-lg-8 col-md-8"><?= $fullname; ?></div>
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Recent Records</h5>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Schedule Code</th>
+                            <th>Department</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Uploader</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <?php if (!empty($evalSched)): ?>
+                          <?php foreach ($evalSched as $row): ?>
+                            <tr>
+                              <td><?= $count++; ?></td>
+                              <td class="id"><?= htmlspecialchars($row['ev_code']); ?></td>
+                              <td class=""><?= htmlspecialchars($row['department']); ?></td>
+                              <td class=""><?= htmlspecialchars($row['startDate']); ?></td>
+                              <td class=""><?= htmlspecialchars($row['endDate']); ?></td>
+                              <td class=""><?= htmlspecialchars($row['uploadBy']); ?></td>
+                              <td>
+                                <?php
+                                  switch ($row['status']) {
+                                    case 1:
+                                      echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Verified</span>';
+                                      break;
+                                    case 2:
+                                      echo '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle"></i> Restricted</span>';
+                                      break;
+                                    default:
+                                      echo '<span class="badge bg-secondary fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>';
+                                      break;
+                                  }
+                                ?>
+                              </td>
+                              <td>
+
+                                <button type="button"
+                                        class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
+                                        id="<?= $row['ev_id']; ?>"
+                                        data-name="<?= htmlspecialchars($row['department']); ?>"
+                                        title="Delete">
+                                  <i class="fas fa-trash mx-2" aria-hidden="true"></i>
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-primary mt-1 px-1 btn-sm editbutton"
+                                        data-toggle="modal"
+                                        data-target="#verifyModal">
+                                  <i class="bi bi-pencil-square mx-2"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          <?php endforeach; ?>
+                        <?php else: ?>
+                          <tr class="text-center"><td colspan="8">No Registered Data!</td></tr>
+                        <?php endif; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div class="card-footer bg-bg-info-subtle d-flex align-items-center justify-content-between">
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination justify-content-center fw-bold">
+                        <li class="page-item <?= ($page_no <= 1) ? 'disabled' : ''; ?>">
+                          <a class="page-link" href="?page_no=1">First</a>
+                        </li>
+                        <li class="page-item <?= ($page_no <= 1) ? 'disabled' : ''; ?>">
+                          <a class="page-link" href="<?= ($page_no <= 1) ? '#' : '?page_no=' . ($page_no - 1); ?>">Prev</a>
+                        </li>
+                        <li class="page-item <?= ($page_no >= $total_pages) ? 'disabled' : ''; ?>">
+                          <a class="page-link" href="<?= ($page_no >= $total_pages) ? '#' : '?page_no=' . ($page_no + 1); ?>">Next</a>
+                        </li>
+                        <li class="page-item <?= ($page_no >= $total_pages) ? 'disabled' : ''; ?>">
+                          <a class="page-link" href="?page_no=<?= $total_pages; ?>">Last</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+
+                </div>
               </div>
 
             </div>
