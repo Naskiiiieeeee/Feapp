@@ -29,5 +29,10 @@ class SchedEvalModel extends Helpers{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function deleteSched($id){
+        $stmt = $this->db->prepare("DELETE FROM `evaluationsched` WHERE `ev_id` = ? ");
+        return $stmt->execute([$id]);
+    }
 }
 ?>
