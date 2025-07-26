@@ -89,6 +89,7 @@ class Helpers extends BaseModel{
     public function randomStringGenerator($length = 8) {
         return bin2hex(random_bytes($length / 2));
     }
+    
 
     public function emailBlocker($email, $allowedDomain) {
         if (!str_ends_with($email, $allowedDomain)) {

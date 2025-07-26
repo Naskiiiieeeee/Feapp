@@ -1,12 +1,11 @@
 <?php
-require_once __DIR__ . '/../../backend/ViewModels/UserViewModel.php';
+require_once __DIR__ . '/../../backend/ViewModels/CourseViewModel.php';
 include_once __DIR__ . '/../components/header.php';
 include_once __DIR__ . '/../components/navigation.php';
 include_once __DIR__ . '/../components/sidebar.php';
 
-$vm = new UserViewModel();
-$ProfileData = null;
-$ProfileData = $vm->getUserEmail($email);
+$vm = new CourseViewModel();
+$departmentInfo = $vm->getAllValidatedDepartment();
 ?>
 
 <main id="main" class="main">
@@ -53,31 +52,11 @@ $ProfileData = $vm->getUserEmail($email);
           <div class="tab-content pt-2">
             <div class="tab-pane fade show active profile-overview" id="profile-overview">
               <h5 class="card-title">Account Details</h5>
-              <?php if ($ProfileData): ?>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-upc-scan"></i> Fullname</div>
-                <div class="col-lg-8 col-md-8"><?= $ProfileData['fullname']; ?></div>
-              </div>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-envelope-at"></i> Email</div>
-                <div class="col-lg-8 col-md-8"><?= $ProfileData['email']; ?></div>
-              </div>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-building-fill-lock"></i> Department</div>
-                <div class="col-lg-8 col-md-8"><?= $ProfileData['department']; ?></div>
-              </div>
-              <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-calendar-check"></i> Registration Date</div>
-                <div class="col-lg-8 col-md-8"><?= $ProfileData['date_created']; ?></div>
-              </div>
 
               <div class="row">
-                <div class="col-lg-4 col-md-4 label"><i class="bi bi-person-rolodex"></i> Role</div>
-                <div class="col-lg-8 col-md-8"><?= $ProfileData['role']; ?></div>
+                <div class="col-lg-4 col-md-4 label"><i class="bi bi-upc-scan"></i> Fullname</div>
+                <div class="col-lg-8 col-md-8"><?= $fullname; ?></div>
               </div>
-            <?php else: ?>
-                <p class="text-danger">User information not found or invalid token.</p>
-            <?php endif; ?>
 
             </div>
 
@@ -86,7 +65,12 @@ $ProfileData = $vm->getUserEmail($email);
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-building-add"></i> Department</label>
                   <div class="col-md-8 col-lg-9">
-                    <select name="" id="" class="form-control"></select>
+                    <select name="department" id="" class="form-control">
+                      <option selected disabled>Please Choose</option>
+                      <?php foreach($departmentInfo as $row): ?>
+                        <option value="<?= $row['description']; ?>"><?= $row['description']; ?></option>
+                      <?php endforeach; ?>
+                    </select>
                   </div>
                 </div>
 
