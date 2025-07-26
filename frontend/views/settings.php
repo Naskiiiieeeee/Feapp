@@ -21,7 +21,7 @@ $total_pages = $evm->getTotalPages($limit);
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>System Settings</h1>
+    <h1>Evaluation Scheduler</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/dashboard">Back to Dashboard</a></li>
@@ -31,25 +31,7 @@ $total_pages = $evm->getTotalPages($limit);
 
 <section class="section profile">
   <div class="row">
-    <div class="col-xl-4">
-      <div class="card">
-        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-            <img src="<?= BASE_URL ?>/frontend/src/img/clientlogo.jpg" alt="Profile" class="rounded-circle" width="150">
-            <h3 class="mt-2">ICTO</h3>
-            <h3>College of Our Lady of Mercy</h3>
-          <div class="social-links mt-2">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="google"><i class="bi bi-google"></i></a>
-          </div>
-        </div>
-        <div class="card-footer bg-primary-subtle">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="col-xl-8">
+    <div class="col-xl-12">
       <div class="card">
         <div class="card-body pt-3">
           <ul class="nav nav-tabs nav-tabs-bordered">
@@ -106,7 +88,6 @@ $total_pages = $evm->getTotalPages($limit);
                                 ?>
                               </td>
                               <td>
-
                                 <button type="button"
                                         class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
                                         id="<?= $row['ev_id']; ?>"
@@ -114,7 +95,6 @@ $total_pages = $evm->getTotalPages($limit);
                                         title="Delete">
                                   <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                                 </button>
-
                                 <button type="button"
                                         class="btn btn-primary mt-1 px-1 btn-sm editbutton"
                                         data-toggle="modal"
@@ -213,9 +193,74 @@ include_once __DIR__ . '/../components/footer.php';
 include_once __DIR__ . '/../components/footscript.php';
 ?>
 
+<script>
+  $(document).ready(function () {
+    $('.editbutton').click(function () {
+      var $row = $(this).closest('tr');
+      $('#id').val($row.find('.id').text());
+      $('#email').val($row.find('.email').text());
+      $('#fullname').val($row.find('.fullname').text());
+      $('#department').val($row.find('.department').text());
+
+      $('#verifyModal').modal('show');
+    });
+  });
+</script>
+
 
 <script>
   const BASE_URL = "<?= BASE_URL ?>";
+
+$(document).ready(function () {
+    $(document).on('click', '.deleteuser', function () {
+      var id = $(this).attr('id');
+      var name = $(this).data('name') || "this user";
+
+      const msg = new SpeechSynthesisUtterance(`Are you sure you want to delete ${name}?`);
+      msg.lang = 'en-US';
+      msg.pitch = 1;
+      msg.rate = 1;
+      speechSynthesis.speak(msg);
+
+      setTimeout(() => {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax({
+              url: BASE_URL + '/api/api.adminuser.php',
+              type: 'POST',
+              data: { deleteSched: id },
+              success: function (data) {
+                if (data.trim() === "success") {
+                  Swal.fire({
+                    title: 'Success',
+                    icon: 'success',
+                    text: 'Evaluation Schedule deleted successfully.',
+                    showConfirmButton: false,
+                    timer: 2000,
+                  }).then(() => {
+                    window.location.reload();
+                  });
+                } else {
+                  Swal.fire("Error", "Failed to delete Evaluation Schedule", "error");
+                }
+              }
+            });
+          } else {
+            Swal.fire("Cancelled", "Delete operation cancelled", "info");
+          }
+        });
+      }, 500);
+    });
+  });
+
 
   // AJAX form submission
 $('#AddForm').submit(function (e) {
