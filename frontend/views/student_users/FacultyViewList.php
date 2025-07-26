@@ -7,6 +7,7 @@ include_once __DIR__ . '/../../components/sidebar.php';
 $vm = new UserFacultyViewModel();
 $facultyList = null;
 $facultyList = $vm->getFacultyInfo();
+$status = $vm->getIfStudentisActivated($email);
 
 $groupedFaculty = [];
 foreach ($facultyList as $faculty) {
@@ -28,6 +29,8 @@ foreach ($facultyList as $faculty) {
       </ol>
     </nav>
   </div>
+
+<?php if($status == 1):?>
 
 <section class="section profile">
   <?php if (!empty($groupedFaculty)): ?>
@@ -68,6 +71,27 @@ foreach ($facultyList as $faculty) {
     <p class="text-danger">No Registered Faculty Found</p>
   <?php endif; ?>
 </section>
+
+<?php else:?>
+
+<section class="section profile">
+  <div class="row mb-4">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header bg-warning-subtle"></div>
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+            <h2><i class="bi bi-exclamation-circle"></i> Evaluation Not Set</h2>
+            <p>Please wait for the system administrator to validate your evaluation module!</p>
+            <div class="social-links mt-2">
+            </div>
+          </div>
+          <div class="card-footer bg-warning-subtle">
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+<?php endif;?>
 
 </main>
 

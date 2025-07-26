@@ -49,5 +49,8 @@ class UserFacultyViewModel {
     public function getNewEmail($email){
         return $this->model->getNewEmail($email);
     }
-
+    
+    public function getIfStudentisActivated($email){
+        return $this->model->checkIfStudentisActivated($email);
+    }
 }

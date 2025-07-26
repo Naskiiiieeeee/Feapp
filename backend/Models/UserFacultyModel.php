@@ -84,4 +84,11 @@ class UserFaculty extends BaseModel {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function checkIfStudentisActivated($email){
+        $stmt = $this->db->prepare("SELECT `evaluationAccess` FROM `student_info` WHERE `student_email` = ? ");
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? (int)$result['evaluationAccess'] : 0;
+    }
 }
