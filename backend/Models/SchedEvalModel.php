@@ -34,5 +34,10 @@ class SchedEvalModel extends Helpers{
         $stmt = $this->db->prepare("DELETE FROM `evaluationsched` WHERE `ev_id` = ? ");
         return $stmt->execute([$id]);
     }
+
+    public function updateSched($id, $status){
+        $stmt = $this->db->prepare("UPDATE `evaluationsched` SET `status` = ? WHERE `ev_code` = ? ");
+        return $stmt->execute([$status, $id]);
+    }
 }
 ?>

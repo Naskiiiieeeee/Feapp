@@ -24,6 +24,10 @@ class SchedEvalViewModel {
     public function getdeleteEval($id){
         return $this->model->deleteSched($id);
     }
+
+    public function getUpdateSchedule($status, $id){
+        return $this->model->updateSched($id, $status);
+    }
 }
 
 ?>

@@ -33,11 +33,25 @@ if($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['deleteSched'])){
         }else{
             echo json_encode("error");
         }
-
     }catch(Exception $e ){
         echo json_encode(["error" . $e->getMessage()]);
     }
     exit;
+}
 
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
+    $id = filter_input(INPUT_POST , 'id' , FILTER_SANITIZE_SPECIAL_CHARS);
+    $status = filter_input(INPUT_POST , 'status' , FILTER_SANITIZE_SPECIAL_CHARS);
+    try{
+        $result = $vm->getUpdateSchedule($status, $id);
+        if($result){
+            echo json_encode("updated");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode('error' . $e->getMessage());
+    }
+    exit;
 }
 ?>

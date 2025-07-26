@@ -68,15 +68,15 @@ $total_pages = $evm->getTotalPages($limit);
                             <tr>
                               <td><?= $count++; ?></td>
                               <td class="id"><?= htmlspecialchars($row['ev_code']); ?></td>
-                              <td class=""><?= htmlspecialchars($row['department']); ?></td>
-                              <td class=""><?= htmlspecialchars($row['startDate']); ?></td>
-                              <td class=""><?= htmlspecialchars($row['endDate']); ?></td>
+                              <td class="department"><?= htmlspecialchars($row['department']); ?></td>
+                              <td class="startDate"><?= htmlspecialchars($row['startDate']); ?></td>
+                              <td class="endDate"><?= htmlspecialchars($row['endDate']); ?></td>
                               <td class=""><?= htmlspecialchars($row['uploadBy']); ?></td>
                               <td>
                                 <?php
                                   switch ($row['status']) {
                                     case 1:
-                                      echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Verified</span>';
+                                      echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Activated</span>';
                                       break;
                                     case 2:
                                       echo '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle"></i> Restricted</span>';
@@ -185,8 +185,48 @@ $total_pages = $evm->getTotalPages($limit);
     </div>
   </div>
 </section>
-
 </main>
+<!-- Edit Modal -->
+<div class="modal fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="updateForm" method="post">
+      <div class="modal-content">
+        <div class="modal-header bg-secondary">
+          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel">Update Evaluation Schedule Access</h5>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id" id="id">
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold">Department</label>
+            <input type="text" id="department" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold">Starting Date</label>
+            <input type="date" id="startDate" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold">Ending Date</label>
+            <input type="date" id="endDate" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold mt-2">Status</label>
+            <select name="status" class="form-control">
+              <option selected disabled>Please Select</option>
+              <option value="1">Activate</option>
+              <option value="2">Restrict</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer bg-secondary">
+          <button type="submit" name="btnUpdateAccess" class="btn btn-light text-dark fw-bold">
+            <i class="bi bi-upload"></i> Save changes
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 <?php
 include_once __DIR__ . '/../components/footer.php';
@@ -198,9 +238,9 @@ include_once __DIR__ . '/../components/footscript.php';
     $('.editbutton').click(function () {
       var $row = $(this).closest('tr');
       $('#id').val($row.find('.id').text());
-      $('#email').val($row.find('.email').text());
-      $('#fullname').val($row.find('.fullname').text());
       $('#department').val($row.find('.department').text());
+      $('#startDate').val($row.find('.startDate').text());
+      $('#endDate').val($row.find('.endDate').text());
 
       $('#verifyModal').modal('show');
     });
@@ -296,4 +336,42 @@ $('#AddForm').submit(function (e) {
     }
   });
 });
+
+// update function
+
+$('#updateForm').submit(function(e){
+  e.preventDefault();
+
+  var formData = new FormData(this);
+  formData.append("btnUpdateAccess", true); 
+
+  $.ajax({
+    url: BASE_URL + '/api/api.evaluationsched.php',
+    type: 'POST',
+    data: formData,
+    contentType: false,       
+    processData: false,        
+    dataType: 'json',
+    success(data) {
+      if (data === "updated") {
+        Swal.fire({
+          icon: 'success',
+          title: 'Schedule Updated',
+          text: 'Evaluation Schedule successfully updated!',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          $('#verifyModal').modal('hide');
+          location.reload();
+        });
+      } else {
+        Swal.fire('Error', 'Failed to update', "error");
+      }
+    },
+    error() {
+      Swal.fire('Error', 'Server error. Try again.', "error");
+    }
+  });
+});
+
 </script>
