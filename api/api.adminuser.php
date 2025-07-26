@@ -5,12 +5,15 @@ $vm = new UserAdminViewModel();
 // DELETE ADMIN USER
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteUser'])) {
     $userId = $_POST['deleteUser'];
-    $result = $vm->deleteAdminUser($userId);
-
-    if ($result) {
-        echo json_encode("success");
-    } else {
-        echo json_encode("error");
+    try{
+        $result = $vm->getDeleteAdmin($userId);
+        if ($result) {
+            echo json_encode("success");
+        } else {
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode("error" . $e->getMessage());
     }
     exit;
 }

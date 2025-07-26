@@ -225,7 +225,7 @@ include_once __DIR__ . '/../../components/footscript.php';
                     window.location.reload();
                   });
                 } else {
-                  Swal.fire("Error", "Failed to delete user", "error");
+                  Swal.fire("Error", "User Account is Protected", "error");
                 }
               }
             });

@@ -76,7 +76,7 @@ class UserAdminModel extends BaseModel {
         $query = $this->db->prepare("SELECT * FROM `endusers` WHERE `eu_id` = ? ");
         $query->execute([$id]);
         $result = $query->fetch(PDO::FETCH_ASSOC);
-        if($result['isprotected'] == 0){
+        if($result['is_protected'] == 0){
             $stmt = $this->db->prepare("DELETE FROM `endusers` WHERE `eu_id` = ?");
             return $stmt->execute([$id]);
         }

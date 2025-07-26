@@ -40,4 +40,8 @@ class UserAdminViewModel {
     public function getNewEmail($email, $role){
         return $this->model->getNewEmail($email, $role);
     }
+
+    public function getDeleteAdmin($id){
+        return $this->model->isAccountProtected($id);
+    }
 }
