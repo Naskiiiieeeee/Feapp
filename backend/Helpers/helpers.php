@@ -150,7 +150,7 @@ class Helpers extends BaseModel{
                 </div>
 
                 <p style="text-align: center; font-size: 13px; color: #666;">If you did not request this, please ignore this email or contact support.</p>
-                <p style="text-align: center; font-size: 13px; color: #666;">Regards,<br><strong>BOCS_APP Team</strong></p>
+                <p style="text-align: center; font-size: 13px; color: #666;">Regards,<br><strong>FEAPP Team</strong></p>
 
                 <hr style="margin-top: 20px; border: none; border-top: 1px solid #ddd;">
                 <p style="text-align: center; font-size: 11px; color: #aaa;">This is an automated message. Please do not reply.</p>
