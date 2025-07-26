@@ -62,5 +62,24 @@ class UserAdminModel extends BaseModel {
         $stmt->execute([$email, $role]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
- 
+
+    public function isAccountProtected($id){
+        $stmt = $this->db->prepare("SELECT `photo` FROM `endusers` WHERE `eu_id` = ?");
+        $stmt->execute([$id]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user && !empty($user['photo'])) {
+            $photoPath = __DIR__ . '/../../' . $user['photo'];
+            if (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
+        $query = $this->db->prepare("SELECT * FROM `endusers` WHERE `eu_id` = ? ");
+        $query->execute([$id]);
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        if($result['isprotected'] == 0){
+            $stmt = $this->db->prepare("DELETE FROM `endusers` WHERE `eu_id` = ?");
+            return $stmt->execute([$id]);
+        }
+        return false;
+    }
 }
