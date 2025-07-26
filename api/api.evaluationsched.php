@@ -42,8 +42,9 @@ if($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['deleteSched'])){
 if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateAccess'])){
     $id = filter_input(INPUT_POST , 'id' , FILTER_SANITIZE_SPECIAL_CHARS);
     $status = filter_input(INPUT_POST , 'status' , FILTER_SANITIZE_SPECIAL_CHARS);
+    $department = filter_input(INPUT_POST , 'department' , FILTER_SANITIZE_SPECIAL_CHARS);
     try{
-        $result = $vm->getUpdateSchedule($status, $id);
+        $result = $vm->getUpdateSchedule($status, $id ,$department);
         if($result){
             echo json_encode("updated");
         }else{

@@ -198,7 +198,7 @@ $total_pages = $evm->getTotalPages($limit);
           <input type="hidden" name="id" id="id">
           <div class="form-group px-2 mt-1">
             <label class="fw-bold">Department</label>
-            <input type="text" id="department" class="form-control mt-2" readonly/>
+            <input type="text" id="department" name="department" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
             <label class="fw-bold">Starting Date</label>

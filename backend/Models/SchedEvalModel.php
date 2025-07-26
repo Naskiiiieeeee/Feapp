@@ -35,9 +35,14 @@ class SchedEvalModel extends Helpers{
         return $stmt->execute([$id]);
     }
 
-    public function updateSched($id, $status){
+    public function updateSched($id, $status , $department){
         $stmt = $this->db->prepare("UPDATE `evaluationsched` SET `status` = ? WHERE `ev_code` = ? ");
-        return $stmt->execute([$status, $id]);
+        if($stmt->execute([$status, $id])){
+            $stmt = $this->db->prepare("UPDATE `student_info` SET `evaluationAccess` = ? WHERE  `student_dep` = ? ");
+            return $stmt->execute([$status, $department]);
+        }else{
+            return false;
+        }
     }
 }
 ?>
