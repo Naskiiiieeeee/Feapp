@@ -587,21 +587,24 @@ if (isset($_GET['token'])) {
               <div class="row">
                 <ul class="col-lg-12 col-md-6">1.	What do you think are the teacher's strengths?</ul>
                 <div class="col-lg-12 col-md-6 ">
-                  <textarea name="strengths" id="" cols="30" class="form-control"></textarea>
+                  <textarea name="strengths" id="" cols="30" class="form-control" required></textarea>
+                  <small class="text-danger"></small>
                 </div>
               </div>
                             
               <div class="row">
                 <ul class="col-lg-12 col-md-6">2.	In what areas could the teacher improve?</ul>
                 <div class="col-lg-12 col-md-6 ">
-                  <textarea name="improvements" id="" cols="30" class="form-control"></textarea>
+                  <textarea name="improvements" id="" cols="30" class="form-control" required></textarea>
+                  <small class="text-danger"></small>
                 </div>
               </div>
 
               <div class="row">
                 <ul class="col-lg-12 col-md-6">3.	Any additional comments:</ul>
                 <div class="col-lg-12 col-md-6 ">
-                  <textarea name="comments" id="" cols="30" class="form-control"></textarea>
+                  <textarea name="comments" id="" cols="30" class="form-control" required></textarea>
+                  <small class="text-danger"></small>
                 </div>
               </div>
 
@@ -623,133 +626,183 @@ if (isset($_GET['token'])) {
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-const BASE_URL = "<?= BASE_URL ?>";
-const token = <?php echo json_encode($_GET['token'] ?? ''); ?>;
-const userEmail = <?php echo json_encode($_SESSION['email']); ?>;
-const storageKey = `faculty_evaluation_${userEmail}_${token}`;
+  const badWords = [
+    'bobo', 'gago', 'tanga', 'ulol', 'putangina', 'walang kwenta', 'tarantado',
+    'ignorante', 'kupal', 'bano', 'fuck you', 'kengkoy', 'paisa', 'manyakis', 'malandi'
+  ];
 
-// Restore saved radios and textareas
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
-  Object.entries(saved).forEach(([name, value]) => {
-    const input = document.querySelector(`[name="${name}"]`);
-    if (input) {
-      if (input.type === 'radio') {
-        const selected = document.querySelector(`input[name="${name}"][value="${value}"]`);
-        if (selected) selected.checked = true;
-      } else if (input.tagName === 'TEXTAREA') {
-        input.value = value;
+  // Real-time check and invalid feedback
+  const fields = document.querySelectorAll("textarea");
+  fields.forEach(field => {
+    field.addEventListener("input", () => {
+      let text = field.value.toLowerCase();
+      let found = false;
+      for (let word of badWords) {
+        if (text.includes(word)) {
+          field.classList.add("is-invalid");
+          field.nextElementSibling.innerHTML = "Please avoid using offensive language.";
+          found = true;
+          break;
+        }
       }
-    }
+      if (!found) {
+        field.classList.remove("is-invalid");
+        field.nextElementSibling.innerHTML = "";
+      }
+    });
   });
-});
 
-// Save user input
-document.querySelectorAll('input[type=radio], textarea').forEach(input => {
-  input.addEventListener('input', () => {
-    const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
-    saved[input.name] = input.value;
-    localStorage.setItem(storageKey, JSON.stringify(saved));
-  });
-});
-
-// Get average per section
-function getAverageScore(sectionPrefix) {
-  let total = 0, count = 0;
-  document.querySelectorAll(`input[type="radio"]:checked`).forEach(input => {
-    if (input.name.startsWith(sectionPrefix)) {
-      total += parseInt(input.value);
-      count++;
-    }
-  });
-  return count ? (total / count).toFixed(2) : 0;
-}
-
-// Handle submit
-$('#evaluationForm').submit(function (e) {
-  e.preventDefault();
-
-  const formData = new FormData(this);
-  formData.append("btnSubmitEvaluation", true);
-
-  const academicAvg = getAverageScore("section1_");
-  const coreValuesAvg = getAverageScore("section2_");
-  const overallScore = getAverageScore("overall_rating");
-
-  if (parseFloat(academicAvg) === 0 || parseFloat(coreValuesAvg) === 0 || parseFloat(overallScore) === 0) {
-    Swal.fire('Incomplete', 'Please answer all required questions.', 'warning');
-    return;
+  // Function to check if any bad word exists in all textarea fields
+  function containsBadWords() {
+    let hasBadWord = false;
+    document.querySelectorAll("textarea").forEach(field => {
+      const text = field.value.toLowerCase();
+      for (let word of badWords) {
+        if (text.includes(word)) {
+          field.classList.add("is-invalid");
+          hasBadWord = true;
+        }
+      }
+    });
+    return hasBadWord;
   }
 
-  formData.append("academic_avg", academicAvg);
-  formData.append("core_values_avg", coreValuesAvg);
-  formData.append("overall_score", overallScore);
-  formData.append("strengths", document.querySelector('textarea[name="strengths"]').value);
-  formData.append("improvements", document.querySelector('textarea[name="improvements"]').value);
-  formData.append("comments", document.querySelector('textarea[name="comments"]').value);
-  formData.append("faculty_token", token); // Important!
+  const BASE_URL = "<?= BASE_URL ?>";
+  const token = <?php echo json_encode($_GET['token'] ?? ''); ?>;
+  const userEmail = <?php echo json_encode($_SESSION['email']); ?>;
+  const storageKey = `faculty_evaluation_${userEmail}_${token}`;
 
-  // Step 1: Submit evaluation
-  $.ajax({
-    url: BASE_URL + '/api/api.setuprecommender.php',
-    type: 'POST',
-    data: formData,
-    contentType: false,
-    processData: false,
-    dataType: 'json',
-    success: function (response) {
-      if (response === "added") {
-        // Step 2: Ask AI for recommendation
-        $.ajax({
-          url: BASE_URL + '/api/proxy.ai.recommender.php',
-          method: 'POST',
-          contentType: 'application/json',
-          data: JSON.stringify({
-            subject_knowledge: academicAvg,
-            engagement: academicAvg,
-            management: coreValuesAvg,
-            preparedness: academicAvg,
-            professionalism: coreValuesAvg
-          }),
-          success: function (recommendation) {
-            const aiTraining = recommendation.recommended_training || "None";
-
-            Swal.fire({
-              icon: 'success',
-              title: 'Evaluation Submitted!',
-              html: 'Recommended Training: <b>' + aiTraining + '</b>'
-            }).then(() => {
-              // Step 3: Save recommendation to DB
-              $.ajax({
-                url: BASE_URL + '/api/api.save_recommendation.php',
-                method: 'POST',
-                data: {
-                  student_email: userEmail,
-                  faculty_token: token,
-                  ai_recommendation: aiTraining
-                },
-                success: function () {
-                  localStorage.removeItem(storageKey);
-                  location.href = 'FacultyViewList';
-                }
-              });
-            });
-          },
-          error: function () {
-            Swal.fire('AI Error', 'Evaluation saved but failed to get AI recommendation.', 'warning');
-          }
-        });
-      } else if (response === "already_evaluated") {
-        Swal.fire('Notice', 'You already evaluated this faculty.', 'info');
-      } else {
-        Swal.fire('Error', 'Something went wrong.', 'error');
+  // Restore saved radios and textareas
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
+    Object.entries(saved).forEach(([name, value]) => {
+      const input = document.querySelector(`[name="${name}"]`);
+      if (input) {
+        if (input.type === 'radio') {
+          const selected = document.querySelector(`input[name="${name}"][value="${value}"]`);
+          if (selected) selected.checked = true;
+        } else if (input.tagName === 'TEXTAREA') {
+          input.value = value;
+        }
       }
-    },
-    error: function () {
-      Swal.fire('Error', 'PHP server error.', 'error');
-    }
+    });
   });
-});
+
+  // Save user input
+  document.querySelectorAll('input[type=radio], textarea').forEach(input => {
+    input.addEventListener('input', () => {
+      const saved = JSON.parse(localStorage.getItem(storageKey)) || {};
+      saved[input.name] = input.value;
+      localStorage.setItem(storageKey, JSON.stringify(saved));
+    });
+  });
+
+  // Get average per section
+  function getAverageScore(sectionPrefix) {
+    let total = 0, count = 0;
+    document.querySelectorAll(`input[type="radio"]:checked`).forEach(input => {
+      if (input.name.startsWith(sectionPrefix)) {
+        total += parseInt(input.value);
+        count++;
+      }
+    });
+    return count ? (total / count).toFixed(2) : 0;
+  }
+
+  // Handle submit
+  $('#evaluationForm').submit(function (e) {
+    e.preventDefault();
+
+    // Check for bad words before proceeding
+    if (containsBadWords()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Offensive Language Detected',
+        text: 'Please avoid using offensive words in your feedback.'
+      });
+      return;
+    }
+
+    const formData = new FormData(this);
+    formData.append("btnSubmitEvaluation", true);
+
+    const academicAvg = getAverageScore("section1_");
+    const coreValuesAvg = getAverageScore("section2_");
+    const overallScore = getAverageScore("overall_rating");
+
+    if (parseFloat(academicAvg) === 0 || parseFloat(coreValuesAvg) === 0 || parseFloat(overallScore) === 0) {
+      Swal.fire('Incomplete', 'Please answer all required questions.', 'warning');
+      return;
+    }
+
+    formData.append("academic_avg", academicAvg);
+    formData.append("core_values_avg", coreValuesAvg);
+    formData.append("overall_score", overallScore);
+    formData.append("strengths", document.querySelector('textarea[name="strengths"]').value);
+    formData.append("improvements", document.querySelector('textarea[name="improvements"]').value);
+    formData.append("comments", document.querySelector('textarea[name="comments"]').value);
+    formData.append("faculty_token", token);
+
+    // Step 1: Submit evaluation
+    $.ajax({
+      url: BASE_URL + '/api/api.setuprecommender.php',
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      dataType: 'json',
+      success: function (response) {
+        if (response === "added") {
+          // Step 2: Ask AI for recommendation
+          $.ajax({
+            url: BASE_URL + '/api/proxy.ai.recommender.php',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              subject_knowledge: academicAvg,
+              engagement: academicAvg,
+              management: coreValuesAvg,
+              preparedness: academicAvg,
+              professionalism: coreValuesAvg
+            }),
+            success: function (recommendation) {
+              const aiTraining = recommendation.recommended_training || "None";
+              Swal.fire({
+                icon: 'success',
+                title: 'Evaluation Submitted!',
+                html: 'Recommended Training: <b>' + aiTraining + '</b>'
+              }).then(() => {
+                // Step 3: Save recommendation to DB
+                $.ajax({
+                  url: BASE_URL + '/api/api.save_recommendation.php',
+                  method: 'POST',
+                  data: {
+                    student_email: userEmail,
+                    faculty_token: token,
+                    ai_recommendation: aiTraining
+                  },
+                  success: function () {
+                    localStorage.removeItem(storageKey);
+                    location.href = 'FacultyViewList';
+                  }
+                });
+              });
+            },
+            error: function () {
+              Swal.fire('AI Error', 'Evaluation saved but failed to get AI recommendation.', 'warning');
+            }
+          });
+        } else if (response === "already_evaluated") {
+          Swal.fire('Notice', 'You already evaluated this faculty.', 'info');
+        } else {
+          Swal.fire('Error', 'Something went wrong.', 'error');
+        }
+      },
+      error: function () {
+        Swal.fire('Error', 'PHP server error.', 'error');
+      }
+    });
+  });
 </script>
