@@ -20,6 +20,10 @@ class SchedEvalViewModel {
         $totalRecords = $this->model->countAllSched();
         return ceil($totalRecords / $limit);
     }
+
+    public function getdeleteEval($id){
+        return $this->model->deleteSched($id);
+    }
 }
 
 ?>
