@@ -19,9 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
             echo "<td class='department'>" . htmlspecialchars($row['student_dep']) . "</td>";
 
             $status = match ($row['status']) {
-                1 => '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Verified</span>',
-                2 => '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle"></i> Restricted</span>',
-                default => '<span class="badge bg-secondary fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>',
+                1 => '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Verified</span>',
+                2 => '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>',
+                default => '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>',
             };
 
             echo "<td>{$status}</td>";

@@ -60,13 +60,13 @@ $total_pages = $vm->getTotalPages($limit);
                         <?php
                           switch ($row['status']) {
                             case 1:
-                              echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Verified</span>';
+                              echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Verified</span>';
                               break;
                             case 2:
-                              echo '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle"></i> Restricted</span>';
+                              echo '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>';
                               break;
                             default:
-                              echo '<span class="badge bg-secondary fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>';
+                              echo '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>';
                               break;
                           }
                         ?>

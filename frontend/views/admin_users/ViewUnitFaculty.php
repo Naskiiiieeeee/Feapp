@@ -100,16 +100,16 @@ if (isset($_GET['token'])) {
                         <?php
                             switch ($facultyData['status']) {
                                 case 1:
-                                    echo '<span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Verified</span>';
+                                    echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Verified</span>';
                                     break;
                                 case 2:
-                                    echo '<span class="badge bg-danger fs-6"><i class="bi bi-x-circle"></i> Restricted</span>';
+                                    echo '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>';
                                     break;
                                 case 0:
-                                    echo '<span class="badge bg-warning fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>';
+                                    echo '<span class="badge bg-warning fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>';
                                     break;
                                 default:
-                                    echo '<span class="badge bg-secondary fs-6"><i class="bi bi-recycle"></i> Archived</span>';
+                                    echo '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-recycle"></i> Archived</span>';
                                     break;
                             }
                         ?>
