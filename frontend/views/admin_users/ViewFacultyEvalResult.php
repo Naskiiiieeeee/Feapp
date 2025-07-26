@@ -44,6 +44,7 @@ $total_pages = $vm->getPages($limit);
                     <th>Faculty ID</th>
                     <th>Faculty Name</th>
                     <th>Department</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -56,6 +57,18 @@ $total_pages = $vm->getPages($limit);
                       <td class="facutlyID"><?= htmlspecialchars($row['faculty_token']); ?></td>
                       <td class="fullname"><?= htmlspecialchars($row['faculty_name']); ?></td>
                       <td class="department"><?= htmlspecialchars($row['faculty_dep']); ?></td>
+                      <td>
+                        <?php
+                          switch ($row['status']) {
+                            case 1:
+                              echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Uploaded</span>';
+                              break;
+                            default:
+                              echo '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>';
+                              break;
+                          }
+                        ?>
+                      </td>
                       <td>
                         <a href="ViewUnitEval?token=<?= urlencode($token); ?>" title="View">
                           <div class="btn btn-secondary mt-1 px-1 btn-sm text-white"><i class="fa fa-eye mx-2"></i></div>

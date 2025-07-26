@@ -22,13 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
                             <i class="fa fa-eye mx-2"></i>
                         </div>
                     </a>
-                    <button type="button"
-                            class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
-                            id="<?= htmlspecialchars($row['id']) ?>"
-                            data-name="<?= htmlspecialchars($row['faculty_name']) ?>"
-                            title="Delete">
-                        <i class="fas fa-trash mx-2" aria-hidden="true"></i>
-                    </button>
                 </td>
             </tr>
             <?php

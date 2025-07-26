@@ -105,7 +105,7 @@ class EvaluationModel extends BaseModel{
         ";
 
         $stmt = $this->db->prepare($query);
-        return $stmt->execute([
+        if($stmt->execute([
             ':faculty_id' => $data['FacultyID'],
             ':faculty_name' => $data['FacultyName'],
             ':faculty_email' => $data['FacultyEmail'],
@@ -118,7 +118,14 @@ class EvaluationModel extends BaseModel{
             ':strengths' => implode(" | ", $data['FeedbacksStrengths']),
             ':improvements' => implode(" | ", $data['FeedbackImprovements']),
             ':comments' => implode(" | ", $data['FeedbackComments']),
-        ]);
+        ])){
+            $FacultyID =  $data['FacultyID'];
+            $status = 1;
+            $stmt = $this->db->prepare("UPDATE `faculty_evaluations` SET `status` = ? WHERE `faculty_token` = ? ");
+            return $stmt->execute([$status, $FacultyID]);
+        }else{
+            return false;
+        }
     }
 
 
