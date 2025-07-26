@@ -20,6 +20,18 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveSched'])){
     }catch(Exception $e){
         echo json_encode(["status" => 'error'. $e->getMessage()]);
     }
+    exit;
 }
 
+if($_SERVER["REQUEST_METHOD"] === 'POST' && isset($_POST['deleteSched'])){
+    $deleteSched = filter_input(INPUT_POST , 'deleteSched' , FILTER_SANITIZE_SPECIAL_CHARS);
+    
+    try{
+
+    }catch(Exception $e ){
+        echo json_encode(["status" => 'error' . $e->getMessage()]);
+    }
+    exit;
+
+}
 ?>

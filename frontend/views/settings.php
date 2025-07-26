@@ -234,7 +234,7 @@ $(document).ready(function () {
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.adminuser.php',
+              url: BASE_URL + '/api/api.evaluationsched.php',
               type: 'POST',
               data: { deleteSched: id },
               success: function (data) {
