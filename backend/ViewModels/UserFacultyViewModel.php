@@ -53,4 +53,8 @@ class UserFacultyViewModel {
     public function getIfStudentisActivated($email){
         return $this->model->checkIfStudentisActivated($email);
     }
+
+    public function getIfFacultyEvaluated($email, $facultyCode){
+        return $this->model->isFacultyEvaluated($email, $facultyCode);
+    }
 }

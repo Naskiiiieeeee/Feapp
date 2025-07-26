@@ -91,4 +91,10 @@ class UserFaculty extends BaseModel {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? (int)$result['evaluationAccess'] : 0;
     }
+
+    public function isFacultyEvaluated($email, $facultyCode){
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM `faculty_evaluations` WHERE `student_email` = ? AND `faculty_token` = ?");
+        $stmt->execute([$email, $facultyCode]);
+        return $stmt->fetchColumn() > 0;
+    }
 }

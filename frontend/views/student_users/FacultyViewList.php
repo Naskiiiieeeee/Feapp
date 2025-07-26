@@ -8,7 +8,6 @@ $vm = new UserFacultyViewModel();
 $facultyList = null;
 $facultyList = $vm->getFacultyInfo();
 $status = $vm->getIfStudentisActivated($email);
-
 $groupedFaculty = [];
 foreach ($facultyList as $faculty) {
     $dept = $faculty['department'];
@@ -17,7 +16,6 @@ foreach ($facultyList as $faculty) {
     }
     $groupedFaculty[$dept][] = $faculty;
 }
-
 ?>
 
 <main id="main" class="main">
@@ -42,7 +40,10 @@ foreach ($facultyList as $faculty) {
         </div>
 
         <?php foreach ($facultyMembers as $faculty): ?>
-          <?php $token = base64_encode($faculty['code'] . '|' . $faculty['code']); ?>
+          <?php
+            $facultyCode = $faculty['code'];
+            $isEvaluated = $vm->getIfFacultyEvaluated($email, $facultyCode);
+            $token = base64_encode($faculty['code'] . '|' . $faculty['code']); ?>
           <div class="col-xl-4">
             <div class="card">
               <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
@@ -56,11 +57,15 @@ foreach ($facultyList as $faculty) {
                 </div>
               </div>
               <div class="card-footer bg-primary-subtle">
+                <?php if($isEvaluated):?>
+                  <span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Completed</span>
+                <?php else:?>
                 <a href="submitEvaluation?token=<?= urlencode($token); ?>" title="View">
                   <div class="btn btn-info mt-1 px-1 btn-sm text-white">
                     <i class="bi bi-journal-text"></i> Submit Evaluation
                   </div>
                 </a>
+                <?php endif;?>
               </div>
             </div>
           </div>
