@@ -68,6 +68,12 @@
           <span>Profile</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/settings">
+          <i class="bi bi-person"></i>
+          <span>Settings</span>
+        </a>
+      </li>
     </ul>
   </aside>
   <!-- End Sidebar-->

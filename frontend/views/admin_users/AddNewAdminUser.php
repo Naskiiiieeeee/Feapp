@@ -35,7 +35,7 @@ include_once __DIR__ . '/../../components/sidebar.php';
             </div>
 
             <div class="row mb-3">
-                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Department</label>
+                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Designation</label>
                 <div class="col-md-8 col-lg-9">
                     <input name="department" type="text" class="form-control" required>
                 </div>
