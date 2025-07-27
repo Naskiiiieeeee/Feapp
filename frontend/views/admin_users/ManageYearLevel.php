@@ -20,7 +20,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Manage Courses</h1>
+    <h1>Manage Year Level</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
@@ -44,11 +44,8 @@ $departmentInfo = $vm->getAllValidatedDepartment();
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Course Code</th>
-                    <th>Course Description</th>
-                    <th>Department</th>
+                    <th>Year Level</th>
                     <th>Date Created</th>
-                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -62,21 +59,6 @@ $departmentInfo = $vm->getAllValidatedDepartment();
                       <td class="description"><?= htmlspecialchars($row['description']); ?></td>
                       <td class=""><?= htmlspecialchars($row['department']); ?></td>
                       <td class=""><?= htmlspecialchars($row['created_date']); ?></td>
-                      <td>
-                        <?php
-                          switch ($row['status']) {
-                            case 1:
-                              echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Activated</span>';
-                              break;
-                            case 2:
-                              echo '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>';
-                              break;
-                            default:
-                              echo '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>';
-                              break;
-                          }
-                        ?>
-                      </td>
                       <td>
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
@@ -244,7 +226,7 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.course.php',
+              url: BASE_URL + '/api/api.yearLvl.php',
               type: 'POST',
               data: { deleteCourse: id },
               success: function (data) {
@@ -278,7 +260,7 @@ $('#updateForm').submit(function(e){
   formData.append("btnUpdateAccess", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.course.php',
+    url: BASE_URL + '/api/api.yearLvl.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -314,7 +296,7 @@ $('#AddForm').submit(function(e){
   formData.append("btnSaveCourse", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.course.php',
+    url: BASE_URL + '/api/api.yearLvl.php',
     type: 'POST',
     data: formData,
     contentType: false,       
