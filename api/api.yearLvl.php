@@ -38,4 +38,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteYear'])){
     }
     exit;
 }
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateYear'])){
+    $id = filter_input(INPUT_POST , 'id' , FILTER_SANITIZE_SPECIAL_CHARS);
+    $description = filter_input(INPUT_POST , 'description' , FILTER_SANITIZE_SPECIAL_CHARS);
+    try{
+        $result = $vm->getYearLevelUpdate($id, $description);
+        if($result){
+            echo json_encode("updated");
+        }else{  
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode("error" . $e->getMessage());
+    }
+    exit;
+}
 ?>

@@ -27,5 +27,9 @@ class YearLevelViewModel {
         return $this->model->deleteYear($id);
     }
 
+    public function getYearLevelUpdate($id, $description){
+        return $this->model->updateYearlevel($id, $description);
+    }
+
 }
 ?>

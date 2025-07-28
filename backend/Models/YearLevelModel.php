@@ -35,6 +35,11 @@ class YearLevelModel extends Helpers{
         return $stmt->execute([$id]);
     }
 
+    public function updateYearlevel($id, $description){
+        $stmt = $this->db->prepare("UPDATE `year_lvl` SET `y_name` = ? WHERE `y_code` = ? ");
+        return $stmt->execute([$description, $id]);
+    }
+
 
 }
 

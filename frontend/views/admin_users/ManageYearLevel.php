@@ -146,19 +146,11 @@ $total_pages = $vm->getTotalPages($limit);
           </div>
           <div class="form-group px-2 mt-1">
             <label class="fw-bold">Description</label>
-            <input type="text" name="description" id="description" class="form-control mt-2" readonly/>
-          </div>
-          <div class="form-group px-2 mt-1">
-            <label class="fw-bold mt-2">Status</label>
-            <select name="status" class="form-control" required>
-              <option selected disabled>Please Select</option>
-              <option value="1">Activate</option>
-              <option value="2">Restrict</option>
-            </select>
+            <input type="text" name="description" id="description" class="form-control mt-2"/>
           </div>
         </div>
         <div class="modal-footer bg-secondary">
-          <button type="submit" name="btnUpdateAccess" class="btn btn-light text-dark fw-bold">
+          <button type="submit" name="btnUpdateYear" class="btn btn-light text-dark fw-bold">
             <i class="bi bi-upload"></i> Save changes
           </button>
         </div>
@@ -242,7 +234,7 @@ $('#updateForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnUpdateAccess", true); 
+  formData.append("btnUpdateYear", true); 
 
   $.ajax({
     url: BASE_URL + '/api/api.yearLvl.php',
@@ -252,11 +244,11 @@ $('#updateForm').submit(function(e){
     processData: false,        
     dataType: 'json',
     success(data) {
-      if (data.status === "updated") {
+      if (data === "updated") {
         Swal.fire({
           icon: 'success',
-          title: 'Course Updated',
-          text: 'Course information successfully updated!',
+          title: 'Year Level Updated',
+          text: 'Year Level information successfully updated!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
