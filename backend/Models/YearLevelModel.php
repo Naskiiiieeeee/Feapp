@@ -30,6 +30,11 @@ class YearLevelModel extends Helpers{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function deleteYear($id){
+        $stmt = $this->db->prepare("DELETE FROM `year_lvl` WHERE `y_id` = ? ");
+        return $stmt->execute([$id]);
+    }
+
 
 }
 

@@ -22,4 +22,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveYearLevel'])){
     exit;
 }
 
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteYear'])){
+    $deleteYear = filter_input(INPUT_POST ,'deleteYear', FILTER_SANITIZE_SPECIAL_CHARS);
+
+    try{
+        $result = $vm->deleteYear($deleteYear);
+
+        if($result){
+            echo json_encode("success");    
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode("error".$e->getMessage());
+    }
+    exit;
+}
 ?>

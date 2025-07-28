@@ -23,5 +23,9 @@ class YearLevelViewModel {
         return ceil($totalRecords / $limit);
     }
 
+    public function deleteYear($id){
+        return $this->model->deleteYear($id);
+    }
+
 }
 ?>
