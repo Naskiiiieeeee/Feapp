@@ -1,21 +1,18 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/CourseViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/YearLevelViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
-$vm = new CourseViewModel();
+$vm = new YearLevelViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$courseData = $vm->getCoursePaginated($page_no, $limit);
+$yearData = $vm->getyearPaginated($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
-
-$departmentInfo = $vm->getAllValidatedDepartment();
-
 ?>
 
 <main id="main" class="main">
@@ -44,26 +41,25 @@ $departmentInfo = $vm->getAllValidatedDepartment();
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>Code</th>
                     <th>Year Level</th>
                     <th>Date Created</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($courseData)): ?>
-                  <?php foreach ($courseData as $row): ?>
-                    <?php $token = base64_encode($row['code'] . '|' . $row['code']); ?>
+                <?php if (!empty($yearData)): ?>
+                  <?php foreach ($yearData as $row): ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class="id"><?= htmlspecialchars($row['code']); ?></td>
-                      <td class="description"><?= htmlspecialchars($row['description']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['department']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['created_date']); ?></td>
+                      <td class="id"><?= htmlspecialchars($row['y_code']); ?></td>
+                      <td class="description"><?= htmlspecialchars($row['y_name']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['created_at']); ?></td>
                       <td>
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
-                                id="<?= $row['id']; ?>"
-                                data-name="<?= htmlspecialchars($row['description']); ?>"
+                                id="<?= $row['y_id']; ?>"
+                                data-name="<?= htmlspecialchars($row['y_name']); ?>"
                                 title="Delete">
                           <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                         </button>

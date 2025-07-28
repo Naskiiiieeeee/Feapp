@@ -12,5 +12,16 @@ class YearLevelViewModel {
         $code = $this->model->randomStringGenerator(12);
         return $this->model->createNewYearLvl($code , $yearLvl, $dateCreated);
     }
+    
+    public function getyearPaginated($page = 1, $limit = 10) {
+        $offset = ($page - 1) * $limit;
+        return $this->model->getyearPaginated($offset, $limit);
+    }
+
+    public function getTotalPages($limit = 4) {
+        $totalRecords = $this->model->countAllyearLevel();
+        return ceil($totalRecords / $limit);
+    }
+
 }
 ?>
