@@ -4,8 +4,8 @@ header('Content-Type: application/json');
 
 $vm = new YearLevelViewModel();
 
-if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btns'])){
-    $yearLvl = filter_input(INPUT_POST , 'yearlvl', FILTER_SANITIZE_SPECIAL_CHARS);
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveYearLevel'])){
+    $yearLvl = filter_input(INPUT_POST , 'yearLvl', FILTER_SANITIZE_SPECIAL_CHARS);
     $dateCreated = filter_input(INPUT_POST , 'dateCreated', FILTER_SANITIZE_SPECIAL_CHARS);
     
     try{

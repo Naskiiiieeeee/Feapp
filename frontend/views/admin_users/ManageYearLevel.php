@@ -114,32 +114,21 @@ $departmentInfo = $vm->getAllValidatedDepartment();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
-                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Course Details</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Year Level Details</h5>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="">Course Code</label>
-                            <input type="text" name="courseCode" id="" class="form-control" placeholder="BSIT" required>
+                            <label for="">Year Level</label>
+                            <input type="text" name="yearLvl" id="" class="form-control" placeholder="1st Year" required>
                         </div>
                         <div class="form-group">
-                            <label for="">Description</label>
-                            <input type="text" name="Description" id="" class="form-control" placeholder="BS Information Technology" required>
+                            <label for="">Date</label>
+                            <input type="date" name="dateCreated" id="" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label for="">Department</label>
-                            <select name="department" id="" class="form-control">
-                                <?php
-                                    foreach($departmentInfo as $rows):
-                                ?>
-                                <option value="<?= $rows['description']; ?>"><?=  $rows['description'];?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="btnSaveCourse" class="btn btn-primary">Save changes</button>
+                    <button type="submit" name="btnSaveYearLevel" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -293,7 +282,7 @@ $('#AddForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveCourse", true); 
+  formData.append("btnSaveYearLevel", true); 
 
   $.ajax({
     url: BASE_URL + '/api/api.yearLvl.php',
@@ -303,11 +292,11 @@ $('#AddForm').submit(function(e){
     processData: false,        
     dataType: 'json',
     success(data) {
-      if (data.status === "added") {
+      if (data === "added") {
         Swal.fire({
           icon: 'success',
-          title: 'Course Added',
-          text: 'New Course Information Successfully Added!',
+          title: 'Year Level Added',
+          text: 'New Year Level Information Successfully Added!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -315,7 +304,7 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Course Code Already Exist', "error");
+        Swal.fire('Error', 'Year level Already Exist', "error");
       }
     },
     error() {
