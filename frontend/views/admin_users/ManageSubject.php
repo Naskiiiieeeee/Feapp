@@ -1,17 +1,17 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/SectionViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/SubjectViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
-$vm = new SectionViewModel();
+$vm = new SubjectViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$sectionData = $vm->getsectionPaginated($page_no, $limit);
+$subjectData = $vm->getsubjectPaginated($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
 ?>
 
@@ -43,21 +43,25 @@ $total_pages = $vm->getTotalPages($limit);
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Code</th>
-                    <th>Section</th>
-                    <th>Date Created</th>
+                    <th>Subject Code</th>
+                    <th>Subject Description</th>
+                    <th>Department</th>
+                    <th>Course</th>
+                    <th>Year Level</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($sectionData)): ?>
-                  <?php foreach ($sectionData as $row): ?>
+                <?php if (!empty($subjectData)): ?>
+                  <?php foreach ($subjectData as $row): ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class="id"><?= htmlspecialchars($row['sec_code']); ?></td>
-                      <td class="description"><?= htmlspecialchars($row['section_name']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['created_date']); ?></td>
+                      <td class="id"><?= htmlspecialchars($row['subj_code']); ?></td>
+                      <td class="description"><?= htmlspecialchars($row['subj_des']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['subj_dep']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['subj_course']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['subj_yearLvl']); ?></td>
                       <td>
                         <?php
                           switch ($row['status']) {
