@@ -74,7 +74,7 @@ $total_pages = $vm->getTotalPages($limit);
                       </td>
                       <td>
                         <button type="button"
-                                class="btn btn-danger mt-1 px-1 btn-sm deleteYear"
+                                class="btn btn-danger mt-1 px-1 btn-sm deleteSection"
                                 id="<?= $row['id']; ?>"
                                 data-name="<?= htmlspecialchars($row['section_name']); ?>"
                                 title="Delete">
@@ -198,7 +198,7 @@ include_once __DIR__ . '/../../components/footscript.php';
 <script>
   const BASE_URL = "<?= BASE_URL ?>";
   $(document).ready(function () {
-    $(document).on('click', '.deleteYear', function () {
+    $(document).on('click', '.deleteSection', function () {
       var id = $(this).attr('id');
       var name = $(this).data('name') || "this course";
 
@@ -220,9 +220,9 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.yearLvl.php',
+              url: BASE_URL + '/api/api.sections.php',
               type: 'POST',
-              data: { deleteYear: id },
+              data: { deleteSection: id },
               success: function (data) {
                 if (data.trim() === "success") {
                   Swal.fire({
@@ -254,7 +254,7 @@ $('#updateForm').submit(function(e){
   formData.append("btnUpdateYear", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.yearLvl.php',
+    url: BASE_URL + '/api/api.sections.php',
     type: 'POST',
     data: formData,
     contentType: false,       

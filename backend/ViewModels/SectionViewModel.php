@@ -22,6 +22,10 @@ class SectionViewModel{
         $sectionCode = $this->model->randomStringGenerator(12);
         return $this->model->createNewSection($sectionCode, $secName, $createdDate);
     }
+
+    public function getDeleteSection($id){
+        return $this->model->deleteSection($id);
+    }
 }
 
 ?>

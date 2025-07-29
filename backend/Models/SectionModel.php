@@ -29,6 +29,11 @@ class SectionModel extends Helpers{
             return $stmt->execute([$sectionCode, $secName, $createdDate]);
         }
     }
+
+    public function deleteSection ($id){
+        $stmt = $this->db->prepare("DELETE FROM `section` WHERE `id` = ? ");
+        return $stmt->execute([$id]);
+    }
 }
 
 ?>
