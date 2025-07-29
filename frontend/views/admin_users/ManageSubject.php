@@ -17,7 +17,7 @@ $total_pages = $vm->getTotalPages($limit);
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Manage Section</h1>
+    <h1>Manage Subject</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
