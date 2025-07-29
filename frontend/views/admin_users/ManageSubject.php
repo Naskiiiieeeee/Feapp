@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../../backend/ViewModels/SubjectViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/CourseViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
@@ -9,10 +10,12 @@ $vm = new SubjectViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
-
 // Get paginated data and total pages
 $subjectData = $vm->getsubjectPaginated($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
+$cvm = new CourseViewModel();
+$departmentInfo = $cvm->getAllValidatedDepartment();
+$yearLvlInfo = $vm->getYearLevel();
 ?>
 
 <main id="main" class="main">
@@ -81,7 +84,7 @@ $total_pages = $vm->getTotalPages($limit);
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteSection"
                                 id="<?= $row['id']; ?>"
-                                data-name="<?= htmlspecialchars($row['section_name']); ?>"
+                                data-name="<?= htmlspecialchars($row['subj_des']); ?>"
                                 title="Delete">
                           <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                         </button>
@@ -132,21 +135,46 @@ $total_pages = $vm->getTotalPages($limit);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
-                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Section Details</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Subject Details</h5>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="">Section Name</label>
-                            <input type="text" name="sectionName" id="" class="form-control" placeholder="1A" required>
+                            <label for="">Subject Code</label>
+                            <input type="text" name="sCode" id="" class="form-control" placeholder="" required>
                         </div>
                         <div class="form-group">
-                            <label for="">Date</label>
-                            <input type="date" name="dateCreated" id="" class="form-control" required>
+                            <label for="">Subject Description</label>
+                            <input type="text" name="sDes" id="" class="form-control" required>
                         </div>
+                        <div class="form-group">
+                            <label for="">Department</label>
+                            <select name="department" id="departmentSelect" class="form-control" required>
+                              <option selected disabled>Please Choose</option>
+                              <?php foreach($departmentInfo as $row): ?>
+                                <option value="<?= $row['description']; ?>"><?= $row['description']; ?></option>
+                              <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Course</label>
+                            <select name="course" id="" class="form-control" required>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Year Level</label>
+                            <select name="syear" id="" class="form-control" required>
+                                <?php
+                                    foreach($yearLvlInfo as $rows):
+                                ?>
+                                <option value="<?= $rows['y_name']; ?>"><?=  $rows['y_name'];?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="btnSaveSection" class="btn btn-primary">Save changes</button>
+                    <button type="submit" name="btnSaveSubject" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -300,10 +328,10 @@ $('#AddForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveSection", true); 
+  formData.append("btnSaveSubject", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.sections.php',
+    url: BASE_URL + '/api/api.subject.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -313,8 +341,8 @@ $('#AddForm').submit(function(e){
       if (data === "added") {
         Swal.fire({
           icon: 'success',
-          title: 'Section Added',
-          text: 'New Section Information Successfully Added!',
+          title: 'Subject Added',
+          text: 'New Subject Information Successfully Added!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -322,11 +350,38 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Year Section Already Exist', "error");
+        Swal.fire('Error', 'Year Subject Already Exist', "error");
       }
     },
     error() {
       Swal.fire('Error', 'Server error. Try again.', "error");
+    }
+  });
+});
+
+$('#departmentSelect').change(function () {
+  const selectedDept = $(this).val();
+
+  $.ajax({
+    url: BASE_URL + '/api/api.course.php',
+    method: 'POST',
+    data: { departmentCode: selectedDept },
+    dataType: 'json',
+    success: function (response) {
+      const courseSelect = $('select[name="course"]');
+      courseSelect.empty();
+      courseSelect.append('<option selected disabled>Please Choose</option>');
+
+      if (response.length > 0) {
+        response.forEach(course => {
+          courseSelect.append(`<option value="${course.code}">${course.description}</option>`);
+        });
+      } else {
+        courseSelect.append('<option disabled>No course available</option>');
+      }
+    },
+    error: function () {
+      console.error('Error fetching courses');
     }
   });
 });

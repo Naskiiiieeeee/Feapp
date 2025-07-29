@@ -17,6 +17,14 @@ class SubjectViewModel{
         $totalRecords = $this->model->countAllSubjects();
         return ceil($totalRecords / $limit);
     }
+
+    public function setNewSubject($sCode, $sDes, $Department, $Course, $yearlvl){
+        return $this->model->createNewSubject($sCode, $sDes, $Department, $Course, $yearlvl);
+    }
+
+    public function getYearLevel(){
+        return $this->model->getYearLevel();
+    }
 }
 
 ?>

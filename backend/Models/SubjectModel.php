@@ -19,6 +19,21 @@ class SubjectModel extends Helpers{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function createNewSubject($sCode, $sDes, $Department, $Course, $yearlvl){
+        $stmt = $this->db->prepare("SELECT * FROM `subjects` WHERE `subj_code` = ? AND `subj_dep` = ? ");
+        $stmt->execute([$sCode, $Department]);
+        if($stmt->rowCount() > 0 ){
+            return false;
+        }else{
+            $stmt = $this->db->prepare("INSERT INTO `subjects`(`subj_code`, `subj_des`, `subj_dep`, `subj_course`, `subj_yearLvl`) VALUES (?,?,?,?,?)");
+            return $stmt->execute([$sCode, $sDes, $Department, $Course, $yearlvl]);
+        }
+    }
 
+    public function getYearLevel(){
+        $stmt = $this->db->prepare("SELECT * FROM `year_lvl`");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+    }
 }
 ?>
