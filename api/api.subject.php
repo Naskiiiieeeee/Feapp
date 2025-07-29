@@ -39,4 +39,21 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteSubject'])){
     }
     exit;
 }
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateSubject'])){
+    $id = filter_input(INPUT_POST, 'id',  FILTER_SANITIZE_SPECIAL_CHARS);
+    $status = filter_input(INPUT_POST, 'status',  FILTER_SANITIZE_SPECIAL_CHARS);
+
+    try{
+        $result = $vm->getUpdateStatus($id ,$status );
+        if($result){
+            echo json_encode("updated");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode("error" . $e->getMessage());
+    }
+    exit;
+}
 ?>

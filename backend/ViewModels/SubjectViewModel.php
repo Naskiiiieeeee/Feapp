@@ -29,6 +29,10 @@ class SubjectViewModel{
     public function getDeleteSubject($id){
         return $this->model->deleteSubject($id);
     }
+
+    public function getUpdateStatus($id, $status){
+        return $this->model->updateSubject($id, $status);
+    }
 }
 
 ?>

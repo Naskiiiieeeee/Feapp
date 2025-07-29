@@ -40,5 +40,10 @@ class SubjectModel extends Helpers{
         $stmt = $this->db->prepare("DELETE FROM `subjects` WHERE `id` = ? ");
         return $stmt->execute([$id]);
     }
+
+    public function updateSubject($id, $status){
+        $stmt = $this->db->prepare("UPDATE `subjects` SET `status` = ? WHERE `subj_code` = ?");
+        return $stmt->execute([$status, $id]);
+    }
 }
 ?>

@@ -62,8 +62,8 @@ $yearLvlInfo = $vm->getYearLevel();
                       <td><?= $count++; ?></td>
                       <td class="id"><?= htmlspecialchars($row['subj_code']); ?></td>
                       <td class="description"><?= htmlspecialchars($row['subj_des']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['subj_dep']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['subj_course']); ?></td>
+                      <td class="department"><?= htmlspecialchars($row['subj_dep']); ?></td>
+                      <td class="course"><?= htmlspecialchars($row['subj_course']); ?></td>
                       <td class=""><?= htmlspecialchars($row['subj_yearLvl']); ?></td>
                       <td>
                         <?php
@@ -187,16 +187,24 @@ $yearLvlInfo = $vm->getYearLevel();
     <form id="updateForm">
       <div class="modal-content">
         <div class="modal-header bg-secondary">
-          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Section Status</h5>
+          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Subject Status</h5>
         </div>
         <div class="modal-body">
           <div class="form-group px-2 mt-1">
-            <label class="fw-bold">section Code</label>
+            <label class="fw-bold">Subject Code</label>
             <input type="text" name="id" id="id" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Section Identity</label>
-            <input type="text" name="description" id="description" class="form-control mt-2" required/>
+            <label class="fw-bold">Subject Description</label>
+            <input type="text" name="description" id="description" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold">Department</label>
+            <input type="text" name="department" id="department" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold">Course</label>
+            <input type="text" name="course" id="course" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
             <label for="fw-bold">Status</label>
@@ -208,7 +216,7 @@ $yearLvlInfo = $vm->getYearLevel();
           </div>
         </div>
         <div class="modal-footer bg-secondary">
-          <button type="submit" name="btnUpdateSection" class="btn btn-light text-dark fw-bold">
+          <button type="submit" name="btnUpdateSubject" class="btn btn-light text-dark fw-bold">
             <i class="bi bi-upload"></i> Save changes
           </button>
         </div>
@@ -229,6 +237,8 @@ include_once __DIR__ . '/../../components/footscript.php';
       var $row = $(this).closest('tr');
       $('#id').val($row.find('.id').text());
       $('#description').val($row.find('.description').text());
+      $('#department').val($row.find('.department').text());
+      $('#course').val($row.find('.course').text());
 
       $('#verifyModal').modal('show');
     });
@@ -292,7 +302,7 @@ $('#updateForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnUpdateSection", true); 
+  formData.append("btnUpdateSubject", true); 
 
   $.ajax({
     url: BASE_URL + '/api/api.subject.php',
