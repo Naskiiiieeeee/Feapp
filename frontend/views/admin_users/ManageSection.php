@@ -154,20 +154,28 @@ $total_pages = $vm->getTotalPages($limit);
     <form id="updateForm">
       <div class="modal-content">
         <div class="modal-header bg-secondary">
-          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Course Status</h5>
+          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Section Status</h5>
         </div>
         <div class="modal-body">
           <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Department Code</label>
+            <label class="fw-bold">section Code</label>
             <input type="text" name="id" id="id" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Description</label>
-            <input type="text" name="description" id="description" class="form-control mt-2"/>
+            <label class="fw-bold">Section Identity</label>
+            <input type="text" name="description" id="description" class="form-control mt-2" required/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label for="fw-bold">Status</label>
+            <select name="status" id="" class="form-control" required>
+                <option disabled>Please Choose</option>
+                <option value="1">Activate</option>
+                <option value="2">Restrict</option>
+            </select>
           </div>
         </div>
         <div class="modal-footer bg-secondary">
-          <button type="submit" name="btnUpdateYear" class="btn btn-light text-dark fw-bold">
+          <button type="submit" name="btnUpdateSection" class="btn btn-light text-dark fw-bold">
             <i class="bi bi-upload"></i> Save changes
           </button>
         </div>
@@ -251,7 +259,7 @@ $('#updateForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnUpdateYear", true); 
+  formData.append("btnUpdateSection", true); 
 
   $.ajax({
     url: BASE_URL + '/api/api.sections.php',
@@ -264,8 +272,8 @@ $('#updateForm').submit(function(e){
       if (data === "updated") {
         Swal.fire({
           icon: 'success',
-          title: 'Year Level Updated',
-          text: 'Year Level information successfully updated!',
+          title: 'Section Updated',
+          text: 'Section information successfully updated!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {

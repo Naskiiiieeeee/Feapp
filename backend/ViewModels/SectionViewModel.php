@@ -26,6 +26,10 @@ class SectionViewModel{
     public function getDeleteSection($id){
         return $this->model->deleteSection($id);
     }
+    
+    public function getUpdateSection($id , $name , $status){
+        return $this->model->updateSection($id , $name , $status);
+    }
 }
 
 ?>

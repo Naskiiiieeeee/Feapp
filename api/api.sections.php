@@ -40,5 +40,20 @@ if($_SERVER['REQUEST_METHOD']   === 'POST' && isset($_POST['deleteSection'])){
     exit;
 }
 
-
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnUpdateSection'])){
+    $id = filter_input(INPUT_POST , 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+    $description = filter_input(INPUT_POST , 'description', FILTER_SANITIZE_SPECIAL_CHARS); 
+    $status = filter_input(INPUT_POST , 'status', FILTER_SANITIZE_SPECIAL_CHARS);
+    try{
+        $result = $vm->getUpdateSection($id,$description,$status);
+        if($result){
+            echo json_encode("updated");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode('error'. $e->getMessage());
+    }
+    exit;        
+}
 ?>

@@ -34,6 +34,11 @@ class SectionModel extends Helpers{
         $stmt = $this->db->prepare("DELETE FROM `section` WHERE `id` = ? ");
         return $stmt->execute([$id]);
     }
+
+    public function updateSection($id , $name , $status){
+        $stmt = $this->db->prepare("UPDATE `section` SET `section_name` = ? , `status` = ? WHERE `sec_code` = ? ");
+        return $stmt->execute([$name, $status, $id]);
+    }
 }
 
 ?>
