@@ -25,6 +25,10 @@ class SubjectViewModel{
     public function getYearLevel(){
         return $this->model->getYearLevel();
     }
+    
+    public function getDeleteSubject($id){
+        return $this->model->deleteSubject($id);
+    }
 }
 
 ?>

@@ -82,7 +82,7 @@ $yearLvlInfo = $vm->getYearLevel();
                       </td>
                       <td>
                         <button type="button"
-                                class="btn btn-danger mt-1 px-1 btn-sm deleteSection"
+                                class="btn btn-danger mt-1 px-1 btn-sm deleteSubject"
                                 id="<?= $row['id']; ?>"
                                 data-name="<?= htmlspecialchars($row['subj_des']); ?>"
                                 title="Delete">
@@ -239,7 +239,7 @@ include_once __DIR__ . '/../../components/footscript.php';
 <script>
   const BASE_URL = "<?= BASE_URL ?>";
   $(document).ready(function () {
-    $(document).on('click', '.deleteSection', function () {
+    $(document).on('click', '.deleteSubject', function () {
       var id = $(this).attr('id');
       var name = $(this).data('name') || "this course";
 
@@ -261,22 +261,22 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.sections.php',
+              url: BASE_URL + '/api/api.subject.php',
               type: 'POST',
-              data: { deleteSection: id },
+              data: { deleteSubject: id },
               success: function (data) {
                 if (data.trim() === "success") {
                   Swal.fire({
                     title: 'Success',
                     icon: 'success',
-                    text: 'Year Level information deleted successfully.',
+                    text: 'Subject information deleted successfully.',
                     showConfirmButton: false,
                     timer: 2000,
                   }).then(() => {
                     window.location.reload();
                   });
                 } else {
-                  Swal.fire("Error", "Failed to delete Year Level", "error");
+                  Swal.fire("Error", "Failed to delete Subject", "error");
                 }
               }
             });
@@ -295,7 +295,7 @@ $('#updateForm').submit(function(e){
   formData.append("btnUpdateSection", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.sections.php',
+    url: BASE_URL + '/api/api.subject.php',
     type: 'POST',
     data: formData,
     contentType: false,       

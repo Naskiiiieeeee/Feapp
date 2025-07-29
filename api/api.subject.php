@@ -23,4 +23,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveSubject'])){
     }
     exit;
 }
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteSubject'])){
+    $id =  filter_input(INPUT_POST, 'deleteSubject',  FILTER_SANITIZE_SPECIAL_CHARS);
+
+    try{
+        $result = $vm->getDeleteSubject($id);
+        if($result){
+            echo json_encode("success");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode("error" . $e->getMessage());
+    }
+    exit;
+}
 ?>

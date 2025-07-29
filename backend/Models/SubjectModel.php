@@ -35,5 +35,10 @@ class SubjectModel extends Helpers{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);   
     }
+
+    public function deleteSubject($id){
+        $stmt = $this->db->prepare("DELETE FROM `subjects` WHERE `id` = ? ");
+        return $stmt->execute([$id]);
+    }
 }
 ?>
