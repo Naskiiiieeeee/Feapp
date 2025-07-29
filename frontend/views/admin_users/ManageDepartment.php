@@ -21,8 +21,9 @@ $total_pages = $vm->getTotalPages($limit);
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
-        <li class="breadcrumb-item active"><a href="ManageCourses">Manage Courses</a></li>
-        <li class="breadcrumb-item active"><a href="ManageYearLevel">Manage Year Level</a></li>
+        <li class="breadcrumb-item"><a href="ManageCourses">Manage Courses</a></li>
+        <li class="breadcrumb-item"><a href="ManageYearLevel">Manage Year Level</a></li>
+        <li class="breadcrumb-item"><a href="ManageSection">Manage Section</a></li>
       </ol>
     </nav>
   </div>

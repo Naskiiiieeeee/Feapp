@@ -1,23 +1,23 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/YearLevelViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/SectionViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
-$vm = new YearLevelViewModel();
+$vm = new SectionViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$yearData = $vm->getyearPaginated($page_no, $limit);
+$sectionData = $vm->getsectionPaginated($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
 ?>
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Manage Year Level</h1>
+    <h1>Manage Section</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
@@ -43,24 +43,40 @@ $total_pages = $vm->getTotalPages($limit);
                   <tr>
                     <th>#</th>
                     <th>Code</th>
-                    <th>Year Level</th>
+                    <th>Section</th>
                     <th>Date Created</th>
+                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($yearData)): ?>
-                  <?php foreach ($yearData as $row): ?>
+                <?php if (!empty($sectionData)): ?>
+                  <?php foreach ($sectionData as $row): ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class="id"><?= htmlspecialchars($row['y_code']); ?></td>
-                      <td class="description"><?= htmlspecialchars($row['y_name']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['created_at']); ?></td>
+                      <td class="id"><?= htmlspecialchars($row['sec_code']); ?></td>
+                      <td class="description"><?= htmlspecialchars($row['section_name']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['created_date']); ?></td>
+                      <td>
+                        <?php
+                          switch ($row['status']) {
+                            case 1:
+                              echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Activated</span>';
+                              break;
+                            case 2:
+                              echo '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>';
+                              break;
+                            default:
+                              echo '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>';
+                              break;
+                          }
+                        ?>
+                      </td>
                       <td>
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteYear"
-                                id="<?= $row['y_id']; ?>"
-                                data-name="<?= htmlspecialchars($row['y_name']); ?>"
+                                id="<?= $row['id']; ?>"
+                                data-name="<?= htmlspecialchars($row['section_name']); ?>"
                                 title="Delete">
                           <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                         </button>
@@ -111,12 +127,12 @@ $total_pages = $vm->getTotalPages($limit);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
-                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Year Level Details</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Section Details</h5>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="">Year Level</label>
-                            <input type="text" name="yearLvl" id="" class="form-control" placeholder="1st Year" required>
+                            <label for="">Section Name</label>
+                            <input type="text" name="sectionName" id="" class="form-control" placeholder="1A" required>
                         </div>
                         <div class="form-group">
                             <label for="">Date</label>
@@ -125,7 +141,7 @@ $total_pages = $vm->getTotalPages($limit);
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="btnSaveYearLevel" class="btn btn-primary">Save changes</button>
+                    <button type="submit" name="btnSaveSection" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -271,10 +287,10 @@ $('#AddForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveYearLevel", true); 
+  formData.append("btnSaveSection", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.yearLvl.php',
+    url: BASE_URL + '/api/api.sections.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -284,8 +300,8 @@ $('#AddForm').submit(function(e){
       if (data === "added") {
         Swal.fire({
           icon: 'success',
-          title: 'Year Level Added',
-          text: 'New Year Level Information Successfully Added!',
+          title: 'Section Added',
+          text: 'New Section Information Successfully Added!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -293,7 +309,7 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Year level Already Exist', "error");
+        Swal.fire('Error', 'Year Section Already Exist', "error");
       }
     },
     error() {
