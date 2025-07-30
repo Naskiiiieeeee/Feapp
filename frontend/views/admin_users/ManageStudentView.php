@@ -356,6 +356,8 @@ $('#VerifiedAllStudents').submit(function(e){
                 text: 'Student information successfully updated!',
                 timer: 2000,
                 showConfirmButton: false
+              }).then(() => {
+                location.href = 'ManageStudentView';
               });
             } else {
               Swal.fire('Error', 'Failed to update', "error");

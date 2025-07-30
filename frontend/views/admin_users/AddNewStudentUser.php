@@ -3,10 +3,12 @@ include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 require_once __DIR__ . '/../../../backend/ViewModels/CourseViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/LoadingViewModel.php';
 
 $vm = new CourseViewModel();
+$lvm = new LoadingViewModel();
 $departmentInfo = $vm->getAllValidatedDepartment();
-
+$sectionInfo = $lvm->getActivatedSection();
 ?>
 
 <main id="main" class="main">
@@ -33,7 +35,12 @@ $departmentInfo = $vm->getAllValidatedDepartment();
             <div class="row mb-3">
                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Section</label>
                 <div class="col-md-8 col-lg-9">
-                    <input name="section" type="text" class="form-control" required>
+                    <select name="section" id="" class="form-control" required>
+                      <option selected disabled>Please Choose</option>
+                      <?php foreach($sectionInfo as $row): ?>
+                        <option value="<?= $row['section_name']; ?>"> Section: <?= $row['section_name']; ?></option>
+                      <?php endforeach; ?>
+                    </select>
                 </div>
             </div>
             
