@@ -2,14 +2,14 @@
 require_once __DIR__ . '/../Helpers/helpers.php';
 
 class LoadingModel extends Helpers{
-    public function countAllSched() {
+    public function countAllLoad() {
         $query = "SELECT COUNT(*) as total_records FROM `faculty_load` ";
         $stmt = $this->db->query($query);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return $row['total_records'] ?? 0;
     }
 
-    public function getSchedPaginated($offset, $limit) {
+    public function getLoadPaginated($offset, $limit) {
         $query = "SELECT * FROM `faculty_load` ORDER BY `id` DESC LIMIT :offset, :limit";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
