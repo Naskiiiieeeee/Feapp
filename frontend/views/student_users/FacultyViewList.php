@@ -6,7 +6,7 @@ include_once __DIR__ . '/../../components/sidebar.php';
 
 $vm = new UserFacultyViewModel();
 $facultyList = null;
-$facultyList = $vm->getFacultyInfo();
+$facultyList = $vm->getFacultyLoad($email);
 $status = $vm->getIfStudentisActivated($email);
 $groupedFaculty = [];
 foreach ($facultyList as $faculty) {
@@ -29,6 +29,7 @@ foreach ($facultyList as $faculty) {
   </div>
 
 <?php if($status == 1):?>
+<!--New Conditions-->
 
 <section class="section profile">
   <?php if (!empty($groupedFaculty)): ?>

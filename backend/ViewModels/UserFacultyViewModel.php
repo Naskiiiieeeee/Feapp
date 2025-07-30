@@ -57,4 +57,8 @@ class UserFacultyViewModel {
     public function getIfFacultyEvaluated($email, $facultyCode){
         return $this->model->isFacultyEvaluated($email, $facultyCode);
     }
+
+    public function getFacultyLoad($email){
+        return $this->model->selectIfCorrectPortal($email);
+    }
 }

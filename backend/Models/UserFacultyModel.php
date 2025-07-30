@@ -97,4 +97,48 @@ class UserFaculty extends BaseModel {
         $stmt->execute([$email, $facultyCode]);
         return $stmt->fetchColumn() > 0;
     }
+
+    public function selectIfCorrectPortal($StudentEmail){
+        $stmt = $this->db->prepare("SELECT * FROM `student_info` WHERE `student_email` = ?");
+        if($stmt->execute([$StudentEmail])){
+            $row = $stmt->fetch(PDO::FETCH_ASSOC); 
+            if (!$row) return false;
+
+            $section = $row['student_section'] ?? null;
+            $studentYear = $row['student_year'] ?? null;
+            $studentCourse = $row['student_course'] ?? null;
+            $studentDepartment = $row['student_dep'] ?? null;
+
+            // Check if required data exists before proceeding
+            if (!$section || !$studentYear || !$studentDepartment) {
+                return false;
+            }
+
+            $stmt = $this->db->prepare("SELECT * FROM `faculty_load` WHERE `department` = ? AND `course` = ? AND `year_lvl` = ? AND `section` = ? ");
+            $stmt->execute([$studentDepartment, $studentCourse, $studentYear, $section]);
+
+            if($stmt->rowCount() > 0){
+                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                // $row is array of faculty now, so loop or return all
+                // But you're accessing $row['faculty_email'], so fix this part too
+
+                // Assuming you want to return ALL matching faculty from `endusers`
+                $facultyEmails = array_column($row, 'faculty_email');
+
+                $placeholders = rtrim(str_repeat('?,', count($facultyEmails)), ',');
+                $sql = "SELECT * FROM `endusers` WHERE `role` = ? AND `status` = ? AND `email` IN ($placeholders)";
+                $params = array_merge(['Faculty', 1], $facultyEmails);
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute($params);
+
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }
