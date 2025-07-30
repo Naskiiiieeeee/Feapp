@@ -13,6 +13,7 @@ $count = ($page_no - 1) * $limit + 1;
 $loadingdata = $lvm->getLoadPaginated($page_no, $limit);
 $total_pages = $lvm->getTotalPages($limit);
 
+$departmentInfo = $lvm->getAllValidatedDepartment();
 ?>
 
 <main id="main" class="main">
@@ -142,7 +143,7 @@ $total_pages = $lvm->getTotalPages($limit);
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-building-add"></i> Department</label>
                   <div class="col-md-8 col-lg-9">
-                    <select name="department" id="" class="form-control">
+                    <select name="department" id="departmentSelect" class="form-control" required>
                       <option selected disabled>Please Choose</option>
                       <?php foreach($departmentInfo as $row): ?>
                         <option value="<?= $row['description']; ?>"><?= $row['description']; ?></option>
@@ -152,16 +153,41 @@ $total_pages = $lvm->getTotalPages($limit);
                 </div>
 
                 <div class="row mb-3">
-                  <label for="about" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-calendar2-check"></i> Starting Date</label>
+                  <label for="about" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-journal-bookmark"></i> Course</label>
                   <div class="col-md-8 col-lg-9">
-                    <input type="date" name="startDate" id="" class="form-control" required>
+                    <select name="course" id="" class="form-control">
+                  
+                    </select>
                   </div>
                 </div>
                 
                 <div class="row mb-3">
-                  <label for="about" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-calendar2-check-fill"></i> Ending Date</label>
+                  <label for="about" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-calendar2-check-fill"></i> Year Level</label>
                   <div class="col-md-8 col-lg-9">
-                    <input type="date" name="endDate" id="" class="form-control" required>
+                    <select name="yearLvl" id="" class="form-control">
+                  
+                    </select>
+                  </div>
+                </div>
+                                
+                <div class="row mb-3">
+                  <label for="about" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-bookmarks"></i> Subject</label>
+                  <div class="col-md-8 col-lg-9">
+                    <select name="subjects" id="" class="form-control">
+                  
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-building-add"></i> Section</label>
+                  <div class="col-md-8 col-lg-9">
+                    <select name="department" id="departmentSelect" class="form-control" required>
+                      <option selected disabled>Please Choose</option>
+                      <?php foreach($departmentInfo as $row): ?>
+                        <option value="<?= $row['description']; ?>"><?= $row['description']; ?></option>
+                      <?php endforeach; ?>
+                    </select>
                   </div>
                 </div>
 
@@ -187,46 +213,6 @@ $total_pages = $lvm->getTotalPages($limit);
   </div>
 </section>
 </main>
-<!-- Edit Modal -->
-<div class="modal fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <form id="updateForm" method="post">
-      <div class="modal-content">
-        <div class="modal-header bg-secondary">
-          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel">Update Evaluation Schedule Access</h5>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" name="id" id="id">
-          <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Department</label>
-            <input type="text" id="department" name="department" class="form-control mt-2" readonly/>
-          </div>
-          <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Starting Date</label>
-            <input type="date" id="startDate" class="form-control mt-2" readonly/>
-          </div>
-          <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Ending Date</label>
-            <input type="date" id="endDate" class="form-control mt-2" readonly/>
-          </div>
-          <div class="form-group px-2 mt-1">
-            <label class="fw-bold mt-2">Status</label>
-            <select name="status" class="form-control">
-              <option selected disabled>Please Select</option>
-              <option value="1">Activate</option>
-              <option value="2">Restrict</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer bg-secondary">
-          <button type="submit" name="btnUpdateAccess" class="btn btn-light text-dark fw-bold">
-            <i class="bi bi-upload"></i> Save changes
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
 
 
 <?php
@@ -374,5 +360,33 @@ $('#updateForm').submit(function(e){
     }
   });
 });
+
+
+$('#departmentSelect').change(function () {
+  const selectedDept = $(this).val();
+  $.ajax({
+    url: BASE_URL + '/api/api.loading.php',
+    method: 'POST',
+    data: { departmentCode: selectedDept },
+    dataType: 'json',
+    success: function (response) {
+      const courseSelect = $('select[name="course"]');
+      courseSelect.empty();
+      courseSelect.append('<option selected disabled>Please Choose</option>');
+
+      if (response.length > 0) {
+        response.forEach(course => {
+          courseSelect.append(`<option value="${course.subj_course}">${course.subj_course}</option>`);
+        });
+      } else {
+        courseSelect.append('<option disabled>No course available</option>');
+      }
+    },
+    error: function () {
+      console.error('Error fetching courses');
+    }
+  });
+});
+
 
 </script>

@@ -17,5 +17,17 @@ class LoadingModel extends Helpers{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getActivatedDepartment(){
+        $stmt = $this->db->prepare("SELECT * FROM `department` WHERE `status` = 1");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+    }
+
+    public function getCoursesByDepartment($departmentCode) {
+        $stmt = $this->db->prepare("SELECT * FROM `subjects` WHERE `subj_dep` = ?");
+        $stmt->execute([$departmentCode]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

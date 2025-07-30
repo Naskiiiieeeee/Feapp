@@ -18,6 +18,14 @@ class LoadingViewModel{
         $totalRecords = $this->model->countAllLoad();
         return ceil($totalRecords / $limit);
     }
+
+    public function getAllValidatedDepartment(){
+        return $this->model->getActivatedDepartment();
+    }
+
+    public function getCoursesByDepartment($departmentCode){
+        return $this->model->getCoursesByDepartment($departmentCode);
+    }
 }
 
 ?>
