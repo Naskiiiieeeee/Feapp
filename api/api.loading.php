@@ -39,4 +39,19 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveLoad'])){
     }   
     exit;
 }
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteload'])){
+    $id = filter_input(INPUT_POST , 'deleteload' , FILTER_SANITIZE_SPECIAL_CHARS);
+    try{
+        $result = $vm->getDeleteLoad($id);
+        if($result){
+            echo json_encode("success");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $d){
+        echo json_encode("error" . $d->getMessage());
+    }
+    exit;
+}
 ?>

@@ -73,9 +73,20 @@ class LoadingModel extends Helpers{
         if($stmt->rowCount() > 0){
             return false;
         }else{
-            $stmt = $this->db->prepare("INSERT INTO `faculty_load`(`fl_code`, `department`, `course`, `year_lvl`, `subjects`, `section`, `faculty_email`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            return $stmt->execute([$code, $dep, $course, $yearLvl, $subject, $section, $fac_email]);
+            $stmt = $this->db->prepare("SELECT * FROM `faculty_load` WHERE `department` = ? AND `course` = ? AND  `subjects` = ? AND `section` = ? ");
+            $stmt->execute([$dep, $course, $subject, $section]);
+            if($stmt->rowCount() > 0){
+                return false;
+            }else{
+                $stmt = $this->db->prepare("INSERT INTO `faculty_load`(`fl_code`, `department`, `course`, `year_lvl`, `subjects`, `section`, `faculty_email`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                return $stmt->execute([$code, $dep, $course, $yearLvl, $subject, $section, $fac_email]);
+            }
         }
+    }
+
+    public function deleteLoad($id){
+        $stmt = $this->db->prepare("DELETE FROM `faculty_load` WHERE `id` = ?");
+        return $stmt->execute([$id]);
     }
 
 }

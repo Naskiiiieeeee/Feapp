@@ -46,6 +46,10 @@ class LoadingViewModel{
         $code = $this->model->randomStringGenerator(9);
         return $this->model->insertNewFacultyLoad($code, $dep, $course, $yearLvl, $subject, $section, $fac_email);
     }
+
+    public function getDeleteLoad($id){
+        return $this->model->deleteLoad($id);
+    }
     
 }
 

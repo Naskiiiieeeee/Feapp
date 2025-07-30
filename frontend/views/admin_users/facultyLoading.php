@@ -93,7 +93,7 @@ $sectionInfo = $lvm->getActivatedSection();
                               </td>
                               <td>
                                 <button type="button"
-                                        class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
+                                        class="btn btn-danger mt-1 px-1 btn-sm deleteLoad"
                                         id="<?= $row['id']; ?>"
                                         data-name="<?= htmlspecialchars($row['faculty_email']); ?>"
                                         title="Delete">
@@ -246,7 +246,7 @@ include_once __DIR__ . '/../../components/footscript.php';
   const BASE_URL = "<?= BASE_URL ?>";
 
 $(document).ready(function () {
-    $(document).on('click', '.deleteuser', function () {
+    $(document).on('click', '.deleteLoad', function () {
       var id = $(this).attr('id');
       var name = $(this).data('name') || "this user";
 
@@ -268,22 +268,22 @@ $(document).ready(function () {
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.evaluationsched.php',
+              url: BASE_URL + '/api/api.loading.php',
               type: 'POST',
-              data: { deleteSched: id },
+              data: { deleteload: id },
               success: function (data) {
                 if (data.trim() === "success") {
                   Swal.fire({
                     title: 'Success',
                     icon: 'success',
-                    text: 'Evaluation Schedule deleted successfully.',
+                    text: 'Faculty Load deleted successfully.',
                     showConfirmButton: false,
                     timer: 2000,
                   }).then(() => {
                     window.location.reload();
                   });
                 } else {
-                  Swal.fire("Error", "Failed to delete Evaluation Schedule", "error");
+                  Swal.fire("Error", "Failed to delete Faculty Load", "error");
                 }
               }
             });
