@@ -69,7 +69,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/settings">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/settings">
           <i class="bi bi-gear"></i>
           <span>Settings</span>
         </a>
