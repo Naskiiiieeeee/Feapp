@@ -48,6 +48,12 @@
           <span>Response Validation</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/settings">
+          <i class="bi bi-gear"></i>
+          <span>Evaluation Setters</span>
+        </a>
+      </li>
       <li class="nav-heading">Reports</li>
       <li class="nav-item <?= $current_page=='ManageViewUnitEvaluation' || $current_page=='#'  ? 'active' : null ?>">
         <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/ManageCertificates">
@@ -68,12 +74,7 @@
           <span>Profile</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/admin_users/settings">
-          <i class="bi bi-gear"></i>
-          <span>Settings</span>
-        </a>
-      </li>
+
     </ul>
   </aside>
   <!-- End Sidebar-->
