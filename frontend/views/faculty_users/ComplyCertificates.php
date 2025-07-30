@@ -86,9 +86,9 @@ if (isset($_GET['token'])) {
                     </table>
 
                     <?php if ($rec['status'] == 0): ?>
-                      <span class="badge bg-warning fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>
+                      <span class="badge bg-warning fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>
                     <?php else: ?>
-                      <span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Completed</span>
+                      <span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Completed</span>
                     <?php endif; ?>
                   </div>
                 </div>
@@ -182,7 +182,7 @@ document.getElementById('btnSaveCertificates').addEventListener('click', functio
       .then(data => {
         if (data.success) {
           Swal.fire('Uploaded!', data.message, 'success').then(() => {
-            location.reload();
+            location.href = 'ViewRecommendation';
           });
         } else {
           Swal.fire('Upload Failed', data.message, 'error');

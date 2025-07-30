@@ -52,9 +52,9 @@ $facultyRecommendationResults = $vm->fetchAllRecommendationsByEmail($email);
                   </tbody>
                 </table>
                     <?php if($rec['status'] == 0):?>
-                        <span class="badge bg-warning fs-6"><i class="bi bi-exclamation-circle"></i> Pending</span>
+                        <span class="badge bg-warning fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>
                     <?php else:?>
-                         <span class="badge bg-success fs-6"><i class="bi bi-check-circle"></i> Completed</span>
+                         <span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Completed</span>
                     <?php endif;?>
               </div>
             </div>
@@ -63,7 +63,7 @@ $facultyRecommendationResults = $vm->fetchAllRecommendationsByEmail($email);
                 <?php if($rec['status'] == 0):?>
                   <a href="ComplyCertificates?token=<?= urlencode($token);?>" class="btn bg-success float-end"> <span class="badge bg-succes"> Comply now!</span></a>
                 <?php else:?>
-                  <strong class="float-end"><i class="bi bi-check-circle"></i> Completed</strong>
+                  <strong class="float-end"><i class="bi bi-check-circle"></i> Complied</strong>
                 <?php endif;?>
             </div>
           </div>

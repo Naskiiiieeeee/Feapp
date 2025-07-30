@@ -74,7 +74,20 @@ foreach ($facultyList as $faculty) {
       </div>
     <?php endforeach; ?>
   <?php else: ?>
-    <p class="text-danger">No Registered Faculty Found</p>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header bg-danger-subtle"></div>
+        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+          <h2><i class="bi bi-exclamation-circle"></i> No Registered Faculty Found</h2>
+          <p>Please wait for the system administrator to validate your evaluation module!</p>
+          <div class="social-links mt-2">
+          </div>
+        </div>
+        <div class="card-footer bg-danger-subtle">
+        </div>
+      </div>
+    </div>
+
   <?php endif; ?>
 </section>
 
