@@ -15,5 +15,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['departmentCode'])) {
         'yearLvls' => $yearLvls,
         'subjects' => $subjects
     ]);
+    exit;
+}
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveLoad'])){
+    $department = filter_input(INPUT_POST, 'department', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $course = filter_input(INPUT_POST, 'course', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $yearLvl = filter_input(INPUT_POST, 'yearLvl', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $subjects = filter_input(INPUT_POST, 'subjects', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $section = filter_input(INPUT_POST, 'section', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $faculty = filter_input(INPUT_POST, 'faculty', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    try{
+        $result = $vm->setNewLoad($department,$course,$yearLvl,$subjects,$section,$faculty);
+
+        if($result){
+            echo json_encode("added");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $ex){
+        echo json_encode("error". $ex->getMessage());
+    }   
+    exit;
 }
 ?>

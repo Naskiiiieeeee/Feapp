@@ -41,6 +41,11 @@ class LoadingViewModel{
     public function getActivatedSection(){
         return $this->model->getActivatedSection();
     }
+
+    public function setNewLoad($dep, $course, $yearLvl, $subject, $section, $fac_email){
+        $code = $this->model->randomStringGenerator(9);
+        return $this->model->insertNewFacultyLoad($code, $dep, $course, $yearLvl, $subject, $section, $fac_email);
+    }
     
 }
 

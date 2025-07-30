@@ -304,25 +304,25 @@ $('#AddForm').submit(function (e) {
   formData.append("btnSaveLoad", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.evaluationsched.php',
+    url: BASE_URL + '/api/api.loading.php',
     type: 'POST',
     data: formData,
     contentType: false,
     processData: false,
     dataType: 'json',
     success: function (response) {
-      if (response.status === "added") {
+      if (response === "added") {
         Swal.fire({
           icon: 'success',
-          title: 'Schedule Created',
-          text: 'New Evaluation Schedule Successfully Added!',
+          title: 'Loading Created',
+          text: 'New Faculty Loading Successfully Added!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
-          location.href = 'settings';
+          location.href = 'facultyLoading';
         });
       } else {
-        Swal.fire('Error', 'Duplicate Schedule', 'error');
+        Swal.fire('Error', 'Duplicate Loading', 'error');
       }
     },
     error: function () {
