@@ -50,6 +50,10 @@ class LoadingViewModel{
     public function getDeleteLoad($id){
         return $this->model->deleteLoad($id);
     }
+
+    public function searchLoad($keyword){
+        return $this->model->searchLoad($keyword);
+    }
     
 }
 

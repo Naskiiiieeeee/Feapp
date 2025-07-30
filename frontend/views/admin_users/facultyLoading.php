@@ -49,6 +49,9 @@ $sectionInfo = $lvm->getActivatedSection();
                   <div class="card-body">
                     <h5 class="card-title">Recent Records</h5>
                     <div class="table-responsive">
+                      <div class="mb-3">
+                        <input type="text" class="form-control" id="searchBox" placeholder="Search by Department/Course/facultyEmail/Section/Subject">
+                      </div>    
                       <table class="table">
                         <thead>
                           <tr>
@@ -60,7 +63,7 @@ $sectionInfo = $lvm->getActivatedSection();
                             <th>Subject Code</th>
                             <th>Section</th>
                             <th>Faculty</th>
-                            <th>Status</th>
+                            <!-- <th>Status</th> -->
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -76,7 +79,7 @@ $sectionInfo = $lvm->getActivatedSection();
                               <td class="subjects"><?= htmlspecialchars($row['subjects']); ?></td>
                               <td class="section"><?= htmlspecialchars($row['section']); ?></td>
                               <td class="faculty_email"><?= htmlspecialchars($row['faculty_email']); ?></td>
-                              <td>
+                              <!-- <td>
                                 <?php
                                   switch ($row['status']) {
                                     case 1:
@@ -90,7 +93,7 @@ $sectionInfo = $lvm->getActivatedSection();
                                       break;
                                   }
                                 ?>
-                              </td>
+                              </td> -->
                               <td>
                                 <button type="button"
                                         class="btn btn-danger mt-1 px-1 btn-sm deleteLoad"
@@ -99,12 +102,12 @@ $sectionInfo = $lvm->getActivatedSection();
                                         title="Delete">
                                   <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                                 </button>
-                                <button type="button"
+                                <!-- <button type="button"
                                         class="btn btn-primary mt-1 px-1 btn-sm editbutton"
                                         data-toggle="modal"
                                         data-target="#verifyModal">
                                   <i class="bi bi-pencil-square mx-2"></i>
-                                </button>
+                                </button> -->
                               </td>
                             </tr>
                           <?php endforeach; ?>
@@ -407,4 +410,24 @@ success: function (response) {
     }
   });
 });
+
+$(document).ready(function () {
+  $('#searchBox').on('keyup', function () {
+    let query = $(this).val();
+
+    $.ajax({
+      url: "<?= BASE_URL ?>/api/api.loadSearch.php",
+      type: "POST",
+      data: {
+        action: "search",
+        keyword: query
+      },
+      success: function (response) {
+        $('tbody').html(response); // bale ito yung way para mapalitan yung mga content ng table via search
+      }
+    });
+  });
+});
+
+
 </script>

@@ -89,5 +89,25 @@ class LoadingModel extends Helpers{
         return $stmt->execute([$id]);
     }
 
+    
+    public function searchLoad($keyword) {
+        $keyword = "%$keyword%";
+        $query = "SELECT * FROM `faculty_load` 
+                WHERE (
+                    `fl_code` LIKE :keyword OR
+                    `department` LIKE :keyword OR
+                    `course` LIKE :keyword OR
+                    `year_lvl` LIKE :keyword OR
+                    `subjects` LIKE :keyword OR
+                    `section` LIKE :keyword OR
+                    `faculty_email` LIKE :keyword
+                )
+                ORDER BY `id` DESC";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':keyword', $keyword, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 ?>
