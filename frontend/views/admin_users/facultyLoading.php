@@ -40,7 +40,7 @@ $total_pages = $evm->getTotalPages($limit);
               <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">History</button>
             </li>
             <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add New Schedule</button>
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add New Faculty Load</button>
             </li>
           </ul>
           <div class="tab-content pt-2">

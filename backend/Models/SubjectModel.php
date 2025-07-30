@@ -20,8 +20,8 @@ class SubjectModel extends Helpers{
     }
 
     public function createNewSubject($sCode, $sDes, $Department, $Course, $yearlvl){
-        $stmt = $this->db->prepare("SELECT * FROM `subjects` WHERE `subj_code` = ? AND `subj_dep` = ? ");
-        $stmt->execute([$sCode, $Department]);
+        $stmt = $this->db->prepare("SELECT * FROM `subjects` WHERE `subj_code` = ? AND `subj_dep` = ? AND `subj_course` = ? ");
+        $stmt->execute([$sCode, $Department,$Course]);
         if($stmt->rowCount() > 0 ){
             return false;
         }else{
