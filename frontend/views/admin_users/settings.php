@@ -24,8 +24,8 @@ $total_pages = $evm->getTotalPages($limit);
     <h1>Evaluation Scheduler</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/settings">Evaluation Scheduler</a></li>
-        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/facultyLoading">Faculty Loading</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/admin_users/settings">Evaluation Scheduler</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/admin_users/facultyLoading">Faculty Loading</a></li>
       </ol>
     </nav>
   </div>
