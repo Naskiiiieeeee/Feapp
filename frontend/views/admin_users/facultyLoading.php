@@ -1,10 +1,10 @@
 <?php
-require_once __DIR__ . '/../../backend/ViewModels/CourseViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/CourseViewModel.php';
 require_once __DIR__ . '/../../backend/ViewModels/SchedEvalViewModel.php';
 
-include_once __DIR__ . '/../components/header.php';
-include_once __DIR__ . '/../components/navigation.php';
-include_once __DIR__ . '/../components/sidebar.php';
+include_once __DIR__ . '/../../components/header.php';
+include_once __DIR__ . '/../../components/navigation.php';
+include_once __DIR__ . '/../../components/sidebar.php';
 
 $vm = new CourseViewModel();
 $departmentInfo = $vm->getAllValidatedDepartment();
@@ -230,8 +230,8 @@ $total_pages = $evm->getTotalPages($limit);
 
 
 <?php
-include_once __DIR__ . '/../components/footer.php';
-include_once __DIR__ . '/../components/footscript.php';
+include_once __DIR__ . '/../../components/footer.php';
+include_once __DIR__ . '/../../components/footscript.php';
 ?>
 
 <script>
