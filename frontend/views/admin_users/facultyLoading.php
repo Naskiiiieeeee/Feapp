@@ -1,22 +1,18 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/CourseViewModel.php';
-require_once __DIR__ . '/../../../backend/ViewModels/SchedEvalViewModel.php';
-
+require_once __DIR__ . '/../../../backend/ViewModels/LoadingViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
-$vm = new CourseViewModel();
-$departmentInfo = $vm->getAllValidatedDepartment();
-
-$evm = new SchedEvalViewModel();
+$lvm = new LoadingViewModel();
 
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
-$limit = 4;
+$limit = 10;
 $count = ($page_no - 1) * $limit + 1;
 
-$evalSched = $evm->getSchedPaginated($page_no, $limit);
-$total_pages = $evm->getTotalPages($limit);
+$loadingdata = $lvm->getLoadPaginated($page_no, $limit);
+$total_pages = $lvm->getTotalPages($limit);
+
 ?>
 
 <main id="main" class="main">
@@ -54,25 +50,29 @@ $total_pages = $evm->getTotalPages($limit);
                         <thead>
                           <tr>
                             <th>#</th>
-                            <th>Schedule Code</th>
+                            <th>Code</th>
                             <th>Department</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Uploader</th>
+                            <th>Course</th>
+                            <th>Year Lvl</th>
+                            <th>Subject Code</th>
+                            <th>Section</th>
+                            <th>Faculty</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                        <?php if (!empty($evalSched)): ?>
-                          <?php foreach ($evalSched as $row): ?>
+                        <?php if (!empty($loadingdata)): ?>
+                          <?php foreach ($loadingdata as $row): ?>
                             <tr>
                               <td><?= $count++; ?></td>
-                              <td class="id"><?= htmlspecialchars($row['ev_code']); ?></td>
+                              <td class="id"><?= htmlspecialchars($row['fl_code']); ?></td>
                               <td class="department"><?= htmlspecialchars($row['department']); ?></td>
-                              <td class="startDate"><?= htmlspecialchars($row['startDate']); ?></td>
-                              <td class="endDate"><?= htmlspecialchars($row['endDate']); ?></td>
-                              <td class=""><?= htmlspecialchars($row['uploadBy']); ?></td>
+                              <td class="course"><?= htmlspecialchars($row['course']); ?></td>
+                              <td class="year_lvl"><?= htmlspecialchars($row['year_lvl']); ?></td>
+                              <td class="subjects"><?= htmlspecialchars($row['subjects']); ?></td>
+                              <td class="section"><?= htmlspecialchars($row['section']); ?></td>
+                              <td class="faculty_email"><?= htmlspecialchars($row['faculty_email']); ?></td>
                               <td>
                                 <?php
                                   switch ($row['status']) {
@@ -91,8 +91,8 @@ $total_pages = $evm->getTotalPages($limit);
                               <td>
                                 <button type="button"
                                         class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
-                                        id="<?= $row['ev_id']; ?>"
-                                        data-name="<?= htmlspecialchars($row['department']); ?>"
+                                        id="<?= $row['id']; ?>"
+                                        data-name="<?= htmlspecialchars($row['faculty_email']); ?>"
                                         title="Delete">
                                   <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                                 </button>

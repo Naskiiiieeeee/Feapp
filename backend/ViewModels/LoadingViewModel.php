@@ -9,7 +9,7 @@ class LoadingViewModel{
         $this->model = new LoadingModel();
     }
 
-    public function getCoursePaginated($page = 1, $limit = 4) {
+    public function getLoadPaginated($page = 1, $limit = 4) {
         $offset = ($page - 1) * $limit;
         return $this->model->getLoadPaginated($offset, $limit);
     }
