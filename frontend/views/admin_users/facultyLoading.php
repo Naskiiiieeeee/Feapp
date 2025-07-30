@@ -14,6 +14,8 @@ $loadingdata = $lvm->getLoadPaginated($page_no, $limit);
 $total_pages = $lvm->getTotalPages($limit);
 
 $departmentInfo = $lvm->getAllValidatedDepartment();
+$facultyInfo = $lvm->getActivatedFaculty();
+$sectionInfo = $lvm->getActivatedSection();
 ?>
 
 <main id="main" class="main">
@@ -180,26 +182,31 @@ $departmentInfo = $lvm->getAllValidatedDepartment();
                 </div>
 
                 <div class="row mb-3">
-                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-building-add"></i> Section</label>
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-person-badge"></i> Section</label>
                   <div class="col-md-8 col-lg-9">
-                    <select name="department" id="departmentSelect" class="form-control" required>
+                    <select name="section" id="" class="form-control" required>
                       <option selected disabled>Please Choose</option>
-                      <?php foreach($departmentInfo as $row): ?>
-                        <option value="<?= $row['description']; ?>"><?= $row['description']; ?></option>
+                      <?php foreach($sectionInfo as $row): ?>
+                        <option value="<?= $row['section_name']; ?>"> Section: <?= $row['section_name']; ?></option>
                       <?php endforeach; ?>
                     </select>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="Address" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-person-badge"></i> Upload By</label>
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-person-badge"></i> Faculty Name</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="adminAccount" type="text" class="form-control" value="<?= $email; ?>" readonly>
+                    <select name="faculty" id="" class="form-control" required>
+                      <option selected disabled>Please Choose</option>
+                      <?php foreach($facultyInfo as $row): ?>
+                        <option value="<?= $row['email']; ?>"><?= $row['fullname']; ?> | <?= $row['department']; ?></option>
+                      <?php endforeach; ?>
+                    </select>
                   </div>
                 </div>
 
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary" name="btnSaveSched">Save Changes</button>
+                  <button type="submit" class="btn btn-primary" name="btnSaveLoad">Save Changes</button>
                 </div>
               </form>
             </div>
@@ -294,7 +301,7 @@ $('#AddForm').submit(function (e) {
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveSched", true); 
+  formData.append("btnSaveLoad", true); 
 
   $.ajax({
     url: BASE_URL + '/api/api.evaluationsched.php',
@@ -361,32 +368,43 @@ $('#updateForm').submit(function(e){
   });
 });
 
-
 $('#departmentSelect').change(function () {
   const selectedDept = $(this).val();
+
   $.ajax({
     url: BASE_URL + '/api/api.loading.php',
     method: 'POST',
     data: { departmentCode: selectedDept },
     dataType: 'json',
-    success: function (response) {
-      const courseSelect = $('select[name="course"]');
-      courseSelect.empty();
-      courseSelect.append('<option selected disabled>Please Choose</option>');
+success: function (response) {
+  // Courses
+  const courseSelect = $('select[name="course"]');
+  courseSelect.empty().append('<option selected disabled>Please Choose</option>');
+  response.courses.forEach(c => {
+    courseSelect.append(`<option value="${c.subj_course}">${c.subj_course}</option>`);
+  });
 
-      if (response.length > 0) {
-        response.forEach(course => {
-          courseSelect.append(`<option value="${course.subj_course}">${course.subj_course}</option>`);
-        });
-      } else {
-        courseSelect.append('<option disabled>No course available</option>');
-      }
-    },
+  // Year Levels
+  const yearSelect = $('select[name="yearLvl"]');
+  yearSelect.empty().append('<option selected disabled>Please Choose</option>');
+  if (Array.isArray(response.yearLvls)) {
+    response.yearLvls.forEach(y => {
+      yearSelect.append(`<option value="${y.subj_yearLvl}">${y.subj_yearLvl}</option>`);
+    });
+  }
+
+  // Subjects
+  const subjSelect = $('select[name="subjects"]');
+  subjSelect.empty().append('<option selected disabled>Please Choose</option>');
+  if (Array.isArray(response.subjects)) {
+    response.subjects.forEach(s => {
+      subjSelect.append(`<option value="${s.subj_code}">${s.subj_des}</option>`);
+    });
+  }
+},
     error: function () {
       console.error('Error fetching courses');
     }
   });
 });
-
-
 </script>

@@ -24,10 +24,49 @@ class LoadingModel extends Helpers{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);   
     }
 
+    public function getActivatedFaculty(){
+        $status = 1;
+        $role = 'Faculty';
+        $stmt = $this->db->prepare("SELECT * FROM `endusers` WHERE `status` = ? AND `role` = ? ");
+        $stmt->execute([$status, $role]);
+        
+        $faculties = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $faculties[] = $row;
+        }
+        return $faculties;
+    }
+
+    
+    public function getActivatedSection(){
+        $status = 1;
+        $stmt = $this->db->prepare("SELECT * FROM `section` WHERE `status` = ? ");
+        $stmt->execute([$status]);
+        
+        $sections = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $sections[] = $row;
+        }
+        return $sections;
+    }
+
     public function getCoursesByDepartment($departmentCode) {
-        $stmt = $this->db->prepare("SELECT * FROM `subjects` WHERE `subj_dep` = ?");
+        $stmt = $this->db->prepare("SELECT DISTINCT `subj_course` FROM `subjects` WHERE `subj_dep` = ?");
         $stmt->execute([$departmentCode]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getSubjectsByDepartment($departmentCode) {
+        $stmt = $this->db->prepare(" SELECT DISTINCT `subj_code`, `subj_des` FROM `subjects` WHERE `subj_dep` = ? ");
+        $stmt->execute([$departmentCode]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getYearLevelsByDepartment($departmentCode) {
+        $stmt = $this->db->prepare(" SELECT DISTINCT `subj_yearLvl` FROM `subjects` WHERE `subj_dep` = ? ");
+        $stmt->execute([$departmentCode]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }
 ?>

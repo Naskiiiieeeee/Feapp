@@ -23,9 +23,25 @@ class LoadingViewModel{
         return $this->model->getActivatedDepartment();
     }
 
+    public function getActivatedFaculty(){
+        return $this->model->getActivatedFaculty();
+    }
+
     public function getCoursesByDepartment($departmentCode){
         return $this->model->getCoursesByDepartment($departmentCode);
     }
+
+    public function getSubjectsByDepartment($departmentCode){
+        return $this->model->getSubjectsByDepartment($departmentCode);
+    }
+
+    public function getYearLevelsByDepartment($departmentCode){
+        return $this->model->getYearLevelsByDepartment($departmentCode);
+    }
+    public function getActivatedSection(){
+        return $this->model->getActivatedSection();
+    }
+    
 }
 
 ?>
