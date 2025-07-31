@@ -1,33 +1,25 @@
 <?php
 require_once __DIR__ . '/../../../backend/ViewModels/EvaluationSummaryViewModel.php';
-require_once __DIR__ . '/../../../frontend/vendor/autoload.php';
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-$type = $_GET['type'] ?? '';
 $from = $_GET['from'] ?? '';
 $to = $_GET['to'] ?? '';
+$type = $_GET['type'] ?? '';
+
+if (empty($from) || empty($to) || empty($type)) {
+    die("Missing required parameters.");
+}
 
 $vm = new EvaluationSummaryViewModel();
-$data = $vm->getEvaluationSummary($from, $to);
+$results = $vm->getEvaluationSummary($from, $to);
 
-if ($type === 'pdf') {
-    $logoPath = __DIR__ . '/../../../frontend/src/img/clientlogo.jpg';
-    $logoBase64 = base64_encode(file_get_contents($logoPath));
-    $logo = 'data:image/png;base64,' . $logoBase64;
+if ($type === 'excel') {
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=evaluation_summary_" . date('YmdHis') . ".xls");
+    header("Pragma: no-cache");
+    header("Expires: 0");
 
-    $html = '
-        <div style="text-align: center; margin-bottom: 20px;">
-            <img src="' . $logo . '" style="width: 100px;">
-            <h2 style="margin: 0;">COLM Faculty Evaluation Summary</h2>
-        </div>';
-
-    $html .= '<table border="1" cellpadding="5" cellspacing="0" width="100%">
-    <thead>
-        <tr>
+    echo "<table border='1'>";
+    echo "<tr>
             <th>#</th>
             <th>Faculty Name</th>
             <th>Email</th>
@@ -35,82 +27,119 @@ if ($type === 'pdf') {
             <th>Academic</th>
             <th>Core Values</th>
             <th>Overall Evaluation</th>
-            <th>Overall Ratings</th>
+            <th>Overall Rating</th>
             <th>Recommendation</th>
             <th>Date</th>
-        </tr>
-    </thead><tbody>';
+          </tr>";
 
-    foreach ($data as $i => $row) {
-        // Explode the AI recommendations string into an array
+    $i = 1;
+    foreach ($results as $row) {
         $recommendations = explode(',', $row['ai_recommendations']);
-        $recommendationList = '<ul>';
-        foreach ($recommendations as $rec) {
-            $recommendationList .= '<li>' . htmlspecialchars(trim($rec)) . '</li>';
-        }
-        $recommendationList .= '</ul>';
+        $recList = implode('<br>', array_map(fn($rec) => '• ' . htmlspecialchars(trim($rec)), $recommendations));
 
-        $html .= '<tr>
-            <td>' . ($i + 1) . '</td>
-            <td>' . htmlspecialchars($row['faculty_name']) . '</td>
-            <td>' . htmlspecialchars($row['faculty_email']) . '</td>
-            <td>' . htmlspecialchars($row['faculty_department']) . '</td>
-            <td>' . $row['academic_rating'] . '</td>
-            <td>' . $row['core_values_rating'] . '</td>
-            <td>' . $row['overall_evaluation'] . '</td>
-            <td>' . $row['overall_rating'] . '</td>
-            <td>' . $recommendationList . '</td>
-            <td>' . date('Y-m-d', strtotime($row['created_at'])) . '</td>
-        </tr>';
+        echo "<tr>
+                <td>{$i}</td>
+                <td>" . htmlspecialchars($row['faculty_name']) . "</td>
+                <td>" . htmlspecialchars($row['faculty_email']) . "</td>
+                <td>" . htmlspecialchars($row['faculty_department']) . "</td>
+                <td>{$row['academic_rating']}</td>
+                <td>{$row['core_values_rating']}</td>
+                <td>{$row['overall_evaluation']}</td>
+                <td>{$row['overall_rating']}</td>
+                <td>{$recList}</td>
+                <td>" . date('Y-m-d', strtotime($row['created_at'])) . "</td>
+              </tr>";
+        $i++;
     }
 
-    $html .= '</tbody></table>';
-
-    $options = new Options();
-    $options->set('isHtml5ParserEnabled', true);
-
-    $dompdf = new Dompdf($options);
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'landscape');
-    $dompdf->render();
-    $dompdf->stream('Evaluation_Summary_' . date('Ymd') . '.pdf', ['Attachment' => true]);
-    exit;
-
-} elseif ($type === 'excel') {
-    $spreadsheet = new Spreadsheet();
-    $sheet = $spreadsheet->getActiveSheet();
-
-    $sheet->fromArray([
-        '#', 'Faculty Name', 'Email', 'Department',
-        'Academic', 'Core Values', 'Overall Evaluation', 'Overall Ratings',
-        'Recommendation', 'Date'
-    ], NULL, 'A1');
-
-    $rowNum = 2;
-    foreach ($data as $i => $row) {
-        $sheet->fromArray([
-            $i + 1,
-            $row['faculty_name'],
-            $row['faculty_email'],
-            $row['faculty_department'],
-            $row['academic_rating'],
-            $row['core_values_rating'],
-            $row['overall_evaluation'],
-            $row['overall_rating'],
-            $row['ai_recommendations'],
-            date('Y-m-d', strtotime($row['created_at']))
-        ], NULL, 'A' . $rowNum);
-        $rowNum++;
-    }
-
-    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    header('Content-Disposition: attachment;filename="Evaluation_Summary_' . date('Ymd') . '.xlsx"');
-    header('Cache-Control: max-age=0');
-
-    $writer = new Xlsx($spreadsheet);
-    $writer->save('php://output');
-    exit;
-} else {
-    echo "Invalid export type.";
+    echo "</table>";
     exit;
 }
+
+if ($type === 'print') {
+    ?>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Evaluation Summary Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; }
+            table { border-collapse: collapse; width: 100%; font-size: 12px; }
+            th, td { border: 1px solid #333; padding: 6px; text-align: left; }
+            h2 { text-align: center; }
+            @media print {
+                .noprint { display: none; }
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div style="text-align: center; margin-bottom: 10px;">
+            <img src="../../src/img/clientlogo.jpg" alt="Logo" style="max-height: 80px;">
+        </div>
+
+        <h2>Evaluation Summary Report</h2>
+        <p>From: <?= htmlspecialchars($from) ?> &nbsp;&nbsp; To: <?= htmlspecialchars($to) ?></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Faculty Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Academic</th>
+                    <th>Core Values</th>
+                    <th>Overall Evaluation</th>
+                    <th>Overall Rating</th>
+                    <th>Recommendation</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($results)): ?>
+                    <tr><td colspan="10" style="text-align:center;">No records found.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($results as $i => $row): ?>
+                        <tr>
+                            <td><?= $i + 1 ?></td>
+                            <td><?= htmlspecialchars($row['faculty_name']) ?></td>
+                            <td><?= htmlspecialchars($row['faculty_email']) ?></td>
+                            <td><?= htmlspecialchars($row['faculty_department']) ?></td>
+                            <td><?= $row['academic_rating'] ?></td>
+                            <td><?= $row['core_values_rating'] ?></td>
+                            <td><?= $row['overall_evaluation'] ?></td>
+                            <td><?= $row['overall_rating'] ?></td>
+                            <td>
+                                <ul style="padding-left: 16px; margin: 0;">
+                                    <?php foreach (explode(',', $row['ai_recommendations']) as $rec): ?>
+                                        <li><?= htmlspecialchars(trim($rec)) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </td>
+                            <td><?= date('Y-m-d', strtotime($row['created_at'])) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+
+        <div class="noprint" style="margin-top: 20px; text-align:center;">
+            <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+            <button onclick="window.location.href='printReports.php'" class="btn btn-secondary">
+                ❌ Back
+            </button>
+        </div>
+
+        <script>
+            window.addEventListener('load', function() {
+                setTimeout(() => window.print(), 500);
+            });
+        </script>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+
+echo "Invalid export type.";

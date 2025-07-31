@@ -47,7 +47,9 @@ if (!empty($from) && !empty($to)) {
 
             <?php if (!empty($results)): ?>
               <div class="d-flex justify-content-end mb-3">
-                <a href="ExportEvaluationSummary.php?from=<?= urlencode($from) ?>&to=<?= urlencode($to) ?>&type=pdf" class="btn btn-danger btn-sm me-2"><i class="bi bi-filetype-pdf"></i> Export PDF</a>
+                <a href="ExportEvaluationSummary.php?from=<?= urlencode($from) ?>&to=<?= urlencode($to) ?>&type=print" class="btn btn-danger btn-sm me-2">
+                  <i class="bi bi-filetype-pdf"></i> Export PDF
+                </a>
                 <a href="ExportEvaluationSummary.php?from=<?= urlencode($from) ?>&to=<?= urlencode($to) ?>&type=excel" class="btn btn-success btn-sm"><i class="bi bi-file-earmark-spreadsheet"></i> Export Excel</a>
               </div>
             <?php endif; ?>
