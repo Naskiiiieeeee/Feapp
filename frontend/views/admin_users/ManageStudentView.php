@@ -51,8 +51,9 @@ $total_pages = $vm->getTotalPages($limit);
                     <th>Section</th>
                     <th>Course</th>
                     <th>Department</th>
-                    <th>Status</th>
+                    <th>Access Status</th>
                     <th>Evaluation Access</th>
+                    <th>Student Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -93,6 +94,18 @@ $total_pages = $vm->getTotalPages($limit);
                               break;
                             default:
                               echo '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>';
+                              break;
+                          }
+                        ?>
+                      </td>
+                      <td>
+                        <?php
+                          switch ($row['is_irregular']) {
+                            case 1:
+                              echo '<span class="badge bg-danger fs-7 rounded-5"> <i class="bi bi-exclamation-circle"></i> Irregular</span>';
+                              break;
+                            default:
+                              echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Regular</span>';
                               break;
                           }
                         ?>

@@ -208,6 +208,26 @@ $sectionInfo = $lvm->getActivatedSection();
                   </div>
                 </div>
 
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-journal-bookmark-fill"></i> Semester</label>
+                  <div class="col-md-8 col-lg-9">
+                    <select name="semester" id="" class="form-control">
+                        <option value="1st Semester">1st Semester</option>
+                        <option value="2nd Semester">2nd Semester</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-calendar2-check"></i> School Year</label>
+                  <div class="col-md-8 col-lg-9">
+                    <select name="sy" id="" class="form-control">
+                        <option value="2024-2025">2024-2025</option>
+                        <option value="2023-2024">2023-2024</option>
+                    </select>
+                  </div>
+                </div>
+
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary" name="btnSaveLoad">Save Changes</button>
                 </div>

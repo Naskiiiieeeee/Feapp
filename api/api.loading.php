@@ -25,9 +25,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveLoad'])){
     $subjects = filter_input(INPUT_POST, 'subjects', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $section = filter_input(INPUT_POST, 'section', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     $faculty = filter_input(INPUT_POST, 'faculty', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $semester = filter_input(INPUT_POST, 'semester', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $sy = filter_input(INPUT_POST, 'sy', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     try{
-        $result = $vm->setNewLoad($department,$course,$yearLvl,$subjects,$section,$faculty);
+        $result = $vm->setNewLoad($department,$course,$yearLvl,$subjects,$section,$faculty, $semester ,$sy);
 
         if($result){
             echo json_encode("added");

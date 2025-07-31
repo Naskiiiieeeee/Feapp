@@ -42,9 +42,9 @@ class LoadingViewModel{
         return $this->model->getActivatedSection();
     }
 
-    public function setNewLoad($dep, $course, $yearLvl, $subject, $section, $fac_email){
+    public function setNewLoad($dep, $course, $yearLvl, $subject, $section, $fac_email, $sem, $sy){
         $code = $this->model->randomStringGenerator(9);
-        return $this->model->insertNewFacultyLoad($code, $dep, $course, $yearLvl, $subject, $section, $fac_email);
+        return $this->model->insertNewFacultyLoad($code, $dep, $course, $yearLvl, $subject, $section, $fac_email, $sem, $sy);
     }
 
     public function getDeleteLoad($id){
