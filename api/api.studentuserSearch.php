@@ -26,6 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
 
             echo "<td>{$status}</td>";
 
+            $evaluationAccess = match ($row['evaluationAccess']) {
+                1 => '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Active</span>',
+                2 => '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>',
+                default => '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>',
+            };
+
+            echo "<td>{$evaluationAccess}</td>";
+
             echo '<td>
                     <button type="button" class="btn btn-danger mt-1 px-1 btn-sm deleteuser" id="' . $row['si_id'] . '" data-name="' . htmlspecialchars($row['student_name']) . '">
                         <i class="fas fa-trash mx-2"></i>
