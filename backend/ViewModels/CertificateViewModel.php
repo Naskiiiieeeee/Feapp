@@ -19,6 +19,11 @@ class CertificateViewModel{
     public function getcertificateByID($id){
         return $this->model->getcertificateByID($id);
     }
+
+    public function getIndividualCertificates($page = 1, $limit = 4, $email){
+        $offset = ($page - 1) * $limit;
+        return $this->model->getIndividualCertificates($offset, $limit,$email);
+    }
 }
 
 ?>

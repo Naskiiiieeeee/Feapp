@@ -103,6 +103,13 @@
           <span>System Recommendation</span>
         </a>
       </li>
+      
+      <li class="nav-item <?= $current_page=='ManageViewUnitEvaluation' || $current_page=='#'  ? 'active' : null ?>">
+        <a class="nav-link collapsed" href="<?= BASE_URL ?>/frontend/views/faculty_users/ManageCertificates">
+          <i class="bi-file-earmark-ruled"></i>
+          <span>Certificates</span>
+        </a>
+      </li>
 
       <li class="nav-heading">User Account</li>
       <li class="nav-item">

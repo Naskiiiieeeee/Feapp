@@ -24,4 +24,14 @@ class CertificateModel extends BaseModel{
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getIndividualCertificates($offset, $limit, $email) {
+        $query = "SELECT * FROM `certificates` WHERE `faculty_email` = :email ORDER BY `id` DESC LIMIT :offset, :limit";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
