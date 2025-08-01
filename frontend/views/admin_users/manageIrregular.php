@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/SubjectViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/IrregularStudentViewModel.php';
 
 require_once __DIR__ . '/../../../backend/ViewModels/LoadingViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
