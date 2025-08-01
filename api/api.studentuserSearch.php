@@ -34,6 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
 
             echo "<td>{$evaluationAccess}</td>";
 
+            //end
+
+                          $status = $row['is_irregular'];
+                          $badgeText = $status ? 'Irregular' : 'Regular';
+                          $badgeClass = $status ? 'bg-danger' : 'bg-success';
+                          $icon = $status ? 'exclamation-circle' : 'check-circle';
+
+                          echo "<td>
+                          <span class='badge $badgeClass fs-7 rounded-5 toggle-status' style='cursor:pointer'
+                                  data-id='{$row['si_id']}' data-status='$status'>
+                                  <i class='bi bi-$icon'></i> $badgeText
+                                </span>
+                            </td>";
+
+
             echo '<td>
                     <button type="button" class="btn btn-danger mt-1 px-1 btn-sm deleteuser" id="' . $row['si_id'] . '" data-name="' . htmlspecialchars($row['student_name']) . '">
                         <i class="fas fa-trash mx-2"></i>
