@@ -98,18 +98,19 @@ $total_pages = $vm->getTotalPages($limit);
                           }
                         ?>
                       </td>
-                      <td>
-                        <?php
-                          switch ($row['is_irregular']) {
-                            case 1:
-                              echo '<span class="badge bg-danger fs-7 rounded-5"> <i class="bi bi-exclamation-circle"></i> Irregular</span>';
-                              break;
-                            default:
-                              echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Regular</span>';
-                              break;
-                          }
-                        ?>
-                      </td>
+<td>
+  <?php
+    $status = $row['is_irregular'];
+    $badgeText = $status ? 'Irregular' : 'Regular';
+    $badgeClass = $status ? 'bg-danger' : 'bg-success';
+    $icon = $status ? 'exclamation-circle' : 'check-circle';
+
+    echo "<span class='badge $badgeClass fs-7 rounded-5 toggle-status' style='cursor:pointer'
+            data-id='{$row['si_id']}' data-status='$status'>
+            <i class='bi bi-$icon'></i> $badgeText
+          </span>";
+  ?>
+</td>
                       <td>
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteuser"

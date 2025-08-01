@@ -141,4 +141,52 @@ class UserFaculty extends BaseModel {
         }
     }
 
+    public function getFacultyForEvaluation($studentEmail) {
+        // Get student record
+        $stmt = $this->db->prepare("SELECT * FROM student_info WHERE student_email = ?");
+        $stmt->execute([$studentEmail]);
+        $student = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$student) return false;
+
+        $studentId = $student['student_no'];
+        $isIrregular = $student['is_irregular'];
+
+        if ($isIrregular) {
+            // Irregular → use evaluation_load
+            $stmt = $this->db->prepare("SELECT * FROM evaluation_load WHERE student_id = ?");
+            $stmt->execute([$studentId]);
+            $load = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!$load) return false;
+
+            $facultyIds = array_column($load, 'faculty_id');
+            $placeholders = rtrim(str_repeat('?,', count($facultyIds)), ',');
+            $params = $facultyIds;
+
+            $sql = "SELECT * FROM endusers WHERE role = 'Faculty' AND status = 1 AND email IN ($placeholders)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        } else {
+            // Regular → use faculty_load
+            $stmt = $this->db->prepare("SELECT * FROM faculty_load WHERE department = ? AND course = ? AND year_lvl = ? AND section = ?");
+            $stmt->execute([$student['student_dep'], $student['student_course'], $student['student_year'], $student['student_section']]);
+            $load = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (!$load) return false;
+
+            $facultyEmails = array_column($load, 'faculty_email');
+            $placeholders = rtrim(str_repeat('?,', count($facultyEmails)), ',');
+            $params = array_merge(['Faculty', 1], $facultyEmails);
+
+            $sql = "SELECT * FROM endusers WHERE role = ? AND status = ? AND email IN ($placeholders)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+
+
 }

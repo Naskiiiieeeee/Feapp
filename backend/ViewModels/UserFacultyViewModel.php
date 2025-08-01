@@ -59,6 +59,6 @@ class UserFacultyViewModel {
     }
 
     public function getFacultyLoad($email){
-        return $this->model->selectIfCorrectPortal($email);
+        return $this->model->getFacultyForEvaluation($email);
     }
 }
