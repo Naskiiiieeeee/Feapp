@@ -98,19 +98,19 @@ $total_pages = $vm->getTotalPages($limit);
                           }
                         ?>
                       </td>
-<td>
-  <?php
-    $status = $row['is_irregular'];
-    $badgeText = $status ? 'Irregular' : 'Regular';
-    $badgeClass = $status ? 'bg-danger' : 'bg-success';
-    $icon = $status ? 'exclamation-circle' : 'check-circle';
+                      <td>
+                        <?php
+                          $status = $row['is_irregular'];
+                          $badgeText = $status ? 'Irregular' : 'Regular';
+                          $badgeClass = $status ? 'bg-danger' : 'bg-success';
+                          $icon = $status ? 'exclamation-circle' : 'check-circle';
 
-    echo "<span class='badge $badgeClass fs-7 rounded-5 toggle-status' style='cursor:pointer'
-            data-id='{$row['si_id']}' data-status='$status'>
-            <i class='bi bi-$icon'></i> $badgeText
-          </span>";
-  ?>
-</td>
+                          echo "<span class='badge $badgeClass fs-7 rounded-5 toggle-status' style='cursor:pointer'
+                                  data-id='{$row['si_id']}' data-status='$status'>
+                                  <i class='bi bi-$icon'></i> $badgeText
+                                </span>";
+                        ?>
+                      </td>
                       <td>
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
@@ -194,7 +194,7 @@ $total_pages = $vm->getTotalPages($limit);
           <div class="form-group px-2 mt-1">
             <label class="fw-bold mt-2">Status</label>
             <select name="status" class="form-control">
-              <option selected disabled>Please Select</option>
+              <option disabled>Please Select</option>
               <option value="1">Activate</option>
               <option value="2">Restrict</option>
             </select>
@@ -386,8 +386,67 @@ $('#VerifiedAllStudents').submit(function(e){
       }
     });
   });
-
-
 });
+
+
+$(document).on('click', '.toggle-status', function () {
+  const badge = $(this);
+  const id = badge.data('id');
+  const currentStatus = badge.data('status');
+
+  const confirmMsg = currentStatus == 1
+    ? "Are you sure you want to mark this student as REGULAR?"
+    : "Are you sure you want to mark this student as IRREGULAR?";
+
+  Swal.fire({
+    title: 'Confirm Action',
+    text: confirmMsg,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, change it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: BASE_URL + '/api/api.studentuser.php',
+        method: 'POST',
+        data: { id: id, current: currentStatus },
+        success: function (response) {
+          if (response === "success") {
+            // Toggle UI
+            if (currentStatus == 1) {
+              badge
+                .removeClass('bg-danger')
+                .addClass('bg-success')
+                .html('<i class="bi bi-check-circle"></i> Regular')
+                .data('status', 0);
+            } else {
+              badge
+                .removeClass('bg-success')
+                .addClass('bg-danger')
+                .html('<i class="bi bi-exclamation-circle"></i> Irregular')
+                .data('status', 1);
+            }
+
+            Swal.fire(
+              'Updated!',
+              'Student status has been changed.',
+              'success'
+            );
+          } else {
+            Swal.fire(
+              'Error!',
+              'Something went wrong.',
+              'error'
+            );
+          }
+        }
+      });
+    }
+  });
+});
+
+
 
 </script>

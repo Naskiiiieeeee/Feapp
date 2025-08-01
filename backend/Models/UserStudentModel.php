@@ -79,4 +79,9 @@ class UserStudentModel extends BaseModel{
         return $stmt->execute([$status, $restricted]);
     }
 
+    public function updateStudentStatus($id, $newStatus){
+        $stmt = $this->db->prepare("UPDATE student_info SET is_irregular = ? WHERE si_id = ? ");
+        return $stmt->execute([$newStatus,$id]);
+    }
+
 }

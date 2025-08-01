@@ -86,4 +86,8 @@ class UserStudentViewModel {
         return $this->model->validateAllStudent($status);
     }
 
+    public function updateStatus($id, $newStats){
+        return $this->model->updateStudentStatus($id, $newStats);
+    }
+
 }

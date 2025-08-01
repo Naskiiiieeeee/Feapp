@@ -72,3 +72,22 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['validateALLStudent']))
         echo json_encode(["stattus" => 'error' . $e->getMessage()]);
     }
 }
+
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $id = $_POST['id'];
+    $current = $_POST['current'];
+    $newStatus = $current == 1 ? 0 : 1;
+
+    try{
+        $result = $vm->updateStatus($id,$newStatus);
+        if($result){
+            echo json_encode("success");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode("error". $e->getMessage() );
+    }
+    exit;
+}
