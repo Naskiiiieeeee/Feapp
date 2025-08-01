@@ -28,6 +28,11 @@ class IrregularStudentModel extends Helpers{
             return $stmt->execute([$studentID, $subjectID, $facultyID, $sem, $sy]);
         }
     }
+
+    public function deleteIrregularStudent($id){
+        $stmt = $this->db->prepare("DELETE FROM `evaluation_load` WHERE `id` = ? ");
+        return $stmt->execute([$id]);
+    }
 }
 
 ?>

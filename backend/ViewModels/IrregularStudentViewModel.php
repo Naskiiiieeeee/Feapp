@@ -22,6 +22,10 @@ class IrregularStudentViewModel {
         return $this->model->createNewIrregStudent($studentID, $subjectID, $facultyID, $sem, $sy);
     }
 
+    public function getDeleteIrreg($id){
+        return $this->model->deleteIrregularStudent($id);
+    }
+
 }
 
 ?>

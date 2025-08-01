@@ -23,4 +23,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveIrreg'])){
     exit;
 }
 
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteIrreg'])){
+    $id = filter_input(INPUT_POST, 'deleteIrreg', FILTER_SANITIZE_SPECIAL_CHARS);
+
+    try{
+        $result = $vm->getDeleteIrreg($id);
+        if($result){
+            echo json_encode("success");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode("error". $e->getMessage());
+    }
+    exit;
+}
+
 ?>

@@ -68,7 +68,7 @@ $facultyInfo = $lvm->getActivatedFaculty();
                       <td class="sy"><?= htmlspecialchars($row['sy']); ?></td>
                       <td>
                         <button type="button"
-                                class="btn btn-danger mt-1 px-1 btn-sm deleteSubject"
+                                class="btn btn-danger mt-1 px-1 btn-sm deleteIrreg"
                                 id="<?= $row['id']; ?>"
                                 data-name="<?= htmlspecialchars($row['student_id']); ?>"
                                 title="Delete">
@@ -233,7 +233,7 @@ include_once __DIR__ . '/../../components/footscript.php';
 <script>
   const BASE_URL = "<?= BASE_URL ?>";
   $(document).ready(function () {
-    $(document).on('click', '.deleteSubject', function () {
+    $(document).on('click', '.deleteIrreg', function () {
       var id = $(this).attr('id');
       var name = $(this).data('name') || "this course";
 
@@ -255,22 +255,22 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.subject.php',
+              url: BASE_URL + '/api/api.irregstudent.php',
               type: 'POST',
-              data: { deleteSubject: id },
+              data: { deleteIrreg: id },
               success: function (data) {
                 if (data.trim() === "success") {
                   Swal.fire({
                     title: 'Success',
                     icon: 'success',
-                    text: 'Subject information deleted successfully.',
+                    text: 'Irregular student information deleted successfully.',
                     showConfirmButton: false,
                     timer: 2000,
                   }).then(() => {
                     window.location.reload();
                   });
                 } else {
-                  Swal.fire("Error", "Failed to delete Subject", "error");
+                  Swal.fire("Error", "Failed to delete Irregular student information", "error");
                 }
               }
             });
