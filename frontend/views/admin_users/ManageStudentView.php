@@ -35,7 +35,7 @@ $total_pages = $vm->getTotalPages($limit);
             <h5 class="card-title">Recent Records</h5>
             <div class="table-responsive">
               <div class="mb-3">
-                <input type="text" class="form-control" id="searchBox" placeholder="Search by Student No., Email, Name, or Course">
+                <input type="text" class="form-control" id="searchBox" placeholder="🔍 Search by Student No., Email, Name, or Course">
                 <form id="VerifiedAllStudents">
                   <input type="hidden" name="status" id="" value="1">
                   <button type="submit" class="btn btn-primary my-2" name="validateALLStudent">Verify All Students</button>

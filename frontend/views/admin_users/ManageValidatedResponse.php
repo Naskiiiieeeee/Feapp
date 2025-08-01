@@ -35,7 +35,7 @@ $total_pages = $vm->getFacultyEvaluationPagesAdmin($limit);
             <h5 class="card-title">Recent Records</h5>
             <div class="table-responsive">
               <div class="mb-3">
-                <input type="text" class="form-control" id="searchBox" placeholder="Search by Faculty ID, Fullname, Date Created">
+                <input type="text" class="form-control" id="searchBox" placeholder="🔍 Search by Faculty ID, Fullname, Date Created">
               </div>
               <table class="table">
                 <thead>

@@ -33,7 +33,7 @@ $total_pages = $vm->getTotalPages($limit);
             <h5 class="card-title">Recent Records</h5>
             <div class="table-responsive">
               <div class="mb-3">
-                <input type="text" class="form-control" id="searchBox" placeholder="Search by Seminar Title, Feapp recommendation , FacultyName , Date Uploaded">
+                <input type="text" class="form-control" id="searchBox" placeholder="🔍 Search by Seminar Title, Feapp recommendation , FacultyName , Date Uploaded">
               </div>  
               <table class="table">
                 <thead>

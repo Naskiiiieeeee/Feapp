@@ -50,7 +50,7 @@ $sectionInfo = $lvm->getActivatedSection();
                     <h5 class="card-title">Recent Records</h5>
                     <div class="table-responsive">
                       <div class="mb-3">
-                        <input type="text" class="form-control" id="searchBox" placeholder="Search by Department/Course/facultyEmail/Section/Subject">
+                        <input type="text" class="form-control" id="searchBox" placeholder="🔍 Search by Department/Course/facultyEmail/Section/Subject">
                       </div>    
                       <table class="table">
                         <thead>

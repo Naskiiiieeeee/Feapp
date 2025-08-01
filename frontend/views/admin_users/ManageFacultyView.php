@@ -34,7 +34,7 @@ $total_pages = $vm->getTotalPages($limit);
             <h5 class="card-title">Recent Records</h5>
             <div class="table-responsive">
               <div class="mb-3">
-                <input type="text" class="form-control" id="searchBox" placeholder="Search by User-Code., Email, Name, or Department">
+                <input type="text" class="form-control" id="searchBox" placeholder="🔍 Search by User-Code., Email, Name, or Department">
               </div>              
               <table class="table">
                 <thead>
