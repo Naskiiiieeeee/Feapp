@@ -21,7 +21,7 @@ $facultyInfo = $lvm->getActivatedFaculty();
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Manage Subject</h1>
+    <h1>Manage Irregular Students</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
@@ -343,7 +343,7 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Invalid Action', "error");
+        Swal.fire('Error', 'Records Already Exist!', "error");
       }
     },
     error() {

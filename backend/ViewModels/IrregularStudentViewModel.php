@@ -18,6 +18,10 @@ class IrregularStudentViewModel {
         return ceil($totalRecords / $limit);
     }
 
+    public function CreateNewIrreg($studentID, $subjectID, $facultyID, $sem, $sy){
+        return $this->model->createNewIrregStudent($studentID, $subjectID, $facultyID, $sem, $sy);
+    }
+
 }
 
 ?>

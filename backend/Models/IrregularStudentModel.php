@@ -28,7 +28,6 @@ class IrregularStudentModel extends Helpers{
             return $stmt->execute([$studentID, $subjectID, $facultyID, $sem, $sy]);
         }
     }
-
 }
 
 ?>
