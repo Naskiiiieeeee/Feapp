@@ -1,23 +1,27 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/DepartmentViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/SubjectViewModel.php';
+
+require_once __DIR__ . '/../../../backend/ViewModels/LoadingViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
-$vm = new DepartmentViewModel();
+$vm = new SubjectViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
-
 // Get paginated data and total pages
-$departmentData = $vm->getDepartmentPaginated($page_no, $limit);
+$subjectData = $vm->getsubjectPaginated($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
+
+$lvm = new LoadingViewModel();
+$facultyInfo = $lvm->getActivatedFaculty();
 ?>
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Manage Departments</h1>
+    <h1>Manage Subject</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
@@ -25,7 +29,6 @@ $total_pages = $vm->getTotalPages($limit);
         <li class="breadcrumb-item"><a href="ManageYearLevel">Manage Year Level</a></li>
         <li class="breadcrumb-item"><a href="ManageSection">Manage Section</a></li>
         <li class="breadcrumb-item"><a href="ManageSubject">Manage Subject</a></li>
-        <li class="breadcrumb-item"><a href="manageIrregular">Manage Irregular Students</a></li>
       </ol>
     </nav>
   </div>
@@ -44,22 +47,25 @@ $total_pages = $vm->getTotalPages($limit);
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Department Code</th>
-                    <th>Department Description</th>
-                    <th>Date Created</th>
+                    <th>Subject Code</th>
+                    <th>Subject Description</th>
+                    <th>Department</th>
+                    <th>Course</th>
+                    <th>Year Level</th>
                     <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($departmentData)): ?>
-                  <?php foreach ($departmentData as $row): ?>
-                    <?php $token = base64_encode($row['code'] . '|' . $row['code']); ?>
+                <?php if (!empty($subjectData)): ?>
+                  <?php foreach ($subjectData as $row): ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class="id"><?= htmlspecialchars($row['code']); ?></td>
-                      <td class="description"><?= htmlspecialchars($row['description']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['created_at']); ?></td>
+                      <td class="id"><?= htmlspecialchars($row['subj_code']); ?></td>
+                      <td class="description"><?= htmlspecialchars($row['subj_des']); ?></td>
+                      <td class="department"><?= htmlspecialchars($row['subj_dep']); ?></td>
+                      <td class="course"><?= htmlspecialchars($row['subj_course']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['subj_yearLvl']); ?></td>
                       <td>
                         <?php
                           switch ($row['status']) {
@@ -77,9 +83,9 @@ $total_pages = $vm->getTotalPages($limit);
                       </td>
                       <td>
                         <button type="button"
-                                class="btn btn-danger mt-1 px-1 btn-sm deleteuser"
+                                class="btn btn-danger mt-1 px-1 btn-sm deleteSubject"
                                 id="<?= $row['id']; ?>"
-                                data-name="<?= htmlspecialchars($row['description']); ?>"
+                                data-name="<?= htmlspecialchars($row['subj_des']); ?>"
                                 title="Delete">
                           <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                         </button>
@@ -130,22 +136,44 @@ $total_pages = $vm->getTotalPages($limit);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
-                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Department Details</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Irregular Student Details</h5>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="">Department Code</label>
-                            <input type="text" name="depCode" id="" class="form-control" placeholder="CSD" required>
+                            <label for="">Student ID</label>
+                            <input type="text" name="studentID" id="" class="form-control" placeholder="XX-000XX" required>
                         </div>
                         <div class="form-group">
-                            <label for="">Description</label>
-                            <input type="text" name="Description" id="" class="form-control" placeholder="Computer Studies Department" required>
+                            <label for="">Subject Code</label>
+                            <input type="text" name="subjectCode" id="" class="form-control" required>
                         </div>
-                    </form>
+                        <div class="form-group">
+                            <label for="">Faculty Name</label>
+                            <select name="faculty" id="" class="form-control" required>
+                                <option selected disabled>Please Choose</option>
+                                <?php foreach($facultyInfo as $row): ?>
+                                    <option value="<?= $row['email']; ?>"><?= $row['fullname']; ?> | <?= $row['department']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Semester</label>
+                            <select name="semester" id="" class="form-control">
+                                <option value="1st Semester">1st Semester</option>
+                                <option value="2nd Semester">2nd Semester</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Year Level</label>
+                            <select name="sy" id="" class="form-control">
+                                <option value="2024-2025">2024-2025</option>
+                                <option value="2023-2024">2023-2024</option>
+                            </select>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="btnSaveDepartment" class="btn btn-primary">Save changes</button>
+                    <button type="submit" name="btnSaveIrreg" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -158,28 +186,36 @@ $total_pages = $vm->getTotalPages($limit);
     <form id="updateForm">
       <div class="modal-content">
         <div class="modal-header bg-secondary">
-          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Department Status</h5>
+          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Subject Status</h5>
         </div>
         <div class="modal-body">
           <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Department Code</label>
+            <label class="fw-bold">Subject Code</label>
             <input type="text" name="id" id="id" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Description</label>
-            <input type="text" name="description" id="description" class="form-control mt-2" required/>
+            <label class="fw-bold">Subject Description</label>
+            <input type="text" name="description" id="description" class="form-control mt-2" readonly/>
           </div>
           <div class="form-group px-2 mt-1">
-            <label class="fw-bold mt-2">Status</label>
-            <select name="status" class="form-control">
-              <option selected disabled>Please Select</option>
-              <option value="1">Activate</option>
-              <option value="2">Restrict</option>
+            <label class="fw-bold">Department</label>
+            <input type="text" name="department" id="department" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label class="fw-bold">Course</label>
+            <input type="text" name="course" id="course" class="form-control mt-2" readonly/>
+          </div>
+          <div class="form-group px-2 mt-1">
+            <label for="fw-bold">Status</label>
+            <select name="status" id="" class="form-control" required>
+                <option disabled>Please Choose</option>
+                <option value="1">Activate</option>
+                <option value="2">Restrict</option>
             </select>
           </div>
         </div>
         <div class="modal-footer bg-secondary">
-          <button type="submit" name="btnUpdateAccess" class="btn btn-light text-dark fw-bold">
+          <button type="submit" name="btnUpdateSubject" class="btn btn-light text-dark fw-bold">
             <i class="bi bi-upload"></i> Save changes
           </button>
         </div>
@@ -200,6 +236,8 @@ include_once __DIR__ . '/../../components/footscript.php';
       var $row = $(this).closest('tr');
       $('#id').val($row.find('.id').text());
       $('#description').val($row.find('.description').text());
+      $('#department').val($row.find('.department').text());
+      $('#course').val($row.find('.course').text());
 
       $('#verifyModal').modal('show');
     });
@@ -210,9 +248,9 @@ include_once __DIR__ . '/../../components/footscript.php';
 <script>
   const BASE_URL = "<?= BASE_URL ?>";
   $(document).ready(function () {
-    $(document).on('click', '.deleteuser', function () {
+    $(document).on('click', '.deleteSubject', function () {
       var id = $(this).attr('id');
-      var name = $(this).data('name') || "this department";
+      var name = $(this).data('name') || "this course";
 
       const msg = new SpeechSynthesisUtterance(`Are you sure you want to delete ${name}?`);
       msg.lang = 'en-US';
@@ -232,22 +270,22 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.department.php',
+              url: BASE_URL + '/api/api.subject.php',
               type: 'POST',
-              data: { deleteDep: id },
+              data: { deleteSubject: id },
               success: function (data) {
                 if (data.trim() === "success") {
                   Swal.fire({
                     title: 'Success',
                     icon: 'success',
-                    text: 'Department information deleted successfully.',
+                    text: 'Subject information deleted successfully.',
                     showConfirmButton: false,
                     timer: 2000,
                   }).then(() => {
                     window.location.reload();
                   });
                 } else {
-                  Swal.fire("Error", "Failed to delete department", "error");
+                  Swal.fire("Error", "Failed to delete Subject", "error");
                 }
               }
             });
@@ -263,21 +301,21 @@ $('#updateForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnUpdateAccess", true); 
+  formData.append("btnUpdateSubject", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.department.php',
+    url: BASE_URL + '/api/api.subject.php',
     type: 'POST',
     data: formData,
     contentType: false,       
     processData: false,        
     dataType: 'json',
     success(data) {
-      if (data.status === "updated") {
+      if (data === "updated") {
         Swal.fire({
           icon: 'success',
-          title: 'Department Updated',
-          text: 'Department information successfully updated!',
+          title: 'Section Updated',
+          text: 'Section information successfully updated!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -299,21 +337,21 @@ $('#AddForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveDepartment", true); 
+  formData.append("btnSaveSubject", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.department.php',
+    url: BASE_URL + '/api/api.subject.php',
     type: 'POST',
     data: formData,
     contentType: false,       
     processData: false,        
     dataType: 'json',
     success(data) {
-      if (data.status === "added") {
+      if (data === "added") {
         Swal.fire({
           icon: 'success',
-          title: 'Department Added',
-          text: 'New Department Information Successfully Added!',
+          title: 'Subject Added',
+          text: 'New Subject Information Successfully Added!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -321,7 +359,7 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Department Code Already Exist', "error");
+        Swal.fire('Error', 'Year Subject Already Exist', "error");
       }
     },
     error() {
