@@ -321,10 +321,10 @@ $('#AddForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveSubject", true); 
+  formData.append("btnSaveIrreg", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.subject.php',
+    url: BASE_URL + '/api/api.irregstudent.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -334,8 +334,8 @@ $('#AddForm').submit(function(e){
       if (data === "added") {
         Swal.fire({
           icon: 'success',
-          title: 'Subject Added',
-          text: 'New Subject Information Successfully Added!',
+          title: 'Irregular Student Added',
+          text: 'New Irregular student Information Successfully Added!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -343,7 +343,7 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Year Subject Already Exist', "error");
+        Swal.fire('Error', 'Invalid Action', "error");
       }
     },
     error() {

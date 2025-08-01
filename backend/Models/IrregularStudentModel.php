@@ -18,7 +18,16 @@ class IrregularStudentModel extends Helpers{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
+    public function createNewIrregStudent($studentID, $subjectID, $facultyID, $sem, $sy){
+        $stmt = $this->db->prepare("SELECT * FROM `evaluation_load` WHERE `student_id` = ? AND `subject_id` = ? AND `faculty_id` = ? AND `semester` = ? AND `sy` = ? ");
+        $stmt->execute([$studentID, $subjectID, $facultyID, $sem, $sy]);
+        if($stmt->rowCount() > 0){
+            return false;
+        }else{
+            $stmt = $this->db->prepare("INSERT INTO `evaluation_load`(`student_id`, `subject_id`, `faculty_id`, `semester`, `sy`) VALUES (?, ?, ?, ?, ?)");
+            return $stmt->execute([$studentID, $subjectID, $facultyID, $sem, $sy]);
+        }
+    }
 
 }
 
