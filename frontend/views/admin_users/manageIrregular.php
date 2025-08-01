@@ -29,6 +29,7 @@ $facultyInfo = $lvm->getActivatedFaculty();
         <li class="breadcrumb-item"><a href="ManageYearLevel">Manage Year Level</a></li>
         <li class="breadcrumb-item"><a href="ManageSection">Manage Section</a></li>
         <li class="breadcrumb-item"><a href="ManageSubject">Manage Subject</a></li>
+        <li class="breadcrumb-item"><a href="manageIrregular">Manage Irregular Students</a></li>
       </ol>
     </nav>
   </div>
