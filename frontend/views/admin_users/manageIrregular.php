@@ -7,12 +7,12 @@ include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
-$vm = new SubjectViewModel();
+$vm = new IrregularStudentViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 // Get paginated data and total pages
-$subjectData = $vm->getsubjectPaginated($page_no, $limit);
+$irregData = $vm->getirregPaginated($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
 
 $lvm = new LoadingViewModel();
@@ -47,45 +47,29 @@ $facultyInfo = $lvm->getActivatedFaculty();
                 <thead>
                   <tr>
                     <th>#</th>
+                    <th>Student ID</th>
                     <th>Subject Code</th>
-                    <th>Subject Description</th>
-                    <th>Department</th>
-                    <th>Course</th>
-                    <th>Year Level</th>
-                    <th>Status</th>
+                    <th>Faculty ID</th>
+                    <th>Semester</th>
+                    <th>School Year</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($subjectData)): ?>
-                  <?php foreach ($subjectData as $row): ?>
+                <?php if (!empty($irregData)): ?>
+                  <?php foreach ($irregData as $row): ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class="id"><?= htmlspecialchars($row['subj_code']); ?></td>
-                      <td class="description"><?= htmlspecialchars($row['subj_des']); ?></td>
-                      <td class="department"><?= htmlspecialchars($row['subj_dep']); ?></td>
-                      <td class="course"><?= htmlspecialchars($row['subj_course']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['subj_yearLvl']); ?></td>
-                      <td>
-                        <?php
-                          switch ($row['status']) {
-                            case 1:
-                              echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Activated</span>';
-                              break;
-                            case 2:
-                              echo '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>';
-                              break;
-                            default:
-                              echo '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>';
-                              break;
-                          }
-                        ?>
-                      </td>
+                      <td class="id"><?= htmlspecialchars($row['student_id']); ?></td>
+                      <td class="subject_id"><?= htmlspecialchars($row['subject_id']); ?></td>
+                      <td class="faculty_id"><?= htmlspecialchars($row['faculty_id']); ?></td>
+                      <td class="semester"><?= htmlspecialchars($row['semester']); ?></td>
+                      <td class="sy"><?= htmlspecialchars($row['sy']); ?></td>
                       <td>
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteSubject"
                                 id="<?= $row['id']; ?>"
-                                data-name="<?= htmlspecialchars($row['subj_des']); ?>"
+                                data-name="<?= htmlspecialchars($row['student_id']); ?>"
                                 title="Delete">
                           <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                         </button>
