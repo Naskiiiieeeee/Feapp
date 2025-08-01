@@ -74,12 +74,12 @@ $facultyInfo = $lvm->getActivatedFaculty();
                                 title="Delete">
                           <i class="fas fa-trash mx-2" aria-hidden="true"></i>
                         </button>
-                        <button type="button"
+                        <!-- <button type="button"
                                 class="btn btn-primary mt-1 px-1 btn-sm editbutton"
                                 data-toggle="modal"
                                 data-target="#verifyModal">
                           <i class="bi bi-pencil-square mx-2"></i>
-                        </button>
+                        </button> -->
                       </td>
                     </tr>
                   <?php endforeach; ?>
