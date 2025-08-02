@@ -49,7 +49,7 @@ $facultyInfo = $lvm->getActivatedFaculty();
                   <tr>
                     <th>#</th>
                     <th>Student ID</th>
-                    <th>Subject Code</th>
+                    <th>Subject Load ID</th>
                     <th>Faculty Name</th>
                     <th>Semester</th>
                     <th>School Year</th>
@@ -129,7 +129,7 @@ $facultyInfo = $lvm->getActivatedFaculty();
                             <input type="text" name="studentID" id="" class="form-control" placeholder="XX-000XX" required>
                         </div>
                         <div class="form-group">
-                            <label for="">Subject Code</label>
+                            <label for="">Subject Load ID</label>
                             <input type="text" name="subjectCode" id="" class="form-control" required>
                         </div>
                         <div class="form-group">
