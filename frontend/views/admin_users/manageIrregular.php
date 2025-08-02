@@ -63,7 +63,7 @@ $facultyInfo = $lvm->getActivatedFaculty();
                       <td><?= $count++; ?></td>
                       <td class="id"><?= htmlspecialchars($row['student_id']); ?></td>
                       <td class="subject_id"><?= htmlspecialchars($row['subject_id']); ?></td>
-                      <td class="faculty_id"><?= htmlspecialchars($row['faculty_id']); ?></td>
+                      <td class="faculty_id"><?= htmlspecialchars($row['fullname']); ?></td>
                       <td class="semester"><?= htmlspecialchars($row['semester']); ?></td>
                       <td class="sy"><?= htmlspecialchars($row['sy']); ?></td>
                       <td>

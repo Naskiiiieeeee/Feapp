@@ -10,7 +10,11 @@ class IrregularStudentModel extends Helpers{
     }
 
     public function getirregPaginated($offset, $limit) {
-        $query = "SELECT * FROM `evaluation_load` ORDER BY `id` DESC LIMIT :offset, :limit";
+        $query = "SELECT fl.*, eu.fullname
+        FROM `evaluation_load` AS fl
+        INNER JOIN `endusers` AS eu ON fl.faculty_id = eu.email
+        ORDER BY `id` 
+        DESC LIMIT :offset, :limit";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
