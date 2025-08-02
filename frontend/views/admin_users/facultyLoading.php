@@ -50,7 +50,7 @@ $sectionInfo = $lvm->getActivatedSection();
                     <h5 class="card-title">Recent Records</h5>
                     <div class="table-responsive">
                       <div class="mb-3">
-                        <input type="text" class="form-control" id="searchBox" placeholder="🔍 Search by Department/Course/facultyEmail/Section/Subject">
+                        <input type="text" class="form-control" id="searchBox" placeholder="🔍 Search by Department/Course/Section/Subject">
                       </div>    
                       <table class="table">
                         <thead>
@@ -78,7 +78,7 @@ $sectionInfo = $lvm->getActivatedSection();
                               <td class="year_lvl"><?= htmlspecialchars($row['year_lvl']); ?></td>
                               <td class="subjects"><?= htmlspecialchars($row['subjects']); ?></td>
                               <td class="section"><?= htmlspecialchars($row['section']); ?></td>
-                              <td class="faculty_email"><?= htmlspecialchars($row['faculty_email']); ?></td>
+                              <td class="faculty_email"><?= htmlspecialchars($row['fullname']); ?></td>
                               <!-- <td>
                                 <?php
                                   switch ($row['status']) {

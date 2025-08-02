@@ -10,7 +10,11 @@ class LoadingModel extends Helpers{
     }
 
     public function getLoadPaginated($offset, $limit) {
-        $query = "SELECT * FROM `faculty_load` ORDER BY `id` DESC LIMIT :offset, :limit";
+        $query = "SELECT fl.* , eu.fullname 
+        FROM `faculty_load` AS fl
+        INNER JOIN `endusers` AS eu ON fl.faculty_email = eu.email
+        ORDER BY `id`
+        DESC LIMIT :offset, :limit";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
@@ -92,15 +96,17 @@ class LoadingModel extends Helpers{
     
     public function searchLoad($keyword) {
         $keyword = "%$keyword%";
-        $query = "SELECT * FROM `faculty_load` 
+        $query = "SELECT fl.* , eu.fullname 
+                FROM `faculty_load` AS fl
+                INNER JOIN `endusers` AS eu ON fl.faculty_email = eu.email
                 WHERE (
-                    `fl_code` LIKE :keyword OR
-                    `department` LIKE :keyword OR
-                    `course` LIKE :keyword OR
-                    `year_lvl` LIKE :keyword OR
-                    `subjects` LIKE :keyword OR
-                    `section` LIKE :keyword OR
-                    `faculty_email` LIKE :keyword
+                    fl.fl_code LIKE :keyword OR
+                    fl.department LIKE :keyword OR
+                    fl.course LIKE :keyword OR
+                    fl.year_lvl LIKE :keyword OR
+                    fl.subjects LIKE :keyword OR
+                    fl.section LIKE :keyword OR
+                    eu.fullname LIKE :keyword
                 )
                 ORDER BY `id` DESC";
         $stmt = $this->db->prepare($query);

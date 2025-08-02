@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
             echo "<td class='year_lvl'>" . htmlspecialchars($row['year_lvl']) . "</td>";
             echo "<td class='subjects'>" . htmlspecialchars($row['subjects']) . "</td>";
             echo "<td class='section'>" . htmlspecialchars($row['section']) . "</td>";
-            echo "<td class='faculty_email'>" . htmlspecialchars($row['faculty_email']) . "</td>";
+            echo "<td class='faculty_email'>" . htmlspecialchars($row['fullname']) . "</td>";
 
             echo '<td>
                     <button type="button" class="btn btn-danger mt-1 px-1 btn-sm deleteuser" id="' . $row['id'] . '" data-name="' . htmlspecialchars($row['faculty_email']) . '">

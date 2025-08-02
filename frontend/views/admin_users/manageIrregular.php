@@ -50,7 +50,7 @@ $facultyInfo = $lvm->getActivatedFaculty();
                     <th>#</th>
                     <th>Student ID</th>
                     <th>Subject Code</th>
-                    <th>Faculty ID</th>
+                    <th>Faculty Name</th>
                     <th>Semester</th>
                     <th>School Year</th>
                     <th>Action</th>
