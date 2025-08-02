@@ -72,7 +72,7 @@ $total_pages = $evm->getTotalPages($limit);
                               <td class="department"><?= htmlspecialchars($row['department']); ?></td>
                               <td class="startDate"><?= htmlspecialchars($row['startDate']); ?></td>
                               <td class="endDate"><?= htmlspecialchars($row['endDate']); ?></td>
-                              <td class=""><?= htmlspecialchars($row['uploadBy']); ?></td>
+                              <td class=""><?= htmlspecialchars($row['fullname']); ?></td>
                               <td>
                                 <?php
                                   switch ($row['status']) {

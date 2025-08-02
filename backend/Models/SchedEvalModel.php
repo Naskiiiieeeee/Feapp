@@ -22,7 +22,11 @@ class SchedEvalModel extends Helpers{
     }
 
     public function getSchedPaginated($offset, $limit) {
-        $query = "SELECT * FROM `evaluationsched` ORDER BY `ev_id` DESC LIMIT :offset, :limit";
+        $query = "SELECT es.* , eu.fullname 
+        FROM `evaluationsched` AS es
+        INNER JOIN `endusers` AS eu ON es.uploadBy = eu.email
+        ORDER BY `ev_id` 
+        DESC LIMIT :offset, :limit";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
         $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
