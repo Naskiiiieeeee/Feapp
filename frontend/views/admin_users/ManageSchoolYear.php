@@ -1,17 +1,17 @@
 <?php
-require_once __DIR__ . '/../../../backend/ViewModels/SectionViewModel.php';
+require_once __DIR__ . '/../../../backend/ViewModels/SchoolYearViewModel.php';
 include_once __DIR__ . '/../../components/header.php';
 include_once __DIR__ . '/../../components/navigation.php';
 include_once __DIR__ . '/../../components/sidebar.php';
 
 // Pagination setup
-$vm = new SectionViewModel();
+$vm = new SchoolYearViewModel();
 $page_no = isset($_GET['page_no']) && $_GET['page_no'] !== "" ? (int)$_GET['page_no'] : 1;
 $limit = 4;
 $count = ($page_no - 1) * $limit + 1;
 
 // Get paginated data and total pages
-$sectionData = $vm->getsectionPaginated($page_no, $limit);
+$schoolyearData = $vm->getschoolYearPaginated($page_no, $limit);
 $total_pages = $vm->getTotalPages($limit);
 ?>
 
@@ -45,54 +45,32 @@ $total_pages = $vm->getTotalPages($limit);
                   <tr>
                     <th>#</th>
                     <th>Code</th>
-                    <th>Section</th>
+                    <th>School Year</th>
                     <th>Date Created</th>
-                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                <?php if (!empty($sectionData)): ?>
-                  <?php foreach ($sectionData as $row): ?>
+                <?php if (!empty($schoolyearData)): ?>
+                  <?php foreach ($schoolyearData as $row): ?>
                     <tr>
                       <td><?= $count++; ?></td>
-                      <td class="id"><?= htmlspecialchars($row['sec_code']); ?></td>
-                      <td class="description"><?= htmlspecialchars($row['section_name']); ?></td>
-                      <td class=""><?= htmlspecialchars($row['created_date']); ?></td>
-                      <td>
-                        <?php
-                          switch ($row['status']) {
-                            case 1:
-                              echo '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Activated</span>';
-                              break;
-                            case 2:
-                              echo '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>';
-                              break;
-                            default:
-                              echo '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>';
-                              break;
-                          }
-                        ?>
-                      </td>
+                      <td class="id"><?= htmlspecialchars($row['sy_code']); ?></td>
+                      <td class="description"><?= htmlspecialchars($row['sy_range']); ?></td>
+                      <td class=""><?= htmlspecialchars($row['date_created']); ?></td>
                       <td>
                         <button type="button"
                                 class="btn btn-danger mt-1 px-1 btn-sm deleteSection"
-                                id="<?= $row['id']; ?>"
-                                data-name="<?= htmlspecialchars($row['section_name']); ?>"
+                                id="<?= $row['sy_id']; ?>"
+                                data-name="<?= htmlspecialchars($row['sy_range']); ?>"
                                 title="Delete">
                           <i class="fas fa-trash mx-2" aria-hidden="true"></i>
-                        </button>
-                        <button type="button"
-                                class="btn btn-primary mt-1 px-1 btn-sm editbutton"
-                                data-toggle="modal"
-                                data-target="#verifyModal">
-                          <i class="bi bi-pencil-square mx-2"></i>
                         </button>
                       </td>
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
-                  <tr class="text-center"><td colspan="8">No Registered Data!</td></tr>
+                  <tr class="text-center"><td colspan="5">No Registered Data!</td></tr>
                 <?php endif; ?>
                 </tbody>
               </table>
@@ -150,59 +128,10 @@ $total_pages = $vm->getTotalPages($limit);
     </form>
 </div>
 
-<!-- Edit Modal -->
-<div class="modal fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <form id="updateForm">
-      <div class="modal-content">
-        <div class="modal-header bg-secondary">
-          <h5 class="modal-title text-white fw-bold" id="exampleModalLabel"><i class="bi bi-pencil-square"></i> Update Section Status</h5>
-        </div>
-        <div class="modal-body">
-          <div class="form-group px-2 mt-1">
-            <label class="fw-bold">section Code</label>
-            <input type="text" name="id" id="id" class="form-control mt-2" readonly/>
-          </div>
-          <div class="form-group px-2 mt-1">
-            <label class="fw-bold">Section Identity</label>
-            <input type="text" name="description" id="description" class="form-control mt-2" required/>
-          </div>
-          <div class="form-group px-2 mt-1">
-            <label for="fw-bold">Status</label>
-            <select name="status" id="" class="form-control" required>
-                <option disabled>Please Choose</option>
-                <option value="1">Activate</option>
-                <option value="2">Restrict</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer bg-secondary">
-          <button type="submit" name="btnUpdateSection" class="btn btn-light text-dark fw-bold">
-            <i class="bi bi-upload"></i> Save changes
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
 <?php
 include_once __DIR__ . '/../../components/footer.php';
 include_once __DIR__ . '/../../components/footscript.php';
 ?>
-
-<!-- Edit Button Logic -->
-<script>
-  $(document).ready(function () {
-    $('.editbutton').click(function () {
-      var $row = $(this).closest('tr');
-      $('#id').val($row.find('.id').text());
-      $('#description').val($row.find('.description').text());
-
-      $('#verifyModal').modal('show');
-    });
-  });
-</script>
 
 <!-- Delete Button Logic -->
 <script>
@@ -230,7 +159,7 @@ include_once __DIR__ . '/../../components/footscript.php';
         }).then((result) => {
           if (result.isConfirmed) {
             $.ajax({
-              url: BASE_URL + '/api/api.sections.php',
+              url: BASE_URL + '/api/api.schoolyear.php',
               type: 'POST',
               data: { deleteSection: id },
               success: function (data) {
@@ -257,50 +186,14 @@ include_once __DIR__ . '/../../components/footscript.php';
     });
   });
 
-$('#updateForm').submit(function(e){
-  e.preventDefault();
-
-  var formData = new FormData(this);
-  formData.append("btnUpdateSection", true); 
-
-  $.ajax({
-    url: BASE_URL + '/api/api.sections.php',
-    type: 'POST',
-    data: formData,
-    contentType: false,       
-    processData: false,        
-    dataType: 'json',
-    success(data) {
-      if (data === "updated") {
-        Swal.fire({
-          icon: 'success',
-          title: 'Section Updated',
-          text: 'Section information successfully updated!',
-          timer: 2000,
-          showConfirmButton: false
-        }).then(() => {
-          $('#verifyModal').modal('hide');
-          location.reload();
-        });
-      } else {
-        Swal.fire('Error', 'Failed to update', "error");
-      }
-    },
-    error() {
-      Swal.fire('Error', 'Server error. Try again.', "error");
-    }
-  });
-});
-
-
 $('#AddForm').submit(function(e){
   e.preventDefault();
 
   var formData = new FormData(this);
-  formData.append("btnSaveSection", true); 
+  formData.append("btnSaveSchoolYear", true); 
 
   $.ajax({
-    url: BASE_URL + '/api/api.sections.php',
+    url: BASE_URL + '/api/api.schoolyear.php',
     type: 'POST',
     data: formData,
     contentType: false,       
@@ -310,8 +203,8 @@ $('#AddForm').submit(function(e){
       if (data === "added") {
         Swal.fire({
           icon: 'success',
-          title: 'Section Added',
-          text: 'New Section Information Successfully Added!',
+          title: 'School Year Added',
+          text: 'New School Year Information Successfully Added!',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -319,7 +212,7 @@ $('#AddForm').submit(function(e){
           location.reload();
         });
       } else {
-        Swal.fire('Error', 'Year Section Already Exist', "error");
+        Swal.fire('Error', 'Year School Year Already Exist', "error");
       }
     },
     error() {

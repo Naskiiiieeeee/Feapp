@@ -9,7 +9,7 @@ class SchoolYearViewModel{
         $this->model = new SchoolYearModel();    
     }
 
-    public function getsectionPaginated($page = 1, $limit = 4) {
+    public function getschoolYearPaginated($page = 1, $limit = 4) {
         $offset = ($page - 1) * $limit;
         return $this->model->getschoolYearPaginated($offset, $limit);
     }
@@ -18,5 +18,10 @@ class SchoolYearViewModel{
         $totalRecords = $this->model->countAllSchoolYear();
         return ceil($totalRecords / $limit);
     }
-    
+
+    public function setCreateNewSchoolYear($sy_range, $date){
+        $Code = $this->model->randomStringGenerator(12);
+        return $this->model->createSchoolYear($Code, $sy_range, $date);
+    }
+
 }

@@ -21,7 +21,19 @@ class SchoolYearModel extends Helpers{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-}
+    public function createSchoolYear($code, $sy_range, $date){
+        $query = "SELECT * FROM `school_year` WHERE `sy_range` = ? ";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$sy_range]);
+        if($stmt->rowCount() > 0 ){
+            return false;
+        }else{
+            $query = "INSERT INTO `school_year`(`sy_code`, `sy_range`, `date_created`) VALUES (? , ? , ?)";
+            $stmt = $this->db->prepare($query);
+            return $stmt->execute([$code, $sy_range, $date]);
+        }
+    }
 
+}
 
 ?>
