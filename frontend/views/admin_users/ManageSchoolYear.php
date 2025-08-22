@@ -60,7 +60,7 @@ $total_pages = $vm->getTotalPages($limit);
                       <td class=""><?= htmlspecialchars($row['date_created']); ?></td>
                       <td>
                         <button type="button"
-                                class="btn btn-danger mt-1 px-1 btn-sm deleteSection"
+                                class="btn btn-danger mt-1 px-1 btn-sm deleteSchoolYear"
                                 id="<?= $row['sy_id']; ?>"
                                 data-name="<?= htmlspecialchars($row['sy_range']); ?>"
                                 title="Delete">
@@ -137,7 +137,7 @@ include_once __DIR__ . '/../../components/footscript.php';
 <script>
   const BASE_URL = "<?= BASE_URL ?>";
   $(document).ready(function () {
-    $(document).on('click', '.deleteSection', function () {
+    $(document).on('click', '.deleteSchoolYear', function () {
       var id = $(this).attr('id');
       var name = $(this).data('name') || "this school year";
 
@@ -161,20 +161,20 @@ include_once __DIR__ . '/../../components/footscript.php';
             $.ajax({
               url: BASE_URL + '/api/api.schoolyear.php',
               type: 'POST',
-              data: { deleteSection: id },
+              data: { deleteSchoolYear: id },
               success: function (data) {
                 if (data.trim() === "success") {
                   Swal.fire({
                     title: 'Success',
                     icon: 'success',
-                    text: 'Year Level information deleted successfully.',
+                    text: 'School Year information deleted successfully.',
                     showConfirmButton: false,
                     timer: 2000,
                   }).then(() => {
                     window.location.reload();
                   });
                 } else {
-                  Swal.fire("Error", "Failed to delete Year Level", "error");
+                  Swal.fire("Error", "Failed to delete School Year Level", "error");
                 }
               }
             });

@@ -34,6 +34,12 @@ class SchoolYearModel extends Helpers{
         }
     }
 
+    public function deleteSchoolYear($id){
+        $query = "DELETE FROM `school_year` WHERE `sy_id` = ? ";
+        $stmt = $this->db->prepare($query);
+        return $stmt->execute([$id]);
+    }
+
 }
 
 ?>

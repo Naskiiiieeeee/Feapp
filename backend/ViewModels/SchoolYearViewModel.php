@@ -24,4 +24,8 @@ class SchoolYearViewModel{
         return $this->model->createSchoolYear($Code, $sy_range, $date);
     }
 
+    public function deleteSchoolYear($id){
+        return $this->model->deleteSchoolYear($id);
+    }
+
 }

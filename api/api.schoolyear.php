@@ -24,20 +24,20 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnSaveSchoolYear'])){
 
 
 
-// if($_SERVER['REQUEST_METHOD']   === 'POST' && isset($_POST['deleteSection'])){
-//     $id = filter_input(INPUT_POST, 'deleteSection' , FILTER_SANITIZE_SPECIAL_CHARS);
-//     try{
-//         $result = $vm->getDeleteSection($id);
+if($_SERVER['REQUEST_METHOD']   === 'POST' && isset($_POST['deleteSchoolYear'])){
+    $id = filter_input(INPUT_POST, 'deleteSchoolYear' , FILTER_SANITIZE_SPECIAL_CHARS);
+    try{
+        $result = $vm->deleteSchoolYear($id);
 
-//         if($result){
-//             echo json_encode("success");
-//         }else{
-//             echo json_encode("error");
-//         }
-//     }catch(Exception $e){
-//         echo json_encode("error" . $e->getMessage());
-//     }
-//     exit;
-// }
+        if($result){
+            echo json_encode("success");
+        }else{
+            echo json_encode("error");
+        }
+    }catch(Exception $e){
+        echo json_encode("error" . $e->getMessage());
+    }
+    exit;
+}
 
 ?>
