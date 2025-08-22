@@ -28,6 +28,7 @@ $departmentInfo = $vm->getAllValidatedDepartment();
         <li class="breadcrumb-item"><a href="ManageYearLevel">Manage Year Level</a></li>
         <li class="breadcrumb-item"><a href="ManageSection">Manage Section</a></li>
         <li class="breadcrumb-item"><a href="ManageSubject">Manage Subject</a></li>
+        <li class="breadcrumb-item"><a href="ManageSchoolYear">Manage School Year</a></li>
       </ol>
     </nav>
   </div>
