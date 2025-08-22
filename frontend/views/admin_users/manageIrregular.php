@@ -24,11 +24,9 @@ $facultyInfo = $lvm->getActivatedFaculty();
     <h1>Manage Irregular Students</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
-        <li class="breadcrumb-item"><a href="ManageCourses">Manage Courses</a></li>
-        <li class="breadcrumb-item"><a href="ManageYearLevel">Manage Year Level</a></li>
-        <li class="breadcrumb-item"><a href="ManageSection">Manage Section</a></li>
-        <li class="breadcrumb-item"><a href="ManageSubject">Manage Subject</a></li>
+        <li class="breadcrumb-item"><a href="ManageStudentView">Manage Student</a></li>
+        <li class="breadcrumb-item active"><a href="AddNewStudentUser">Add New Student User</a></li>
+        <li class="breadcrumb-item active"><a href="UploadViaCSV">Upload Via CSV</a></li>
         <li class="breadcrumb-item"><a href="manageIrregular">Manage Irregular Students</a></li>
       </ol>
     </nav>
