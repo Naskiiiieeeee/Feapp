@@ -54,6 +54,17 @@ class LoadingModel extends Helpers{
         return $sections;
     }
 
+    public function getSchoolYear(){
+        $stmt = $this->db->prepare("SELECT * FROM `school_year` ");
+        $stmt->execute();
+        
+        $syYear = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $syYear[] = $row;
+        }
+        return $syYear;
+    }
+
     public function getCoursesByDepartment($departmentCode) {
         $stmt = $this->db->prepare("SELECT DISTINCT `subj_course` FROM `subjects` WHERE `subj_dep` = ?");
         $stmt->execute([$departmentCode]);

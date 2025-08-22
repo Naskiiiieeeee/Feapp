@@ -16,6 +16,7 @@ $total_pages = $lvm->getTotalPages($limit);
 $departmentInfo = $lvm->getAllValidatedDepartment();
 $facultyInfo = $lvm->getActivatedFaculty();
 $sectionInfo = $lvm->getActivatedSection();
+$syInfo = $lvm->getSchoolYear();
 ?>
 
 <main id="main" class="main">
@@ -222,8 +223,10 @@ $sectionInfo = $lvm->getActivatedSection();
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><i class="bi bi-calendar2-check"></i> School Year</label>
                   <div class="col-md-8 col-lg-9">
                     <select name="sy" id="" class="form-control">
-                        <option value="2024-2025">2024-2025</option>
-                        <option value="2023-2024">2023-2024</option>
+                        <option selected disabled>Please Choose</option>
+                        <?php foreach($syInfo as $row): ?>
+                          <option value="<?= $row['sy_range']; ?>"> <?= $row['sy_range']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                   </div>
                 </div>

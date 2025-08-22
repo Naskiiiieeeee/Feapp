@@ -42,6 +42,10 @@ class LoadingViewModel{
         return $this->model->getActivatedSection();
     }
 
+    public function getSchoolYear(){
+        return $this->model->getSchoolYear();
+    }
+
     public function setNewLoad($dep, $course, $yearLvl, $subject, $section, $fac_email, $sem, $sy){
         $code = $this->model->randomStringGenerator(9);
         return $this->model->insertNewFacultyLoad($code, $dep, $course, $yearLvl, $subject, $section, $fac_email, $sem, $sy);
