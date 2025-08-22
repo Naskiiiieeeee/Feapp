@@ -17,7 +17,7 @@ $total_pages = $vm->getTotalPages($limit);
 
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Manage Section</h1>
+    <h1>Manage School Year</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="ManageDepartment">Manage Department</a></li>
@@ -129,21 +129,21 @@ $total_pages = $vm->getTotalPages($limit);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-secondary">
-                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> Section Details</h5>
+                    <h5 class="modal-title text-white" id="exampleModalLabel"><i class="bi bi-plus-circle-dotted"></i> School Year Details</h5>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="">Section Name</label>
-                            <input type="text" name="sectionName" id="" class="form-control" placeholder="1A" required>
+                            <label for="">School Year Range</label>
+                            <input type="text" name="SchoolYearName" id="" class="form-control" placeholder="2024-2025" required>
                         </div>
                         <div class="form-group">
-                            <label for="">Date</label>
+                            <label for="">Date Created</label>
                             <input type="date" name="dateCreated" id="" class="form-control" required>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="btnSaveSection" class="btn btn-primary">Save changes</button>
+                    <button type="submit" name="btnSaveSchoolYear" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -210,7 +210,7 @@ include_once __DIR__ . '/../../components/footscript.php';
   $(document).ready(function () {
     $(document).on('click', '.deleteSection', function () {
       var id = $(this).attr('id');
-      var name = $(this).data('name') || "this course";
+      var name = $(this).data('name') || "this school year";
 
       const msg = new SpeechSynthesisUtterance(`Are you sure you want to delete ${name}?`);
       msg.lang = 'en-US';
