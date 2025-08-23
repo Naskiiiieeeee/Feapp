@@ -84,8 +84,8 @@ class LoadingViewModel{
             while (($data = fgetcsv($handle, 1000, ",")) !== false) {
                 if (count($data) < 5) continue; // skip incomplete rows
 
-                [$email, $no, $name, $section, $year, $course, $department] = array_map('trim', $data);
-                $success = $this->model->insertLoad($code, $email, $no, $name, $section, $year, $course, $department);
+                [$department, $course, $year, $subject, $section , $facultyemail, $sem, $sy] = array_map('trim', $data);
+                $success = $this->model->insertLoad($code, $department, $course, $year, $subject, $section , $facultyemail, $sem, $sy);
 
                 if ($success) {
                     $inserted++;
