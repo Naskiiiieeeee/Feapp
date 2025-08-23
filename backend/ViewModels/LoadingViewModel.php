@@ -70,7 +70,16 @@ class LoadingViewModel{
             $header = array_map('strtolower', $header);
             $header = array_map(fn($h) => preg_replace('/[^a-z0-9_]/', '', $h), $header);
 
-            $required = ['department', 'course', 'year_lvl', 'subjects', 'section', 'faculty_email', 'semester', 'sy' ];
+            $required = [
+                'department',
+                'course',
+                'yearlevel',
+                'subjectcode',
+                'section',
+                'facultyemail',
+                'semester',
+                'schoolyear'
+            ];
 
             if ($header !== $required) {
                 return [
