@@ -126,15 +126,21 @@ class LoadingModel extends Helpers{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insertLoad($code ,$email, $no, $name, $section, $year , $course, $department) {
-        $stmt = $this->db->prepare("SELECT COUNT(*) FROM `student_info` WHERE `student_email` = ?");
-        $stmt->execute([$email]);
-        if ($stmt->fetchColumn() > 0) {
-            return false; // Duplicate
+    public function insertLoad($code, $dep, $course, $yearLvl, $subject, $section, $fac_email, $sem, $sy) {
+        $stmt = $this->db->prepare("SELECT * FROM `faculty_load` WHERE `department` = ? AND `course` = ? AND  `subjects` = ? AND `section` = ?  AND `faculty_email` = ?");
+        $stmt->execute([$dep, $course, $subject, $section, $fac_email]);
+        if($stmt->rowCount() > 0){
+            return false;
+        }else{
+            $stmt = $this->db->prepare("SELECT * FROM `faculty_load` WHERE `department` = ? AND `course` = ? AND  `subjects` = ? AND `section` = ? ");
+            $stmt->execute([$dep, $course, $subject, $section]);
+            if($stmt->rowCount() > 0){
+                return false;
+            }else{
+                $stmt = $this->db->prepare("INSERT INTO `faculty_load`(`fl_code`, `department`, `course`, `year_lvl`, `subjects`, `section`, `faculty_email`, `semester`, `sy`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                return $stmt->execute([$code, $dep, $course, $yearLvl, $subject, $section, $fac_email, $sem, $sy]);
+            }
         }
-        $role = "Student";
-        $stmt = $this->db->prepare("INSERT INTO `student_info` (`student_email`, `student_no`, `student_name`, `student_section`, `student_year`, `student_course` ,`student_dep` , `role`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([$email, $no, $name, $section, $year, $course, $department, $role]);
     }
 
 }
