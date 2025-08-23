@@ -26,6 +26,7 @@ $syInfo = $lvm->getSchoolYear();
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/admin_users/settings">Evaluation Scheduler</a></li>
         <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/admin_users/facultyLoading">Faculty Loading</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/admin_users/facultyCSV">Upload Loading Via CSV</a></li>
       </ol>
     </nav>
   </div>
@@ -113,7 +114,7 @@ $syInfo = $lvm->getSchoolYear();
                             </tr>
                           <?php endforeach; ?>
                         <?php else: ?>
-                          <tr class="text-center"><td colspan="8">No Registered Data!</td></tr>
+                          <tr class="text-center"><td colspan="9">No Registered Data!</td></tr>
                         <?php endif; ?>
                         </tbody>
                       </table>

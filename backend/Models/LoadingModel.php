@@ -126,5 +126,16 @@ class LoadingModel extends Helpers{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function insertLoad($code ,$email, $no, $name, $section, $year , $course, $department) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM `student_info` WHERE `student_email` = ?");
+        $stmt->execute([$email]);
+        if ($stmt->fetchColumn() > 0) {
+            return false; // Duplicate
+        }
+        $role = "Student";
+        $stmt = $this->db->prepare("INSERT INTO `student_info` (`student_email`, `student_no`, `student_name`, `student_section`, `student_year`, `student_course` ,`student_dep` , `role`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([$email, $no, $name, $section, $year, $course, $department, $role]);
+    }
+
 }
 ?>

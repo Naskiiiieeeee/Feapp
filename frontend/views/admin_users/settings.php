@@ -26,6 +26,7 @@ $total_pages = $evm->getTotalPages($limit);
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/admin_users/settings">Evaluation Scheduler</a></li>
         <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/admin_users/facultyLoading">Faculty Loading</a></li>
+        <li class="breadcrumb-item"><a href="<?= BASE_URL ?>/frontend/views/admin_users/facultyCSV">Upload Loading Via CSV</a></li>
       </ol>
     </nav>
   </div>

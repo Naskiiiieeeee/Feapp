@@ -56,4 +56,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['deleteload'])){
     }
     exit;
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['loadingCSV'])) {
+    $response = $vm->uploadCSV($_FILES['loadingCSV']);
+    echo json_encode($response['status'] === 'added' ? 'added' : $response);
+    exit;
+}
 ?>
