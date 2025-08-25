@@ -18,7 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
             echo "<td class='course'>" . htmlspecialchars($row['student_course']) . "</td>";
             echo "<td class='department'>" . htmlspecialchars($row['student_dep']) . "</td>";
 
-            $status = match ($row['status']) {
+            $statusVal = (int)$row['status'];
+            $status = match ($statusVal) {
                 1 => '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Verified</span>',
                 2 => '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>',
                 default => '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>',
@@ -26,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'search') {
 
             echo "<td>{$status}</td>";
 
-            $evaluationAccess = match ($row['evaluationAccess']) {
+            $evalVal = (int)$row['evaluationAccess'];
+            $evaluationAccess = match ($evalVal) {
                 1 => '<span class="badge bg-success fs-7 rounded-5"><i class="bi bi-check-circle"></i> Active</span>',
                 2 => '<span class="badge bg-danger fs-7 rounded-5"><i class="bi bi-x-circle"></i> Restricted</span>',
                 default => '<span class="badge bg-secondary fs-7 rounded-5"><i class="bi bi-exclamation-circle"></i> Pending</span>',
