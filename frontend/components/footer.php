@@ -1,4 +1,3 @@
-  <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>FEAPP-SOLUTIONS</span></strong>. All Rights Reserved
