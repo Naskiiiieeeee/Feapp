@@ -1,6 +1,4 @@
 <?php
-// proxy.ai.recommender.php
-
 header('Content-Type: application/json');
 
 try {
